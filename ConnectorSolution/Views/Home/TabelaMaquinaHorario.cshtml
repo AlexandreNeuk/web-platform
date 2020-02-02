@@ -1,0 +1,153 @@
+﻿@using Connector.Models;
+@{
+    ViewBag.Title = "TabelaMaquinaHorario";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/modal-loading.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/modal-loading-animate.css" />
+
+<style>
+    table.b {
+        table-layout: fixed;
+        width: 480px;
+    }
+
+    .vertical-alignment-helper {
+        display: table;
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+    }
+
+    .vertical-align-center {
+        display: table-cell;
+        vertical-align: middle;
+        pointer-events: none;
+    }
+
+    .modal-content {
+        width: inherit;
+        max-width: inherit;
+        height: inherit;
+        margin: 0 auto;
+        pointer-events: all;
+    }
+</style>
+
+<div class="container-fluid">
+    <div id="page-wrapper" style="min-height:780px;">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Programação de Máquinas</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <form role="form">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="idbtmd" style="display:none;"></button>
+
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLongTitle">Programação Máquinas</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Dados salvos com sucesso!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                    <label style="color:#337abd; font-weight:1;">Informe a máquina:</label>
+                    <select class="form-control" id="slm" onchange="m.pm.q()">
+                        @if (ViewBag.ListaMaquinas != null)
+                        {
+                            foreach (var item in ViewBag.ListaMaquinas)
+                            {
+                                if (item != null)
+                                {
+                                    <option id="@item.ID">@item.ID  @item.Descricao</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                    <button type="button" class="btn btn-primary mb-2" onclick="m.pm.s();">Salvar</button>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4" style="padding-top: 20px;">
+                    <table class="table b" id="tbmh">
+                        <thead>
+                            <tr>
+                                <th style="width: 90px;" scope="col">Dia</th>
+                                <th style="width: 100px;" scope="col">Hora On</th>
+                                <th style="width: 100px;" scope="col">Hora Off</th>
+                                <th style="width: 90px;" scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>
+
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+<script type="text/javascript">
+    
+
+    function loadjs(file) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = file;
+        script.onload = function () {
+            m.pm.l();
+        };
+        document.body.appendChild(script);
+    }
+
+    function aaa(a) {
+        if (a) {
+            a.select();
+        }
+    }
+    //
+    loadjs("@Url.Content("~/vendor/mask/mask.js")");
+</script>

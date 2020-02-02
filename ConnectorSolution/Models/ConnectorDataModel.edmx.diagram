@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="45389045526f45b588576827df305472" Name="Diagram1" ZoomLevel="69">
+        <EntityTypeShape EntityType="ConnectorModel.Filial" Width="1.5" PointX="3" PointY="1.5" />
+        <EntityTypeShape EntityType="ConnectorModel.MaquinaHorario" Width="1.5" PointX="5.25" PointY="8.75" />
+        <EntityTypeShape EntityType="ConnectorModel.Setor" Width="1.5" PointX="7.5" PointY="1.625" />
+        <EntityTypeShape EntityType="ConnectorModel.Unidade" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="ConnectorModel.Usuario" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="ConnectorModel.UsuarioLogin" Width="1.5" PointX="5.25" PointY="5.25" />
+        <AssociationConnector Association="ConnectorModel.ctrain_unidade_filial" />
+        <AssociationConnector Association="ConnectorModel.ctrain_setor_unidade" />
+        <AssociationConnector Association="ConnectorModel.id_usu_med_login" />
+        <EntityTypeShape EntityType="ConnectorModel.Maquina" Width="1.5" PointX="3" PointY="9.5" />
+        <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
+        <EntityTypeShape EntityType="ConnectorModel.Gateway" Width="1.5" PointX="3" PointY="13.375" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorPressaoHistorico" Width="1.5" PointX="10.5" PointY="4.875" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorProducaoHistorico" Width="1.5" PointX="10.5" PointY="7.625" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorTemperaturaHistorico" Width="1.5" PointX="10.5" PointY="10.375" />
+        <EntityTypeShape EntityType="ConnectorModel.LogAtividade" Width="1.5" PointX="3" PointY="17.625" />
+        <EntityTypeShape EntityType="ConnectorModel.Coletor" Width="1.5" PointX="5.25" PointY="12.125" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_pressao_hist" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_producao_hist" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_temperatura_hist" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorAlerta" Width="1.5" PointX="7.5" PointY="14.25" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_alerta" />
+        <EntityTypeShape EntityType="ConnectorModel.Empresa" Width="1.5" PointX="0.75" PointY="9.375" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_empresa" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_alert_empresa" />
+        <AssociationConnector Association="ConnectorModel.ctrain_atividade_empresa" />
+        <AssociationConnector Association="ConnectorModel.ctrain_filial_empresa" />
+        <AssociationConnector Association="ConnectorModel.ctrain_gateway_empresa" />
+        <AssociationConnector Association="ConnectorModel.id_empresa_constrain" />
+        <AssociationConnector Association="ConnectorModel.id_empresa_maquina_constrain" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorSensorMovHistorico" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorAlertaLog" Width="1.5" PointX="9.75" PointY="13.75" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_lg_col" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_lg_cola" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorTipoAlerta" Width="1.5" PointX="3" PointY="21" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_tipoalerta" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_tp_alert_empresa" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorTopico" Width="1.5" PointX="7.5" PointY="19" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletortopico" />
+        <EntityTypeShape EntityType="ConnectorModel.ColetorTopicoLog" Width="1.5" PointX="9.75" PointY="19.25" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_topico_log" />
+        <EntityTypeShape EntityType="ConnectorModel.Processo" Width="1.5" PointX="5.25" PointY="17.75" />
+        <EntityTypeShape EntityType="ConnectorModel.Programa" Width="1.5" PointX="8" PointY="10.5" />
+        <AssociationConnector Association="ConnectorModel.ctrain_programa_empresa" />
+        <AssociationConnector Association="ConnectorModel.id_empresa_processo_constrain" />
+        <AssociationConnector Association="ConnectorModel.ctrain_programa_processo" />
+        <EntityTypeShape EntityType="ConnectorModel.TipoProcesso" Width="1.5" PointX="3" PointY="24.5" />
+        <AssociationConnector Association="ConnectorModel.id_empresa_tipoprocesso_constrain" />
+        <AssociationConnector Association="ConnectorModel.id_tipoprocesso_processo_constrain" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

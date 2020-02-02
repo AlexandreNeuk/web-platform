@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Empresas";
+}
+
+<link href="@Url.Content("~/vendor/datatables/js/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Empresas</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudIncluir;" data-toggle="modal" data-target="#empresaModal" onclick="m.empresa.setempresainclui()">
+                Incluir
+            </button>
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudEditar;" onclick="m.empresa.edit()">
+                Editar
+            </button>
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudExcluir;" onclick="m.empresa.exclui()">
+                Excluir
+            </button>
+            <button class="btn btn-primary" onclick="m.empresa.exportar()">
+                Exportar
+            </button>
+        </div>
+        <div class="card-body">
+
+            <!-- Modal -->
+            <div class="modal fade" id="empresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEmpresa" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content-insert-alerta">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabelEmpresa">Incluir Empresa</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Nome</label>
+                                    <input type="text" class="form-control" maxlength="50" id="txtnomeempresa">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Telefone</label>
+                                    <input type="text" class="form-control" maxlength="15" id="txttelefoneempresa">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Endereço</label>
+                                <input type="text" class="form-control" maxlength="50" id="txtenderecoempresa">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Bairro</label>
+                                    <input type="text" class="form-control" maxlength="30" id="txtbairroempresa">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Número</label>
+                                    <input type="text" class="form-control" maxlength="5" id="txtnumeroempresa">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Cidade</label>
+                                    <input type="text" class="form-control" maxlength="30" id="txtcidadeempresa">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Estado</label>
+                                    <select id="slestadoempresa" class="form-control">
+                                        <option selected id="0"></option>
+                                        <option id="1">AC - Acre</option>
+                                        <option id="2">AL - Alagoas</option>
+                                        <option id="3">AP - Amapá</option>
+                                        <option id="4">AM - Amazonas</option>
+                                        <option id="5">BA - Bahia</option>
+                                        <option id="6">CE - Ceará</option>
+                                        <option id="7">DF - Distrito Federal</option>
+                                        <option id="8">ES - Espírito Santo</option>
+                                        <option id="9">GO - Goiás</option>
+                                        <option id="10">MA - Maranhão</option>
+                                        <option id="11">MT - Mato Grosso</option>
+                                        <option id="12">MS - Mato Grosso do Sul</option>
+                                        <option id="13">MG - Minas Gerais</option>
+                                        <option id="14">PA - Pará</option>
+                                        <option id="15">PB - Paraíba</option>
+                                        <option id="16">PR - Paraná</option>
+                                        <option id="17">PE - Pernambuco</option>
+                                        <option id="18">PI - Piauí</option>
+                                        <option id="19">RJ - Rio de Janeiro</option>
+                                        <option id="20">RN - Rio Grande do Norte</option>
+                                        <option id="21">RS - Rio Grande do Sul</option>
+                                        <option id="22">RO - Rondônia</option>
+                                        <option id="23">RR - Roraima</option>
+                                        <option id="24">SC - Santa Catarina</option>
+                                        <option id="25">SP - São Paulo</option>
+                                        <option id="26">SE - Sergipe</option>
+                                        <option id="27">TO - Tocantins</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>CEP</label>
+                                    <input type="text" id="txtcepempresa" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Site</label>
+                                    <input type="text" class="form-control" maxlength="50" id="txtsiteempresa">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" maxlength="30" id="txtemailempresa">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick="m.empresa.salva();" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered"
+                       id="dataTableEmpresas"
+                       data-pagination="true"
+                       data-search="true"
+                       data-click-to-select="true"
+                       data-pagination-h-align="left"
+                       data-pagination-detail-h-align="right"
+                       cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true"></th>
+                            <th data-field="Id">Id</th>
+                            <th data-field="Nome">Nome</th>
+                            <th data-field="Cidade">Cidade</th>
+                            <th data-field="EstadoSigla">UF</th>
+                            <th data-field="Telefone">Telefone</th>
+                            <th data-field="Email">Email</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="@Url.Content("~/vendor/datatables/bootstrap-table.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/vendor/datatables/bootstrap-table.min.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        m.empresa.init(@Html.Raw(Json.Encode(ViewBag.ListaEmpresas)));
+    });
+</script>

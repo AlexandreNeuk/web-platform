@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "ConsumoPesoMaquina";
+}
+
+@*<script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>*@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Consulta Consumo KW/h por Máquina</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <form role="form">
+            <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <label style="color:#337abd; font-weight:1;">Informe a máquina:</label>
+                <select class="form-control" id="slmaquinaum">
+                    @if (ViewBag.ListaMaquinas != null)
+                    {
+                        foreach (var item in ViewBag.ListaMaquinas)
+                        {
+                            if (item != null)
+                            {
+                                <option id="@item.ID">@item.Descricao</option>
+                            }
+                        }
+                    }
+                </select>
+
+                <label style="color:#337abd; font-weight:1;">Informe a máquina:</label>
+                <select class="form-control" id="slmaquinadois">
+                    @if (ViewBag.ListaMaquinas != null)
+                    {
+                        foreach (var item in ViewBag.ListaMaquinas)
+                        {
+                            if (item != null)
+                            {
+                                <option id="@item.ID">@item.Descricao</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <button type="button" class="btn btn-primary mb-2" onclick="cdtrkwm()">Consultar</button>
+            </div>
+        </form>
+        <div class="clearfix"></div>
+        <br /><br />
+    </div>
+
+    <div class="row">
+        <div id="container" style="max-width: 860px;"></div>
+    </div>
+</div>
+
+
+
+<script>
+    function cdtrkwm() {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+        //
+        d = document;
+        d.g = d.getElementById;
+        //
+        var chart;
+        $('#container')
+            .highcharts({
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 10,
+                    events: {
+                        load: function () {
+
+                            // set up the updating of the chart each second
+                            var series = this.series[0];
+                            var series2 = this.series[1];
+                            setInterval(
+
+                                function () {
+                                    var x = (new Date())
+                                        .getTime(), // current time
+                                        y = Math.random() * 1000;
+                                        z = Math.random() * 1000;
+                                        series.addPoint(
+                                        [
+                                            x,
+                                            y
+                                        ],
+                                        false,
+                                        true);
+                                        series2.addPoint(
+                                        [
+                                            x,
+                                            z],
+                                        true,
+                                        true);
+                                }, 1000);
+                        }
+                    }
+                },
+                title: {
+                    text: d.g('slmaquinaum').options[d.g('slmaquinaum').selectedIndex].value
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150
+                },
+                yAxis: [{
+                    title: {
+                        text: 'CEC'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                }, {
+                    title: {
+                        text: 'CH'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#fefefe'
+                    }]
+                }],
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br />' + Highcharts.dateFormat(
+                            '%Y-%m-%d %H:%M:%S',
+                            this.x) + '<br />' + Highcharts.numberFormat(
+                                this.y,
+                                2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: true
+                },
+                series: [{
+                    name: 'Random data',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date())
+                                .getTime(),
+                            i;
+
+                        for (i = -19; i <= 0; i++) {
+                            data.push({
+                                x: time + i * 1000,
+                                y: Math.random()
+                            });
+                        }
+                        return data;
+                    })()
+                }, {
+                    name: 'Random data',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date())
+                                .getTime(),
+                            i;
+
+                        for (i = -19; i <= 0; i++) {
+                            data.push({
+                                x: time + i * 1000,
+                                y: Math.random()
+                            });
+                        }
+                        return data;
+                    })()
+                }]
+            });
+    }
+</script>

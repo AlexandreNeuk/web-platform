@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<script type="text/javascript" src="~/vendor/jquery/jquery.js"></script>
+<link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+@if (Session != null && Session["logado"] != null && Session["logado"].ToString().Equals("1"))
+{
+    <link href="@Url.Content("~/vendor/metisMenu/metisMenu.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/vendor/morrisjs/morris.css")" rel="stylesheet">
+}
+@*<link href="@Url.Content("~/vendor/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">*@
+
+<link rel="stylesheet" type="text/css" href="~/Content/modal-loading.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/modal-loading-animate.css" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Informe seus dados:</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="chave" type="password" value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me">Lembrar-me
+                                </label>
+                            </div>
+                            <a href="#" onclick="login()" class="btn btn-success-login btn-block">Login</a>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/vendor/modal/modal-loading.js")"></script>
+
+<script>
+    var checked = false;
+    var loading = null;
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $(document).ready(function () {
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+                checked = true;
+                setCookie('rmblg', true, 360);
+            }
+            else if ($(this).prop("checked") == false) {
+                checked = false;
+                setCookie('rmblg', false, 360);
+            }
+        })
+        if (getCookie('rmblg') === 'true') {
+            $("input[name=remember]").prop('checked', true);
+            $("input[name=email]").val(getCookie('rmblglg'));
+            $("input[name=chave]").val(getCookie('rmblgps'));
+            checked = true;
+            //
+            if (location.host.indexOf('host') > -1) {
+                //login();
+            }
+        }
+        else {
+            $("input[name=remember]").prop('checked', false);
+            $("input[name=email]").val('');
+            $("input[name=chave]").val('');
+            checked = false;
+        }
+    });
+
+    function login() {
+        loading = new Loading({
+            discription: 'Logando...',
+            discriptionColor: 'rgb(255, 255, 255)',
+            animationOriginColor: 'rgb(255, 255, 255)',
+            mask: true,
+            loadingPadding: '20px 50px',
+            defaultApply: true,
+        });
+        $.ajax({
+            url: location.host.indexOf('host') > -1 ?
+                location.origin + location.pathname.split('//')[0] + '/login/login?email=' + $("input[name=email]").val() + '&chave=' + $("input[name=chave]").val() :
+                location.href + 'login/login?email=' + $("input[name=email]").val() + '&chave=' + $("input[name=chave]").val(),
+            type: "post",
+            success: function (resp) {
+                if (resp && resp.data == 'ok') {
+                    if (checked) {
+                        setCookie('rmblglg', $("input[name=email]").val(), 360);
+                        setCookie('rmblgps', $("input[name=chave]").val(), 360);
+                    }
+                    location.href = location.host.indexOf('host') > -1 ? location.origin + location.pathname.split('//')[0] + '/Home/Dashboard/' :
+                        location.href.indexOf('#') > -1 ? location.href.replace('#', '') + '/Home/Dashboard/' : location.href + '/Home/Dashboard/';
+                }
+                else {
+                    loading.out();
+                    alert('Credenciais inválidas!');
+                    try {
+                        if (m) {
+                            m.usuario.loadingout();
+                        }                        
+                        $('#usuarioModal').modal('hide');
+
+                    } catch (err) { }
+                }
+            },
+            error: function (xhr, error) {
+                console.log(xhr);
+                console.log(error);
+            }
+        });
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/connector/";
+    }
+
+</script>

@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "ConsumoKWMaquina";
+}
+
+<script type="text/javascript" src="http://www.echartsjs.com/gallery/vendors/echarts/echarts.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.js"></script>
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Consulta Consumo KW/h por Máquina</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <form role="form">
+            <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <label style="color:#337abd; font-weight:1;">Informe a máquina:</label>
+                <select class="form-control" id="slmaquinas">
+                    @if (ViewBag.ListaMaquinas != null)
+                    {
+                        foreach (var item in ViewBag.ListaMaquinas)
+                        {
+                            if (item != null)
+                            {
+                                <option id="@item.ID">@item.Descricao</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <label style="color:#337abd; font-weight:1;">Informe o período:</label>
+                <input type="text" name="daterange" class="form-control" value="09/01/2018 - 12/15/2018" />
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <button type="button" class="btn btn-primary mb-2" onclick="cdckwm()">Consultar</button>
+            </div>
+        </form>
+        <div class="clearfix"></div>
+        <br /><br />
+    </div>
+
+    <div class="row" id="iddivgrafico">
+        <div id="novo" style="width: 800px;height:480px;"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script type="text/javascript">
+
+    var mychart = null;
+
+    function get() {
+        return mychart;
+    }
+
+    function cdckwm() {
+        //
+        if (!mychart) {
+            var dom = document.getElementById("novo");
+            mychart = echarts.init(dom);
+        }
+        else {
+            var divgrafico = document.getElementById("iddivgrafico");
+            while (divgrafico.firstChild) {
+                divgrafico.removeChild(divgrafico.firstChild);
+            }
+            //
+            var iDiv = document.createElement('div');
+            iDiv.id = 'novo';
+            iDiv.style.width = '800px';
+            iDiv.style.height = '480px';
+            divgrafico.appendChild(iDiv);
+            var dom = document.getElementById("novo");
+            mychart = echarts.init(dom);
+        }
+        //var app = {};
+        //option = null;
+        var e = document.getElementById("slmaquinas");
+        $.get(m.g.rsvlurl('home/pegadadosmaquina') + '?idmaquina=' + e.options[e.selectedIndex].id + '&periodo=' + $('input[name=daterange]')[0].value, function (data) {
+            //
+            if (data) {
+                //
+                myChart = get();
+                myChart.setOption(option = {
+                    title: {
+                        text: e.options[e.selectedIndex].id.value
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        data: data.data.map(function (item) {
+                            //return item[0];
+                            return item.data;
+                        })
+                    },
+                    yAxis: {
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    toolbox: {
+                        default: false,
+                        left: 'center',
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            restore: { title: 'Restaurar Gráfico' },
+                            saveAsImage: { text: 'asasas', name: 'myImageName', title: 'Salvar imagem' }
+                        }
+                    },
+                    dataZoom: [{
+                        startValue: '2014-06-01'
+                    }, {
+                        type: 'inside'
+                    }],
+                    visualMap: {
+                        top: 10,
+                        right: 10,
+                        pieces: [{
+                            gt: 0,
+                            lte: 50,
+                            color: '#096'
+                        }, {
+                            gt: 50,
+                            lte: 100,
+                            color: '#ffde33'
+                        }, {
+                            gt: 100,
+                            lte: 150,
+                            color: '#ff9933'
+                        }, {
+                            gt: 150,
+                            lte: 200,
+                            color: '#cc0033'
+                        }, {
+                            gt: 200,
+                            lte: 300,
+                            color: '#660099'
+                        }, {
+                            gt: 300,
+                            color: '#7e0023'
+                        }],
+                        outOfRange: {
+                            color: '#999'
+                        }
+                    },
+                    series: {
+                        name: e.options[e.selectedIndex].id.value,
+                        type: 'line',
+                        data: data.data.map(function (item) {
+                            //return item[1];
+                            return item.valor;
+                        }),
+                        markLine: {
+                            silent: true,
+                            data: [{
+                                yAxis: 50
+                            }, {
+                                yAxis: 100
+                            }, {
+                                yAxis: 150
+                            }, {
+                                yAxis: 200
+                            }, {
+                                yAxis: 300
+                            }]
+                        }
+                    }
+                });
+            }
+            else {
+                alert('A máquina não possui dados!');
+            }
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+        //
+        $(".applyBtn")[0].innerHTML = 'Concluir';
+        $(".cancelBtn")[0].innerHTML = 'Cancelar';
+    });
+</script>
+
+
+@*//$.get('https://ecomfe.github.io/echarts-examples/public/data/asset/data/aqi-beijing.json', function (data) {*@

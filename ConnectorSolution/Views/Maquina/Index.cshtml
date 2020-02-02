@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Máquinas";
+}
+
+<link href="@Url.Content("~/vendor/datatables/js/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Máquinas</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudIncluir;" data-toggle="modal" data-target="#maquinaModal" onclick="m.maquina.setmaquinainclui()">
+                Incluir
+            </button>
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudEditar;" onclick="m.maquina.editmaquina()">
+                Editar
+            </button>
+            <button class="btn btn-primary" style="display: @ViewBag.ShowCrudExcluir;" onclick="m.maquina.exclui()">
+                Excluir
+            </button>
+            <button class="btn btn-primary" onclick="m.maquina.exportar()">
+                Exportar
+            </button>
+        </div>
+        <div class="card-body">
+
+            <!-- Modal -->
+            <div class="modal fade" id="maquinaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelMaquina" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabelMaquina">Incluir Máquina</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>Descrição da Máquina:</label>
+                                <input id="txtdescmaquina" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Empresa:</label>
+                                <select class="form-control" id="slempresamaquina" onchange="m.maquina.chgcmbempresamaquina();">
+                                    @if (ViewBag.ListaEmpresas != null)
+                                    {
+                                        foreach (var item in ViewBag.ListaEmpresas)
+                                        {
+                                            if (item != null)
+                                            {
+                                                <option id="@item.Id">@item.Nome</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Coletor:</label>
+                                <select class="form-control" id="slcoletor">
+                                    <option></option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="m.maquina.cancela();" class="btn btn-cancelar btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick="m.maquina.salva();" class="btn btn-primary">Salvar</button>
+                            <button type="button" onclick="m.maquina.exclui();" id="btnexcluirmaquina" class="btn btn-danger">Exlcuir</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" 
+                       id="dataTableMaquinas"
+                       data-pagination="true"
+                       data-search="true"
+                       data-click-to-select="true"
+                       data-pagination-h-align="left"
+                       data-pagination-detail-h-align="right"
+                       cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true"></th>
+                            <th data-field="ID">Id</th>
+                            <th data-field="Descricao">Descrição</th>
+                            <th data-field="DescricaoMedidor">Coletor</th>
+                            <th data-field="DescricaoEmpresa">Empresa</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="excluiMaquinaModal" tabindex="-1" role="dialog" aria-labelledby="modalMaquinaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalMaquinaLabel"></h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label>Você deseja excluir a máquina do sistema?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Não</button>
+                <button type="button" onclick="m.maquina.excluipost();" class="btn btn-danger">Sim</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<link href="@Url.Content("~/vendor/datatables/bootstrap-table.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/vendor/datatables/bootstrap-table.min.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        m.maquina.init(@Html.Raw(Json.Encode(ViewBag.ListaMaquinas)));
+    });
+</script>

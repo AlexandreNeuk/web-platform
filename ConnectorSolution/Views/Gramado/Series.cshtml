@@ -1,0 +1,388 @@
+﻿@{
+
+    ViewBag.Title = "Séries";
+}
+
+<script src="@Url.Content("~/vendor/chart.js/Chart.min.js")"></script>
+<script src="@Url.Content("~/vendor/chart.js/utils.js")"></script>
+
+<style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .chart-container {
+        width: 800px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 40px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /*justify-content: center;*/
+    }
+</style>
+
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Gráfico de Séries</h1>
+    <hr />
+    <div class="row">
+        <div class="container" id="divgraficodia31"></div>
+    </div>
+    <div class="row">
+        <div class="container" id="divgraficodia01"></div>
+    </div>
+    <div class="row">
+        <div class="container" id="divgraficodia02"></div>
+    </div>
+</div>
+
+<script>
+     /**
+     * 
+     * grafico dia 31
+     */
+    function createConfiggraficoDia31(gridlines, title) {
+        return {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+                datasets: [{
+                    label: 'Palco Getnet',
+                    fill: false,
+                    backgroundColor: 'rgb(15, 72, 127)',
+                    borderColor: 'rgb(15, 72, 127)',
+                    data: [503, 628, 537, 427, 402, 406, 434, 393, 427, 381, 1028, 1533, 458]
+                }, {
+                    label: 'Corredor',
+                    backgroundColor: 'rgb(52, 109, 164)',
+                    borderColor: 'rgb(52, 109, 164)',
+                    data: [600, 771, 592, 496, 574, 592, 684, 630, 508, 472, 454, 171, 76],
+                    fill: false,
+                }, {
+                    label: 'Restaurante',
+                    fill: false,
+                    backgroundColor: 'rgb(160, 217, 255)',
+                    borderColor: 'rgb(160, 217, 255)',
+                    data: [124, 137, 110, 357, 492, 330, 276, 268, 139, 127, 44, 1, 4]
+                }, {
+                    label: 'Entrada',
+                    fill: false,
+                    backgroundColor: 'rgb(0, 219, 249)',
+                    borderColor: 'rgb(0, 219, 249)',
+                    data: [515, 567, 438, 352, 421, 423, 495, 614, 432, 325, 271, 200, 34]
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: title
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: gridlines
+                    }],
+                    yAxes: [{
+                        gridLines: gridlines,
+                        ticks: {
+                            min: 0,
+                            max: 1600,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        };
+    }
+
+    /**
+ * 
+ * grafico dia 01
+ */
+    function createConfiggraficoDia01(gridlines, title) {
+        return {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+                datasets: [{
+                    label: 'Palco Getnet',
+                    fill: false,
+                    backgroundColor: 'rgb(15, 72, 127)',
+                    borderColor: 'rgb(15, 72, 127)',
+                    data: [254,448,432,442,466,381,227,269,471,689,1519,1143,152]
+                }, {
+                    label: 'Corredor',
+                    backgroundColor: 'rgb(52, 109, 164)',
+                    borderColor: 'rgb(52, 109, 164)',
+                        data: [237,450,605,753,581,417,517,523,629,623,449,122,98],
+                    fill: false,
+                }, {
+                    label: 'Restaurante',
+                    fill: false,
+                    backgroundColor: 'rgb(160, 217, 255)',
+                    borderColor: 'rgb(160, 217, 255)',
+                        data: [31,38,154,267,342,210,158,120,232,172,81,1,4]
+                }, {
+                    label: 'Entrada',
+                    fill: false,
+                    backgroundColor: 'rgb(0, 219, 249)',
+                    borderColor: 'rgb(0, 219, 249)',
+                        data: [274,430,543,485,338,421,382,484,663,520,480,135,49]
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: title
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: gridlines
+                    }],
+                    yAxes: [{
+                        gridLines: gridlines,
+                        ticks: {
+                            min: 0,
+                            max: 1600,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        };
+    }
+
+    /**
+* 
+* grafico dia 02
+*/
+    function createConfiggraficoDia02(gridlines, title) {
+        return {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+                datasets: [{
+                    label: 'Palco Getnet',
+                    fill: false,
+                    backgroundColor: 'rgb(15, 72, 127)',
+                    borderColor: 'rgb(15, 72, 127)',
+                    data: [288,418,349,579,390,475,306,246,311,283,908,1165,218]
+                }, {
+                    label: 'Corredor',
+                    backgroundColor: 'rgb(52, 109, 164)',
+                    borderColor: 'rgb(52, 109, 164)',
+                        data: [277,474,542,761,673,653,702,455,438,339,286,210,274],
+                    fill: false,
+                }, {
+                    label: 'Restaurante',
+                    fill: false,
+                    backgroundColor: 'rgb(160, 217, 255)',
+                    borderColor: 'rgb(160, 217, 255)',
+                        data: [36,44,117,336,481,504,244,53,51,42,54,45,21]
+                }, {
+                    label: 'Entrada',
+                    fill: false,
+                    backgroundColor: 'rgb(0, 219, 249)',
+                    borderColor: 'rgb(0, 219, 249)',
+                        data: [222,391,395,612,667,504,584,270,315,226,263,251,97]
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: title
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: gridlines
+                    }],
+                    yAxes: [{
+                        gridLines: gridlines,
+                        ticks: {
+                            min: 0,
+                            max: 1600,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        };
+    }
+
+    window.onload = function () {
+        var divgraficodia31 = document.getElementById('divgraficodia31');
+        [{
+            title: 'Dia 31/07',
+            gridLines: {
+                display: true
+            }
+        }].forEach(function (details) {
+            var div = document.createElement('div');
+            div.classList.add('chart-container');
+
+            var canvas = document.createElement('canvas');
+            div.appendChild(canvas);
+            divgraficodia31.appendChild(div);
+
+            var ctx = canvas.getContext('2d');
+            var config = createConfiggraficoDia31(details.gridLines, details.title);
+            new Chart(ctx, config);
+        });
+        //
+        var divgraficodia01 = document.getElementById('divgraficodia01');
+        [{
+            title: 'Dia 01/08',
+            gridLines: {
+                display: true
+            }
+        }].forEach(function (details) {
+            var div = document.createElement('div');
+            div.classList.add('chart-container');
+
+            var canvas = document.createElement('canvas');
+            div.appendChild(canvas);
+            divgraficodia01.appendChild(div);
+
+            var ctx = canvas.getContext('2d');
+            var config = createConfiggraficoDia01(details.gridLines, details.title);
+            new Chart(ctx, config);
+        });
+        //
+        var divgraficodia02 = document.getElementById('divgraficodia02');
+        [{
+            title: 'Dia 02/08',
+            gridLines: {
+                display: true
+            }
+        }].forEach(function (details) {
+            var div = document.createElement('div');
+            div.classList.add('chart-container');
+
+            var canvas = document.createElement('canvas');
+            div.appendChild(canvas);
+            divgraficodia02.appendChild(div);
+
+            var ctx = canvas.getContext('2d');
+            var config = createConfiggraficoDia02(details.gridLines, details.title);
+            new Chart(ctx, config);
+        });
+    };
+</script>
+
+
+@*<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <div class="container-fluid">
+        <h1 class="h3 mb-2 text-gray-800">Gráfico de Séries</h1>
+        <hr />
+
+        <div id="container" style="min-width: 310px; height: 400px;  margin-right: 40px !important;"></div>
+    </div>
+
+
+
+        <script>
+
+
+            $.getJSON(
+                'http://localhost/connector/data/serie_teste.json',
+                function (data) {
+                    array = [];
+                    array_filho = [];
+                    //array_filho.push();
+                    var aaa = [[1331028000000, 5], [1331031600000, 6], [1331035200000, 4]];
+
+                    for (var i = 0; i < data.length; i++) {
+                        if (data) {
+
+                            //var tempo = data[i][1];
+                            //var val = data[i][0];
+                            //data[i][0] = tempo;
+                            //data[i][1] = val;
+                            //array_filho = [2];
+
+                            //var ano = parseInt(data[0][1].split('-')[0]);
+                            //var mes = parseInt(data[0][1].split('-')[1]);
+                            //var dia = parseInt(data[0][1].split('-')[2]);
+                            //var hora = parseInt(data[0][2]);
+                            //var min = parseInt(data[0][3]);
+                            //var seg = parseInt(data[0][4]);
+
+                            //var novadata = new Date(ano, (mes -1), dia, hora, min, seg);
+                            //var novadata_gettime = novadata.getTime();
+                            //var novadata_gettime_res = novadata_gettime / 1000;
+                            ////
+                            //console.log('[' + (i + 1) + "," + novadata_gettime_res + ']');
+                            //array_filho.push([novadata_gettime_res, (i + 1)]);
+                            //array.push(array_filho);
+                        }
+                    }
+
+                    Highcharts.chart('container', {
+                        chart: {
+                            zoomType: 'x'
+                        },
+                        title: {
+                            text: 'Palco Getnet'
+                        },
+                        subtitle: {
+                            text: 'Gráfico do sensor entre a entrada do palco Getnet e o estande da Hélice'
+                        },
+                        xAxis: {
+                            type: 'datetime'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Exchange rate'
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            area: {
+                                fillColor: {
+                                    linearGradient: {
+                                        x1: 0,
+                                        y1: 0,
+                                        x2: 0,
+                                        y2: 1
+                                    },
+                                    stops: [
+                                        [0, Highcharts.getOptions().colors[0]],
+                                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                    ]
+                                },
+                                marker: {
+                                    radius: 2
+                                },
+                                lineWidth: 1,
+                                states: {
+                                    hover: {
+                                        lineWidth: 1
+                                    }
+                                },
+                                threshold: null
+                            }
+                        },
+
+                        series: [{
+                            type: 'area',
+                            name: 'USD to EUR',
+                            data: data
+                        }]
+                    });
+                }
+            );
+        </script>*@

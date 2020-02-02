@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.944 36.944">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="summit-icon" transform="translate(0 0)">
+    <path id="Path_52" data-name="Path 52" class="cls-1" d="M0,0V12.315H15.867L0,28.182v8.762H8.762l16.1-15.867V36.944H36.944V20.6L16.578,0Z"/>
+    <path id="Path_53" data-name="Path 53" class="cls-1" d="M9.3,0,24.22,15.157V0Z" transform="translate(12.725)"/>
+  </g>
+</svg>

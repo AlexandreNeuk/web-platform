@@ -1,0 +1,155 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Empresas";
+}
+
+<style>
+    .select2-results__option .wrap:before {
+        font-family: fontAwesome;
+        color: #999;
+        content: "\f096";
+        width: 25px;
+        height: 25px;
+        padding-right: 10px;
+    }
+
+    .select2-results__option[aria-selected=true] .wrap:before {
+        content: "\f14a";
+    }
+
+    .row {
+        padding: 10px;
+    }
+
+    .select2-multiple, .select2-multiple2 {
+        width: 50%
+    }
+
+    .select2-container {
+        min-width: 305px;
+    }
+
+    .div-pad-lef {
+        padding-left: 15px !important;
+    }
+
+    .div-pad-lef-2 {
+        padding-left: 12px !important;
+    }
+
+    .td-center-table {
+        text-align: center;
+    }
+</style>
+
+<link href="@Url.Content("~/vendor/multiselect/select2.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/vendor/datatables/js/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Log de Alertas</h1>
+
+
+    <div class="row">
+        <div class="div-pad-lef">
+            <label style="color:#337abd; font-weight:1;">Informe a máquina:</label>
+            <select class="form-control" style="width: 300px!important;" id="slmaquinasalerta" multiple="multiple">
+                @if (ViewBag.ListaMaquinas != null)
+                {
+                    foreach (var item in ViewBag.ListaMaquinas)
+                    {
+                        if (item != null)
+                        {
+                            <option id="@item.ID" data-idempresa="@item.Id_Empresa">@item.ID  @item.Descricao</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+
+
+        <div class="d-inline-block" style="padding-left: 20px !important; padding-top: 28px !important;">
+
+            <div class="form-group">
+                <select class="form-control" id="sllogativtotreg">
+                    <option id="5">5</option>
+                    <option id="10">10</option>
+                    <option id="30">30</option>
+                    <option id="50">50</option>
+                    <option id="100">100</option>
+                    <option id="100">300</option>
+                    <option id="100">500</option>
+                    <option id="100">1000</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-inline-block" style="padding-left: 20px !important; padding-top: 32px !important;">
+            <div>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="m.logatividade.carrega()">Consultar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-check form-check-inline div-pad-lef-2">
+            <input type="checkbox" class="form-check-input" id="chkpress">
+            <label class="form-check-label">Pressão</label>
+        </div>
+
+        <div class="form-check form-check-inline div-pad-lef-2">
+            <input type="checkbox" class="form-check-input" id="chktemp">
+            <label class="form-check-label">Temperatura</label>
+        </div>
+
+        <div class="form-check form-check-inline div-pad-lef-2">
+            <input type="checkbox" class="form-check-input" id="chkprod">
+            <label class="form-check-label">Produção</label>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered"
+                       id="dataTableAlertaMaquina"
+                       data-pagination="true"
+                       data-search="true"
+                       data-click-to-select="true"
+                       data-pagination-h-align="left"
+                       data-pagination-detail-h-align="right"
+                       cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="td-center-table" data-field="Imagem"></th>
+                            <th data-field="NomeMaquina">Máquina</th>
+                            <th data-field="NomeColetor">Coletor</th>
+                            <th data-field="Descricao">Descricao</th>
+                            <th data-field="DataHoraDesc">Data/Hora</th>
+                            <th data-field="NomeEmpresa">Empresa</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<link href="@Url.Content("~/vendor/datatables/bootstrap-table.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/vendor/datatables/bootstrap-table.min.js")"></script>
+<script src="@Url.Content("~/vendor/multiselect/select2.min.js")"></script>
+<script src="@Url.Content("~/vendor/multiselect/select2.multi-checkboxes.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        m.alerta.init(@Html.Raw(Json.Encode(ViewBag.ListaAlertas)));
+    });
+</script>
