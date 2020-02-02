@@ -360,6 +360,18 @@ namespace Connector.Controllers
             return View();
         }
 
+        public ActionResult Atmosfera()
+        {
+            ViewBag.GraficoAtivo = "active";
+            ViewBag.GraficoAtmosfera = "active";
+            ViewBag.GraficoShow = "show";
+
+            List<Maquina> lista_mdidor_maquina = db.Maquina.Where(a => a.Id_Empresa == Codigo_Empresa).ToList();
+            ViewBag.ListaMaquinas = lista_mdidor_maquina;
+            return View();
+        }
+
+
         public void PegaRotuloGrafico(int periodo, DateTime dt, ref string[] listaRotulosGrafico_comp, ref string[] listaRotulosGrafico, int dias)
         {
             switch (periodo)

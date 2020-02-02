@@ -2148,6 +2148,7 @@
     <Content Include="vendor\morrisjs\morris.min.js" />
     <Content Include="vendor\raphael\raphael.js" />
     <Content Include="vendor\raphael\raphael.min.js" />
+    <Content Include="Views\Dashboard\Tecnohard.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2310,6 +2311,15 @@
     <Content Include="Views\Mqtt\Index.cshtml" />
     <Content Include="Views\Programa\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <Content Include="Views\Menulateral\Tecnohard.cshtml" />
+    <Content Include="Views\Menulateral\Inequil.cshtml" />
+    <Content Include="Views\Menulateral\Gramadosummit.cshtml" />
+    <Content Include="Views\Menulateral\Demo.cshtml" />
+    <Content Include="Views\Dashboard\Inequil.cshtml" />
+    <Content Include="Views\Dashboard\Demo.cshtml" />
+    <Content Include="Views\Topo\Demo.cshtml" />
+    <Content Include="Views\Topo\Tecnohard.cshtml" />
+    <Content Include="Views\Grafico\Atmosfera.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

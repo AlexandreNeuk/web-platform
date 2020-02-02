@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Inequil";
+}
+
+<hr class="sidebar-divider my-0">
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.DashboardAtivo">
+    <a class="nav-link" href="~/Home/Dashboard" onclick="m.g.load('Carregando painel principal...');">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Painel Principal</span>
+    </a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+<!-- Heading -->
+<div class="sidebar-heading">
+    Cadastros
+</div>
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item @ViewBag.FabricaAtivo">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-industry"></i>
+        <span>Fábrica</span>
+    </a>
+    <div id="collapseTwo" class="collapse @ViewBag.FabricaShow" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item @ViewBag.FabricaMaquinaAtivo" onclick="m.g.load('Carregando máquinas...');" href="@Url.Content("~/Maquina/Index")">Máquinas</a>
+            @*<a class="collapse-item @ViewBag.FabricaProgramacaoMaquinaAtivo" onclick="m.g.load('Carregando progrmação de máquinas');" href="@Url.Content("~/TabelaMaquinaHorario/Index")">Programação Máquinas</a>*@
+            <a class="collapse-item @ViewBag.FabricaColetorAtivo" onclick="m.g.load('Carregando coletores...');" href="@Url.Content("~/Coletor/Index")">Coletores</a>
+            <a class="collapse-item @ViewBag.FabricaProgramaAtivo" onclick="m.g.load('Carregando programas...');" href="@Url.Content("~/Programa/Index")">Programas</a>
+            <a class="collapse-item @ViewBag.FabricaTipoAlertaAtivo" onclick="m.g.load('Carregando tipos de alertas...');" href="@Url.Content("~/TipoAlerta/Index")">Tipo Alerta</a>
+        </div>
+    </div>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item @ViewBag.GeralAtivo">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+        <i class="fas fa-fw fa-address-card"></i>
+        <span>Geral</span>
+    </a>
+    <div id="collapseUtilities" class="collapse @ViewBag.GeralShow" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item @ViewBag.GeralEmpresasAtivo" id="linkEmpresa" onclick="m.g.load('Carregando empresas...');" href="@Url.Content("~/Empresa/Index")">Empresas</a>
+            <a class="collapse-item @ViewBag.GeralUsuariosAtivo" onclick="m.g.load('Carregando usuários...');" href="@Url.Content("~/Usuario/Index")">Usuários</a>
+            @*<a class="collapse-item @ViewBag.GeralPermissoesAtivo" onclick="m.g.load('Carregando permissões...');" href="@Url.Content("~/Permissao/Index")">Permissões</a>*@
+        </div>
+    </div>
+</li>
+                    }
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Consultas
+</div>
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.AlertasAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando alertas...');" href="@Url.Content("~/Alerta/")">
+        <i class="fas fa-fw fa-bell"></i>
+        <span>Alertas</span>
+    </a>
+</li>
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.RelatorioAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando relatórios...');" href="@Url.Content("~/Relatorio/Index")">
+        <i class="fas fa-fw fa-file-signature"></i>
+        <span>Relatórios</span>
+    </a>
+</li>
+
+<li class="nav-item @ViewBag.Grafico">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesGraficos" aria-expanded="true" aria-controls="collapsePagesGraficos">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Gráficos</span>
+    </a>
+    <div id="collapsePagesGraficos" class="collapse @ViewBag.GraficoShow" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Dados de Máquina:</h6>
+            <a class="collapse-item @ViewBag.GraficoProducao" onclick="m.g.load('Carregando gráfico de produção...');" href="@Url.Content("~/Grafico/Producao")">Produção</a>
+        </div>
+    </div>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block">
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+

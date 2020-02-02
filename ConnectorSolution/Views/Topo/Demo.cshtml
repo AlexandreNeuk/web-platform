@@ -1,0 +1,186 @@
+﻿<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+    <!-- Topbar Search -->
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append" style="height: 34px;">
+                <button class="btn btn-primary" style="height: 38px !important;" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+        <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+            </a>
+            <!-- Dropdown - Messages -->
+            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+
+        @if (Session["cd_empresa"].ToString().Equals("10"))
+        {
+
+        }
+        else
+        {
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-bell fa-fw"></i>
+                    <!-- Counter - Alerts -->
+                    <span class="badge badge-danger badge-counter">4+</span>
+                </a>
+                <!-- Dropdown - Alerts -->
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                    <h6 class="dropdown-header">
+                        Central de Alertas
+                    </h6>
+
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="mr-3">
+                            <div class="icon-circle bg-danger">
+                                <i class="fas fa-danger text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">31/07/2019 - 08:45</div>
+                            <span class="font-weight-bold">Extrusora Carnevalli 60mm - Temperatura acima de 90 Cº</span>
+                        </div>
+                    </a>
+
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="mr-3">
+                            <div class="icon-circle bg-danger">
+                                <i class="fas fa-danger text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">31/07/2019 - 02:45</div>
+                            <span class="font-weight-bold">Extrusora Carnevalli 60mm - Pressão acima de 20 bares</span>
+                        </div>
+                    </a>
+
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="mr-3">
+                            <div class="icon-circle bg-danger">
+                                <i class="fas fa-danger text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">30/07/2019 - 22:50</div>
+                            <span class="font-weight-bold">Injetora Phoenix - Pressão acima de 8 bares</span>
+                        </div>
+                    </a>
+
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="mr-3">
+                            <div class="icon-circle bg-warning">
+                                <i class="fas fa-exclamation-triangle text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">29/07/2019 - 20:35</div>
+                            <span class="font-weight-bold">Injetora EKII 4000T - Temperatura acima de 60 Cº</span>
+                        </div>
+                    </a>
+                    <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar Todos Alertas</a>
+                </div>
+            </li>
+        }
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if (Session["nome_usuario"] != null)
+                {
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Session["nome_usuario"].ToString()</span>
+                    if (Session["cd_empresa"] != null && Session["cd_empresa"].ToString().Equals("1"))
+                    {
+                        <img class="img-profile rounded-circle" src="~/img/profile.jfif">
+                    }
+                    else
+                    {
+                        if (Session["cd_empresa"].ToString().Equals("10"))
+                        {
+                            <img class="img-profile rounded-circle" src="~/img/profile.jfif">
+                        }
+                        else
+                        {
+                            <img class="img-profile rounded-circle" src="~/img/images.jfif">
+                        }
+                    }
+                }
+                else
+                {
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                    <img class="img-profile rounded-circle">
+                }
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                @if (Session != null && Session["tipo_empresa"] != null && Convert.ToInt32(Session["tipo_empresa"]) == 1)
+                {
+                    if (Session["cd_tipo"].ToString().Equals("2"))
+                    {
+                        <a class="dropdown-item" onclick="m.g.load('Carregando usuários...');" href="@Url.Content("~/Usuario/Index")">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Usuários
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a class="dropdown-item" onclick="m.g.load('Carregando perfil...');" href="@Url.Content("~/Perfil/Index")">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Perfil
+                    </a>
+                }
+
+                @*<a class="dropdown-item" href="#">
+                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Configurações
+                    </a>*@
+
+                @if (Session["cd_empresa"].ToString().Equals("10"))
+                {
+
+                }
+                else
+                {
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" onclick="m.g.load('Carregando log de atividades...');" href="@Url.Content("~/LogAtividade/Index")">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Log de Atividade
+                    </a>
+                }
+
+
+                @*<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onclick="$('#logoutModal').modal('show');">*@
+                <a class="dropdown-item" href="#" onclick="m.sessao.logout()">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Sair
+                </a>
+
+            </div>
+        </li>
+    </ul>
+</nav>

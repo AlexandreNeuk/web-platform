@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Gramadosummit";
+}
+
+<!-- Sidebar - Brand -->
+<a href="~/Home/Dashboard" class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <img class="img-profile" src="~/img/summit-icon.svg" height="32" width="32">
+</a>
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.DashboardAtivo">
+    <a class="nav-link" href="~/Home/DashGramado" onclick="m.g.load('Carregando painel principal...');">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Painel Principal</span>
+    </a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.MapaCalorAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando mapa de calor...');" href="@Url.Content("~/Gramado/Mapacalor/")">
+        <i class="fas fa-fw fa-map"></i>
+        <span>Mapa de Calor</span>
+    </a>
+</li>
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.BubleplotAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando gráfico de bolhas...');" href="@Url.Content("~/Gramado/Bubleplot/")">
+        <i class="fas fa-fw fa-adjust"></i>
+        <span>Gráfico de Bolhas</span>
+    </a>
+</li>
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.SeriestAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando gráfico de séries...');" href="@Url.Content("~/Gramado/Series/")">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Gráfico de Séries</span>
+    </a>
+</li>
+
+                    if (Session["cd_tipo"].ToString().Equals("2"))
+                    {
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item @ViewBag.GeralUsuariosAtivo">
+    <a class="nav-link" onclick="m.g.load('Carregando usuários...');" href="@Url.Content("~/Usuario/Index")">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Usuários</span>
+    </a>
+</li>
+                    }
+
