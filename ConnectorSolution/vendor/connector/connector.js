@@ -2134,6 +2134,7 @@
                     m.pressao.load = m.g.load('Carregando gráfico pressão...');
                     //
                     $.ajax({
+                        //RelatorioTemperatura
                         url: m.g.rsvlurl('Grafico/PressaoMaquina') + '?lista_ids=' + m.pressao.list_ids +
                             '&periodo=' + d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id,
                         type: "post",
@@ -2499,6 +2500,165 @@
                     }
                 })
             },
+            temperatura: function () {
+                //
+                var maquina = document.getElementById('slmaquinas').value;
+                //
+                m.grafico.l = m.g.load('Carregando gráfico comparativo...');
+                var e = document.getElementById("slmaquinas");
+                $.get(m.g.rsvlurl('Grafico/GraficoPresTempProd') + '?idmaquina=' + e.options[e.selectedIndex].id + '&periodo=' + $('input[name=daterange]')[0].value, function (data) {
+                    //
+                    if (data.data = 'OK') {
+                        //
+                        var dados_temp = [];
+                        var dados_pres = [];
+                        var dados_prod = [];
+                        //
+                        try {
+                            for (var i = 0; i < data.lista_temperatura[0].length; i++) {
+                                dados_temp.push(parseFloat(data.lista_temperatura[0][i].replace(',', '.')));
+                                dados_pres.push(parseFloat(data.lista_pressao[0][i].replace(',', '.')));
+                                dados_prod.push(parseFloat(data.lista_producao[0][i]));
+                            }
+                            //
+                            var labels = data.lista_labels.reverse();
+                            dados_temp = dados_temp.reverse();
+                            dados_pres = dados_pres.reverse();
+                            dados_prod = dados_prod.reverse();
+                            //
+                            Highcharts.chart('container', {
+                                chart: {
+                                    zoomType: 'xy'
+                                },
+                                title: {
+                                    text: 'Variação de Temperatura, Pressão e Produção: ' + maquina,
+                                    align: 'left'
+                                },
+                                xAxis: [{
+                                    categories: labels,
+                                    crosshair: true
+                                }],
+                                yAxis: [{ // Primary yAxis
+                                    labels: {
+                                        format: '{value}°C',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[2]
+                                        }
+                                    },
+                                    title: {
+                                        text: 'Temeratura',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[2]
+                                        }
+                                    },
+                                    opposite: true
+
+                                }, { // Secondary yAxis
+                                    gridLineWidth: 0,
+                                    title: {
+                                        text: 'Pressão',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[1]
+                                        }
+                                    },
+                                    labels: {
+                                        format: '{value} bar',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[1]
+                                        }
+                                    }
+                                }, { // Tertiary yAxis
+                                    gridLineWidth: 0,
+                                    title: {
+                                        text: 'Produção',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[0]
+                                        }
+                                    },
+                                    labels: {
+                                        format: '{value} ciclos',
+                                        style: {
+                                            color: Highcharts.getOptions().colors[0]
+                                        }
+                                    },
+                                    opposite: true
+                                }],
+                                tooltip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'left',
+                                    x: 80,
+                                    verticalAlign: 'top',
+                                    y: 55,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || // theme
+                                        'rgba(255,255,255,0.25)'
+                                },
+                                series: [{
+                                    name: 'Produção',
+                                    type: 'column',
+                                    yAxis: 2,
+                                    data: dados_prod,
+                                    tooltip: {
+                                        valueSuffix: ' ciclos'
+                                    }
+
+                                }, {
+                                    name: 'Pressão',
+                                    type: 'spline',
+                                    yAxis: 1,
+                                    data: dados_pres,
+                                    marker: {
+                                        enabled: false
+                                    },
+                                    dashStyle: 'shortdot',
+                                    tooltip: {
+                                        valueSuffix: ' Bar'
+                                    }
+
+                                }, {
+                                    name: 'Temperatura',
+                                    type: 'spline',
+                                    data: dados_temp,
+                                    tooltip: {
+                                        valueSuffix: ' °C'
+                                    }
+                                }],
+                                responsive: {
+                                    rules: [{
+                                        condition: {
+                                            maxWidth: 500
+                                        },
+                                        chartOptions: {
+                                            legend: {
+                                                floating: false,
+                                                layout: 'horizontal',
+                                                align: 'center',
+                                                verticalAlign: 'bottom',
+                                                x: 0,
+                                                y: 0
+                                            }
+                                        }
+                                    }]
+                                }
+                            });
+                            //
+                            $('.highcharts-credits').remove();
+                        } catch (e) {
+
+                        }
+                        //
+                        m.grafico.loadingout();
+                    }
+                    else {
+                        m.grafico.loadingout();
+                        alert('A máquina não possui dados!');
+                    }
+                })
+            },
             loadingout: function () {
                 try { m.grafico.l.out() } catch (e) { }
             }
@@ -2522,7 +2682,7 @@
                     m.relatorio.load = m.g.load('Carregando relatório de máquinas...');
                     //
                     $.ajax({
-                        url: m.g.rsvlurl('relatorio/relatoriomaquina') + '?idempresa=' + m.sessao.cd_empresa_logado + '&lista_ids=' + m.relatorio.list_ids +
+                        url: m.g.rsvlurl('relatorio/RelatorioTemperatura') + '?idempresa=' + m.sessao.cd_empresa_logado + '&lista_ids=' + m.relatorio.list_ids +
                             '&periodo=' + d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id,
                         type: "post",
                         success: function (resp) {
@@ -2535,6 +2695,51 @@
                                 //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
                                 //alert('ok');
                                 
+                            }
+                            else {
+                                $('#msg')[0].innerHTML = 'Ocorreu um erro ao tentar salvar a conta.';
+                                $("#btnModal").click();
+                            }
+                        },
+                        error: function (xhr, error) {
+                            console.log(xhr);
+                            console.log(error);
+                        }
+                    });
+                }
+                else {
+                    m.g.alert('Restriçao', 'Informe a máquina.');
+                }
+            },
+            temperatura_atmosfera: function () {
+                //
+                if ($('#slmaquinasrelatorio').select2('val') && $('#slmaquinasrelatorio').select2('val').length > 0) {
+                    //
+                    for (var i = 0; i < $('#slmaquinasrelatorio').find(':selected').length; i++) {
+                        //
+                        m.relatorio.list_ids.push($('#slmaquinasrelatorio').find(':selected')[i].id);
+                    }
+                    //
+                    m.relatorio.load = m.g.load('Carregando relatório de máquinas...');
+                    //
+                    $.ajax({
+                        url: m.g.rsvlurl('relatorio/RelatorioTemperaturaAtmosfera') +
+                            '?idempresa=' + m.sessao.cd_empresa_logado +
+                            '&lista_ids=' + m.relatorio.list_ids +
+                            '&periodo=' + $('input[name=daterange]')[0].value + 
+                            '&horaini=' + d.getid("hrinicial").value + 
+                            '&horafim=' + d.getid("hrfinal").value,
+                        type: "post",
+                        success: function (resp) {
+                            //
+                            m.relatorio.load.out();
+                            //
+                            if (resp && resp.sreult == 'ok') {
+                                //
+                                document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/Relat%C3%B3rio_M%C3%A1quinas31-07-2019_01-59-24_.pdf'
+                                //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
+                                //alert('ok');
+
                             }
                             else {
                                 $('#msg')[0].innerHTML = 'Ocorreu um erro ao tentar salvar a conta.';
