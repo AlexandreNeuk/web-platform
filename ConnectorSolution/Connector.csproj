@@ -68,6 +68,7 @@
     <Reference Include="MqttLib">
       <HintPath>..\..\..\..\Downloads\MqttDotNet-master (1)\MqttDotNet-master\MqttLib\bin\Debug\MqttLib.dll</HintPath>
     </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>

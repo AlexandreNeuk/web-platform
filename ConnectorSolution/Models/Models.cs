@@ -138,6 +138,9 @@ namespace Connector.Models
         public string NomeFantasia { get; set; }
         public string Email { get; set; }
         public string Bairro { get; set; }
+        public string NomeMaquina { get; set; }
+        public string Periodo { get; set; }
+        public Byte[] Imagem { get; set; }
     }
 
     public class GatewayModel

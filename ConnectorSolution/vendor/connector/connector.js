@@ -2341,6 +2341,299 @@
             grafico: null,
             load: null,
             list_ids: [],
+            reportTempAtmos: function (maquinas, periodo) {
+                let strBase64 = _m.grafico.grafico.toBase64Image();
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", m.g.rsvlurl('relatorio/RelatorioTemperaturaAtmosfera'), true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function () { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        // Request finished. Do processing here.
+                        document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/' + JSON.parse(this.responseText).relatorio
+                    }
+                }
+                xhr.send('idempresa=' + m.sessao.cd_empresa_logado + '&strimage1=' + strBase64 + '&periodo=' + periodo + '&maquinas=' + maquinas);
+            },
+            grafico_temperatura_report: function (lista_dados, lista_labels, maquinas, periodo) {
+                //
+                _m.grafico.grafico = new Chart(document.getElementById("idcanvastempreport"), {
+                    type: 'line',
+                    data: {
+                        labels: lista_labels,
+                        datasets: [{
+                            data: lista_dados,
+                            label: "Africa",
+                            borderColor: "#3e95cd",
+                            fill: false
+                        }
+                        //    , {
+                        //    data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
+                        //    label: "Asia",
+                        //    borderColor: "#8e5ea2",
+                        //    fill: false
+                        //}, {
+                        //    data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
+                        //    label: "Europe",
+                        //    borderColor: "#3cba9f",
+                        //    fill: false
+                        //}, {
+                        //    data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
+                        //    label: "Latin America",
+                        //    borderColor: "#e8c3b9",
+                        //    fill: false
+                        //}, {
+                        //    data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
+                        //    label: "North America",
+                        //    borderColor: "#c45850",
+                        //    fill: false
+                        //}
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'World population per region (in millions)'
+                        },
+                        animation: {
+                            onComplete: function () {
+                                _m.grafico.reportTempAtmos(maquinas, periodo)
+                            }
+                        },
+                        chartArea: {
+                            backgroundColor: 'rgba(251, 85, 85, 0.4)'
+                        }
+                    }
+                });
+                
+
+                /*
+                console.log(strBase64);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", m.g.rsvlurl('relatorio/RelatorioTemperaturaAtmosfera'), true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function () { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        // Request finished. Do processing here.
+                    }
+                }
+                xhr.send('idempresa=' + m.sessao.cd_empresa_logado + '&strimage1=' + strBase64);
+                */
+                /*
+                let strBase64 = myChart.toBase64Image();
+               // let blob = _m.grafico.makeblob(strBase64);
+                let img1 = strBase64.substring(0, (strBase64.length / 2))
+                let img2 = strBase64.substring((strBase64.length / 2), strBase64.length)
+                //
+
+                //
+                */
+                /*
+                $.ajax({
+                    url: m.g.rsvlurl('relatorio/RelatorioTemperaturaAtmosfera') + '?idempresa=' + m.sessao.cd_empresa_logado + '&strimage1=' + img1 + '&strimage2=' + img2,
+                    processData: false,
+                    contentType: 'application/octet-stream',
+                    type: "POST",
+                    success: function (resp) {
+                        //
+                        m.relatorio.load.out();
+                        //
+                        if (resp && resp.sreult == 'ok') {
+                            //
+                            _m.grafico.grafico_temperatura_report(xaxys, yaxys, label);
+                            //document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/' + resp.result.data
+                            report = JSON.parse(resp.result).data;
+                            document.getElementById('idframerelmaquina').src = location.href + "/Temp/" + report;
+
+
+                        }
+                        else {
+                            $('#msg')[0].innerHTML = 'Ocorreu um erro ao tentar salvar a conta.';
+                            $("#btnModal").click();
+                        }
+                    },
+                    error: function (xhr, error) {
+                        console.log('ERRO ', error)
+                    }
+                });
+                */
+
+                /*
+                m.pressao.load.out();
+                // Set new default font family and font color to mimic Bootstrap's default styling
+                Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                Chart.defaults.global.defaultFontColor = '#858796';
+
+                // Area Chart Example
+                var ctx = d.getid("idcanvastempreport");
+                if (m.pressao.grafico) {
+                    m.pressao.grafico.destroy();
+                }
+                //
+                lista_dados = [];
+                //
+                if (tipo != '5') {
+                    for (var i = 0; i < m.pressao.list_ids.length; i++) {
+                        lista_dados[i] = [12];
+                        //
+                        switch (tipo) {
+
+                            case '1':
+                                break;
+                        }
+
+                        if (m.pressao.list_ids[i] == '57') { // Injetora Magna 2000T
+                            lista_dados[i] = [448, 225, 319, 524, 575, 252, 399, 335, 518, 457, 464, 527];
+                        }
+                        else if (m.pressao.list_ids[i] == '58') { // Injetora Phoenix 3000T
+                            lista_dados[i] = [532, 358, 477, 349, 387, 433, 250, 339, 434, 329, 402, 433];
+                        }
+                        else if (m.pressao.list_ids[i] == '59') { // Extrusora Carnevalli 60mm
+                            lista_dados[i] = [447, 606, 743, 469, 790, 530, 550, 644, 767, 607, 698, 600];
+                        }
+                        else if (m.pressao.list_ids[i] == '60') { // Injetora EKII 4000T
+                            lista_dados[i] = [649, 451, 604, 517, 596, 655, 641, 641, 485, 615, 661, 694];
+                        }
+                        else if (m.pressao.list_ids[i] == '61') { // Enchedoras Tribloco
+                            lista_dados[i] = [406, 388, 425, 275, 489, 255, 270, 441, 237, 2145, 268, 409];
+                        }
+                        else if (m.pressao.list_ids[i] == '62') { // Tribloco Automática Carbo L 500
+                            lista_dados[i] = [283, 439, 279, 364, 278, 318, 373, 407, 435, 316, 221, 482];
+                        }
+                    }
+                }
+                //
+                if (lista_dados) {
+                    //
+                    lista_labels = lista_labels.reverse();
+                    let graph = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            //labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],   // aunal
+                            //labels: ["Sexta", "Sabado", "Domingo", "Segunda-Feira", "Terca-Feira", "Quarta-Feira", "Quinta-Feira"],                                  // semanal
+                            //labels: ["19:00", "21:00", "22:00", "00:00", "02:00", "05:00", "07:00", "09:00", "11:00", "13:00", "15:00", "17:00"],                    // diário
+                            //labels: lista_labels.reverse(),
+                            labels: lista_labels,
+                            datasets: []
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 25,
+                                    top: 25,
+                                    bottom: 0
+                                }
+                            },
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'date'
+                                    },
+                                    gridLines: {
+                                        display: false,
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 7
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        maxTicksLimit: 5,
+                                        padding: 10,
+                                        // Include a dollar sign in the ticks
+                                        callback: function (value, index, values) {
+                                            return 'Bar ' + m.g.number_format(value);
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "rgb(234, 236, 244)",
+                                        zeroLineColor: "rgb(234, 236, 244)",
+                                        drawBorder: false,
+                                        borderDash: [2],
+                                        zeroLineBorderDash: [2]
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: true
+                            },
+                            tooltips: {
+                                backgroundColor: "rgb(255,255,255)",
+                                bodyFontColor: "#858796",
+                                titleMarginBottom: 10,
+                                titleFontColor: '#6e707e',
+                                titleFontSize: 14,
+                                borderColor: '#dddfeb',
+                                borderWidth: 1,
+                                xPadding: 15,
+                                yPadding: 15,
+                                displayColors: false,
+                                intersect: false,
+                                mode: 'index',
+                                caretPadding: 10,
+                                callbacks: {
+                                    label: function (tooltipItem, chart) {
+                                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                        return datasetLabel + ': ' + m.g.number_format(tooltipItem.yLabel) + ' Bar';
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    //
+                    for (var i = 0; i < lista_dados.length; i++) {
+                        //
+                        if (!lista_dados[i][i]) {
+                            //
+                            for (var j = 0; j < lista_dados[i][j].length; i++) {
+                                //
+                                lista_dados[i][j] = '0';
+                            }
+                        }
+                        var rgba = 'rgba(' + m.g.rgba_graph()[i] + ')';
+                        if (d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id == 5) {
+                            lista_dados[i] = lista_dados[i].reverse();
+                        }
+                        //
+                        m.pressao.grafico.data.datasets.push({
+                            label: $('#slpressao').select2('val')[i],
+                            lineTension: 0.3,
+                            backgroundColor: "rgba(0,0,0,0.01)",
+                            //borderColor: "rgba(78, 115, 223, 1)",
+                            borderColor: rgba,
+                            pointRadius: 3,
+                            //pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                            pointBackgroundColor: rgba,
+                            //pointBorderColor: "rgba(78, 115, 223, 1)",
+                            pointBorderColor: rgba,
+                            pointHoverRadius: 3,
+                            //pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                            pointHoverBackgroundColor: rgba,
+                            //pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                            pointHoverBorderColor: rgba,
+                            pointHitRadius: 10,
+                            pointBorderWidth: 2,
+                            //data: [1400, 1450, 2000, 2200, 2800, 2200, 2100, 2600, 1500, 1100, 1200, 2000] // diario
+                            //data: [1400, 1450, 2000, 2200, 2800, 2200, 2100]                               // semanal
+                            //data: [1400, 1450, 2000, 2200, 2800, 2200, 2100, 2600, 1500, 1100, 1200, 2000] // anual
+                            data: lista_dados[i]  // mensal
+                        });
+                    }
+                    //
+                    m.pressao.grafico.update();
+                    m.pressao.list_ids = [];
+                    */
+                
+            },
             prestempprod: function () {
                 //
                 var maquina = document.getElementById('slmaquinas').value;
@@ -2687,7 +2980,7 @@
                         type: "post",
                         success: function (resp) {
                             //
-                            m.relatorio.load.out();
+                            
                             //
                             if (resp && resp.sreult == 'ok') {
                                 //
@@ -2702,8 +2995,10 @@
                             }
                         },
                         error: function (xhr, error) {
-                            console.log(xhr);
-                            console.log(error);
+                            //
+                            //console.log(xhr);
+                            //console.log(error);
+
                         }
                     });
                 }
@@ -2723,20 +3018,30 @@
                     m.relatorio.load = m.g.load('Carregando relatório de máquinas...');
                     //
                     $.ajax({
-                        url: m.g.rsvlurl('relatorio/RelatorioTemperaturaAtmosfera') +
+                        url: m.g.rsvlurl('relatorio/RelatorioTemperaturaGetDados') +
                             '?idempresa=' + m.sessao.cd_empresa_logado +
                             '&lista_ids=' + m.relatorio.list_ids +
                             '&periodo=' + $('input[name=daterange]')[0].value + 
                             '&horaini=' + d.getid("hrinicial").value + 
                             '&horafim=' + d.getid("hrfinal").value,
                         type: "post",
+                        //contentType: "application/json",
+                        //dataType: 'text',
                         success: function (resp) {
                             //
                             m.relatorio.load.out();
                             //
-                            if (resp && resp.sreult == 'ok') {
+                            m.relatorio.list_ids = []
+                            if (resp && resp.data == 'OK') {
                                 //
-                                document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/Relat%C3%B3rio_M%C3%A1quinas31-07-2019_01-59-24_.pdf'
+                                let yaxys = resp.dados[0][0];
+                                let xaxys = resp.dados[0][1];
+                                let label = resp.dados[0][2];
+                                console.log('per', resp.periodo)
+                                _m.grafico.grafico_temperatura_report(xaxys, yaxys, resp.maquinas, resp.periodo);
+                                //document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/' + resp.result.data
+                                //report = JSON.parse(resp.result).data;
+                                //document.getElementById('idframerelmaquina').src = location.href + "/Temp/" + report;
                                 //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
                                 //alert('ok');
 
@@ -2747,8 +3052,7 @@
                             }
                         },
                         error: function (xhr, error) {
-                            console.log(xhr);
-                            console.log(error);
+                            m.relatorio.list_ids = []
                         }
                     });
                 }
