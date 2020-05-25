@@ -48,5 +48,8 @@ namespace Connector.Models
         public DbSet<Processo> Processo { get; set; }
         public DbSet<Programa> Programa { get; set; }
         public DbSet<TipoProcesso> TipoProcesso { get; set; }
+        public DbSet<Receita> Receita { get; set; }
+        public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
+        public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
     }
 }

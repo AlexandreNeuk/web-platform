@@ -2980,14 +2980,14 @@
                         type: "post",
                         success: function (resp) {
                             //
-                            
+
                             //
                             if (resp && resp.sreult == 'ok') {
                                 //
                                 document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/Relat%C3%B3rio_M%C3%A1quinas31-07-2019_01-59-24_.pdf'
                                 //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
                                 //alert('ok');
-                                
+
                             }
                             else {
                                 $('#msg')[0].innerHTML = 'Ocorreu um erro ao tentar salvar a conta.';

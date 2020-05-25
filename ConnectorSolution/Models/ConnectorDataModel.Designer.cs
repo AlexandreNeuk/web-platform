@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Alexandre\OneDrive\Documentos\connector_app\ConnectorSolution\Models\ConnectorDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Alexandre\Documents\Git\connector\PlataformaWeb\ConnectorSolution\Models\ConnectorDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

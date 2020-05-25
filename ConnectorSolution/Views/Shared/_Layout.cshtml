@@ -63,7 +63,7 @@
 
     @if (Session != null && Session["logado"] != null && Session["logado"].ToString().Equals("1"))
     {
-    <div id="wrapper">
+        <div id="wrapper">
         <!-- Menu lateral -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" style="z-index: 1;" id="accordionSidebar">
             @if (Session["cd_empresa"].ToString().Equals("10"))
@@ -74,7 +74,7 @@
             {
                 @Html.Partial("../Menulateral/Tecnohard")
             }
-            else if (Session["cd_empresa"].ToString().Equals("17"))
+            else if (Session["cd_empresa"].ToString().Equals("5"))
             {
                 @Html.Partial("../Menulateral/Inequil")
             }

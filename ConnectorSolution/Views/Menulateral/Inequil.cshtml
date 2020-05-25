@@ -3,6 +3,10 @@
     ViewBag.Title = "Inequil";
 }
 
+<a href = "~/Home/Dashboard" class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+<img class="img-profile" src="~/img/logo.png" height="45" width="160">
+</a>
+
 <hr class="sidebar-divider my-0">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item @ViewBag.DashboardAtivo">
@@ -29,7 +33,7 @@
             <a class="collapse-item @ViewBag.FabricaMaquinaAtivo" onclick="m.g.load('Carregando máquinas...');" href="@Url.Content("~/Maquina/Index")">Máquinas</a>
             @*<a class="collapse-item @ViewBag.FabricaProgramacaoMaquinaAtivo" onclick="m.g.load('Carregando progrmação de máquinas');" href="@Url.Content("~/TabelaMaquinaHorario/Index")">Programação Máquinas</a>*@
             <a class="collapse-item @ViewBag.FabricaColetorAtivo" onclick="m.g.load('Carregando coletores...');" href="@Url.Content("~/Coletor/Index")">Coletores</a>
-            <a class="collapse-item @ViewBag.FabricaProgramaAtivo" onclick="m.g.load('Carregando programas...');" href="@Url.Content("~/Programa/Index")">Programas</a>
+            <a class="collapse-item @ViewBag.FabricaProgramaAtivo" onclick="m.g.load('Carregando receitas...');" href="@Url.Content("~/Receita/Index")">Receitas</a>
             <a class="collapse-item @ViewBag.FabricaTipoAlertaAtivo" onclick="m.g.load('Carregando tipos de alertas...');" href="@Url.Content("~/TipoAlerta/Index")">Tipo Alerta</a>
         </div>
     </div>

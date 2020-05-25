@@ -189,6 +189,7 @@
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PermissaoController.cs" />
     <Compile Include="Controllers\ProgramaController.cs" />
+    <Compile Include="Controllers\ReceitaController.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Controllers\RequisicaoController.cs" />
     <Compile Include="Controllers\SQLController.cs" />
@@ -269,6 +270,15 @@
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Programa.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Receita.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceitaPassoCentrifugacao.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceitaPassoLavagem.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Setor.cs">
@@ -2329,6 +2339,7 @@
     <Content Include="Views\Topo\Tecnohard.cshtml" />
     <Content Include="Views\Grafico\Atmosfera.cshtml" />
     <Content Include="Views\Relatorio\Temperatura.cshtml" />
+    <Content Include="Views\Receita\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
