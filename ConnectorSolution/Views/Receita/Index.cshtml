@@ -1,7 +1,174 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Coletor";
 }
 
-<h2>Index</h2>
 
+<link href="@Url.Content("~/vendor/datatables/js/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Coletores</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button class="btn btn-primary" onclick="m.receita.setcoletorinclui()">
+                Incluir
+            </button>
+            <button class="btn btn-primary" onclick="m.receita.editcoletor()">
+                Editar
+            </button>
+            <button class="btn btn-primary" onclick="m.receita.exclui()">
+                Excluir
+            </button>
+            <button class="btn btn-primary" onclick="m.receita.copia()">
+                Copiar
+            </button>
+        </div>
+        <div class="card-body">
+
+            <!-- Modal Novo/Edita Coletor -->
+            <div class="modal fade" id="idreceitamodal" tabindex="-1" role="dialog" aria-labelledby="modalColetorLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content-insert-alerta">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalColetorLabel"></h4>
+                        </div>
+                            <div class="form-group-insert-alerta">
+                                <label>Empresa:</label>
+                                <select class="form-control" id="slempresacoletor">
+                                    @if (ViewBag.ListaEmpresas != null)
+                                    {
+                                        foreach (var item in ViewBag.ListaEmpresas)
+                                        {
+                                            if (item != null)
+                                            {
+                                                <option id="@item.Id">@item.Nome</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group-insert-alerta">
+                                <label>Descrição da Receita</label>
+                                <input id="txtdescreceita" class="form-control">
+                            </div>
+                            
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick="m.receita.salva();" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+            <!-- Modal Nova/Edita Regra -->
+            <div class="modal fade" id="idalertamodal" tabindex="-1" role="dialog" aria-hidden="true">
+	            <div class="modal-dialog modal-dialog-centered">
+		            <div class="modal-content">
+			            <div class="modal-header">
+				            <h4 class="modal-title" id="modalalertatituloLabel"></h4>
+			            </div>
+				            <div class="form-group-insert-alerta">
+					            <label>Tipo:</label>
+					            <select class="form-control" id="slalertatipo">
+					            </select>
+				            </div>
+				
+				            <div class="form-group-insert-alerta">
+					            <label>Regra:</label>
+					            <select class="form-control" id="slalertaregra">
+						            <option id="1">Maior ></option>
+						            <option id="2">Menor <</option>
+						            <option id="3">Igual =</option>
+						            <option id="4">Maior ou Igual >=</option>
+						            <option id="5">Menor ou Igual <=</option>
+					            </select>
+				            </div>
+				
+				            <div class="form-group-insert-alerta">
+					            <label>Valor:</label>
+					            <input type="number" id="txtalertavalor" class="form-control">
+				            </div>
+
+				            <div class="form-group-insert-alerta">
+					            <label>Email:</label>
+					            <input id="txtalertaemail" class="form-control">
+				            </div>
+				
+				            <div class="form-group-insert-alerta">
+					            <label>Ativa:</label>
+					            <select class="form-control" style="margin-bottom: 1rem !important;" id="slalertaativo">
+						            <option id="1">Sim</option>
+						            <option id="0">Não</option>
+					            </select>
+				            </div>
+			            <div class="modal-footer">
+				            <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Cancelar</button>
+				            <button type="button" onclick="m.coletor.novoalertasalva();" class="btn btn-primary">Salvar</button>
+			            </div>
+		            </div>
+		            <!-- /.modal-content -->
+	            </div>
+	            <!-- /.modal-dialog -->
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered"
+                       id="dtreceitas"
+                       data-pagination="true"
+                       data-search="true"
+                       data-click-to-select="true"
+                       data-pagination-h-align="left"
+                       data-pagination-detail-h-align="right"
+                       cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true"></th>                            
+                            <th data-field="Id">Id</th>
+                            <th data-field="Descricao">Descrição</th>
+                            <th data-field="TotalPassos">Total Passos</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="excluiColetorModal" tabindex="-1" role="dialog" aria-labelledby="modalColetorExcluiLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalColetorExcluiLabel"></h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label>Você deseja excluir o coletor do sistema?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Não</button>
+                <button type="button" onclick="m.coletor.excluipost();" class="btn btn-danger">Sim</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<link href="@Url.Content("~/vendor/datatables/bootstrap-table.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/vendor/datatables/bootstrap-table.min.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        m.receita.init(@Html.Raw(Json.Encode(ViewBag.ListaReceitas)));
+    });
+</script>

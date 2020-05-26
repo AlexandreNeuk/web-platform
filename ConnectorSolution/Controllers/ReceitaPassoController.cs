@@ -1,13 +1,14 @@
 ﻿using Connector.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Connector.Controllers
 {
-    public class ReceitaController : BaseController
+    public class ReceitaPassoController : BaseController
     {
         // GET: ReceitaPasso
         public ActionResult Index()
@@ -16,7 +17,7 @@ namespace Connector.Controllers
             ViewBag.FabricaAtivo = "active";
             ViewBag.FabricaReceitaAtivo = "active";
             ViewBag.FabricaShow = "show";
-            ViewBag.ListaReceitas = CarregaDadosReceitas();
+            ViewBag.ListaReceitasPasso = CarregaDadosReceitas();
             ViewBag.ListaEmpresas = PegaEmpresas();
             return View();
         }
@@ -69,7 +70,7 @@ namespace Connector.Controllers
                     if (oReceita != null)
                     {
                         oReceita.Descricao = descricao;
-                        db.Entry(oReceita).State = System.Data.EntityState.Modified;
+                        db.Entry(oReceita).State = EntityState.Modified;
                         db.SaveChanges();
                     }
                     else

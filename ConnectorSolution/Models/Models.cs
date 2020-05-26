@@ -70,6 +70,17 @@ namespace Connector.Models
         public DateTime DataHora { get; set; }
     }
 
+    public class ReceitaModel
+    {
+        public int Id { get; set; }
+        public Nullable<int> Id_Maquina { get; set; }
+        public Nullable<int> Id_Empresa { get; set; }
+        public string Descricao { get; set; }
+        public string Resumo { get; set; }
+        public int TotalPassos { get; set; }
+        public Nullable<bool> Ativo { get; set; }
+    }
+
     public class ColetorModel
     {
         public int Id { get; set; }

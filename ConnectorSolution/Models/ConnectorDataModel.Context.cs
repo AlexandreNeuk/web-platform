@@ -42,13 +42,10 @@ namespace Connector.Models
         public DbSet<Gateway> Gateway { get; set; }
         public DbSet<LogAtividade> LogAtividade { get; set; }
         public DbSet<MaquinaHorario> MaquinaHorario { get; set; }
+        public DbSet<Setor> Setor { get; set; }
+        public DbSet<Site_Mensagem> Site_Mensagem { get; set; }
         public DbSet<Receita> Receita { get; set; }
         public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
         public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
-        public DbSet<Setor> Setor { get; set; }
-        public DbSet<Site_Acesso> Site_Acesso { get; set; }
-        public DbSet<Site_Mensagem> Site_Mensagem { get; set; }
-        public DbSet<Site_NewsLetter> Site_NewsLetter { get; set; }
-        public DbSet<Site_Proposta> Site_Proposta { get; set; }
     }
 }

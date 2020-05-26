@@ -107,13 +107,6 @@ warning 6002: The table/view 'inequil.dbo.ColetorTemperaturaHistorico' does not 
           <Property Name="Ativo" Type="bit" />
           <Property Name="Tipo" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'inequil.dbo.ColetorTopicoLog' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ColetorTopicoLog">
-          <Property Name="Id_ColetorTopico" Type="nchar" MaxLength="3" />
-          <Property Name="DataHora" Type="nchar" MaxLength="50" />
-          <Property Name="Valor" Type="nchar" MaxLength="400" />
-        </EntityType>-->
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="Id" />
@@ -197,8 +190,6 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
           <Property Name="DataHoraInicio" Type="datetime" />
           <Property Name="DataHoraFim" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Receita' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Receita">
           <Key>
             <PropertyRef Name="Id" />
@@ -210,12 +201,9 @@ warning 6002: The table/view 'inequil.dbo.Receita' does not have a primary key d
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
           <Property Name="Ativo" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.ReceitaPassoCentrifugacao' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReceitaPassoCentrifugacao">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Id_Receita" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Receita" Type="int" Nullable="false" />
@@ -233,12 +221,9 @@ warning 6002: The table/view 'inequil.dbo.ReceitaPassoCentrifugacao' does not ha
           <Property Name="Tempo5" Type="varchar" MaxLength="3" />
           <Property Name="Ativo" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.ReceitaPassoLavagem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReceitaPassoLavagem">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Id_Receita" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Receita" Type="int" Nullable="false" />
@@ -280,18 +265,6 @@ warning 6002: The table/view 'inequil.dbo.Setor' does not have a primary key def
           <Property Name="Id_Unidade" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Site_Acesso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Site_Acesso">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="IP" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="IP" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="DataHora" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'inequil.dbo.Site_Mensagem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Site_Mensagem">
           <Key>
@@ -307,38 +280,6 @@ warning 6002: The table/view 'inequil.dbo.Site_Mensagem' does not have a primary
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Assunto" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="DataHora" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Site_NewsLetter' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Site_NewsLetter">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="DataHora" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Site_Proposta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Site_Proposta">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Nome" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Empresa" />
-            <PropertyRef Name="Telefone" />
-            <PropertyRef Name="Proposta" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Empresa" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Telefone" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Proposta" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="DataHora" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidade">
@@ -587,6 +528,9 @@ warning 6002: The table/view 'inequil.dbo.Site_Proposta' does not have a primary
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Filial" EntityType="Self.Filial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Maquina" EntityType="Self.Maquina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receita" EntityType="Self.Receita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="Self.ReceitaPassoCentrifugacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceitaPassoLavagem" EntityType="Self.ReceitaPassoLavagem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidade" EntityType="Self.Unidade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioLogin" EntityType="Self.UsuarioLogin" Schema="dbo" store:Type="Tables" />
@@ -662,65 +606,6 @@ FROM [dbo].[LogAtividade] AS [LogAtividade]</DefiningQuery>
 [MaquinaHorario].[DataHoraFim] AS [DataHoraFim]
 FROM [dbo].[MaquinaHorario] AS [MaquinaHorario]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Receita" EntityType="Self.Receita" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Receita].[Id] AS [Id], 
-[Receita].[Id_Maquina] AS [Id_Maquina], 
-[Receita].[Id_Empresa] AS [Id_Empresa], 
-[Receita].[Descricao] AS [Descricao], 
-[Receita].[Resumo] AS [Resumo], 
-[Receita].[Ativo] AS [Ativo]
-FROM [dbo].[Receita] AS [Receita]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="Self.ReceitaPassoCentrifugacao" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ReceitaPassoCentrifugacao].[Id] AS [Id], 
-[ReceitaPassoCentrifugacao].[Id_Receita] AS [Id_Receita], 
-[ReceitaPassoCentrifugacao].[ModoTrabalho] AS [ModoTrabalho], 
-[ReceitaPassoCentrifugacao].[Saida] AS [Saida], 
-[ReceitaPassoCentrifugacao].[Velocidade1] AS [Velocidade1], 
-[ReceitaPassoCentrifugacao].[Tempo1] AS [Tempo1], 
-[ReceitaPassoCentrifugacao].[Velocidade2] AS [Velocidade2], 
-[ReceitaPassoCentrifugacao].[Tempo2] AS [Tempo2], 
-[ReceitaPassoCentrifugacao].[Velocidade3] AS [Velocidade3], 
-[ReceitaPassoCentrifugacao].[Tempo3] AS [Tempo3], 
-[ReceitaPassoCentrifugacao].[Velocidade4] AS [Velocidade4], 
-[ReceitaPassoCentrifugacao].[Tempo4] AS [Tempo4], 
-[ReceitaPassoCentrifugacao].[Velocidade5] AS [Velocidade5], 
-[ReceitaPassoCentrifugacao].[Tempo5] AS [Tempo5], 
-[ReceitaPassoCentrifugacao].[Ativo] AS [Ativo]
-FROM [dbo].[ReceitaPassoCentrifugacao] AS [ReceitaPassoCentrifugacao]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ReceitaPassoLavagem" EntityType="Self.ReceitaPassoLavagem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ReceitaPassoLavagem].[Id] AS [Id], 
-[ReceitaPassoLavagem].[Id_Receita] AS [Id_Receita], 
-[ReceitaPassoLavagem].[ModoTrabalho] AS [ModoTrabalho], 
-[ReceitaPassoLavagem].[TempoOperacao] AS [TempoOperacao], 
-[ReceitaPassoLavagem].[TempoReversao] AS [TempoReversao], 
-[ReceitaPassoLavagem].[RPM] AS [RPM], 
-[ReceitaPassoLavagem].[Temperatura] AS [Temperatura], 
-[ReceitaPassoLavagem].[SemVapor] AS [SemVapor], 
-[ReceitaPassoLavagem].[Entrada] AS [Entrada], 
-[ReceitaPassoLavagem].[Nivel] AS [Nivel], 
-[ReceitaPassoLavagem].[Saida] AS [Saida], 
-[ReceitaPassoLavagem].[ProdutoA] AS [ProdutoA], 
-[ReceitaPassoLavagem].[ValorA] AS [ValorA], 
-[ReceitaPassoLavagem].[ProdutoB] AS [ProdutoB], 
-[ReceitaPassoLavagem].[ValorB] AS [ValorB], 
-[ReceitaPassoLavagem].[ProdutoC] AS [ProdutoC], 
-[ReceitaPassoLavagem].[ValorC] AS [ValorC], 
-[ReceitaPassoLavagem].[ProdutoD] AS [ProdutoD], 
-[ReceitaPassoLavagem].[ValorD] AS [ValorD], 
-[ReceitaPassoLavagem].[ProdutoE] AS [ProdutoE], 
-[ReceitaPassoLavagem].[ValorE] AS [ValorE], 
-[ReceitaPassoLavagem].[ProdutoF] AS [ProdutoF], 
-[ReceitaPassoLavagem].[ValorF] AS [ValorF], 
-[ReceitaPassoLavagem].[ProdutoG] AS [ProdutoG], 
-[ReceitaPassoLavagem].[ValorG] AS [ValorG], 
-[ReceitaPassoLavagem].[Ativo] AS [Ativo]
-FROM [dbo].[ReceitaPassoLavagem] AS [ReceitaPassoLavagem]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="Setor" EntityType="Self.Setor" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [Setor].[Id] AS [Id], 
@@ -728,13 +613,6 @@ FROM [dbo].[ReceitaPassoLavagem] AS [ReceitaPassoLavagem]</DefiningQuery>
 [Setor].[Resumo] AS [Resumo], 
 [Setor].[Id_Unidade] AS [Id_Unidade]
 FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Site_Acesso" EntityType="Self.Site_Acesso" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Site_Acesso].[Id] AS [Id], 
-[Site_Acesso].[IP] AS [IP], 
-[Site_Acesso].[DataHora] AS [DataHora]
-FROM [dbo].[Site_Acesso] AS [Site_Acesso]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Site_Mensagem" EntityType="Self.Site_Mensagem" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -745,24 +623,6 @@ FROM [dbo].[Site_Acesso] AS [Site_Acesso]</DefiningQuery>
 [Site_Mensagem].[Descricao] AS [Descricao], 
 [Site_Mensagem].[DataHora] AS [DataHora]
 FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Site_NewsLetter" EntityType="Self.Site_NewsLetter" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Site_NewsLetter].[Id] AS [Id], 
-[Site_NewsLetter].[Email] AS [Email], 
-[Site_NewsLetter].[DataHora] AS [DataHora]
-FROM [dbo].[Site_NewsLetter] AS [Site_NewsLetter]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Site_Proposta" EntityType="Self.Site_Proposta" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Site_Proposta].[Id] AS [Id], 
-[Site_Proposta].[Nome] AS [Nome], 
-[Site_Proposta].[Email] AS [Email], 
-[Site_Proposta].[Empresa] AS [Empresa], 
-[Site_Proposta].[Telefone] AS [Telefone], 
-[Site_Proposta].[Proposta] AS [Proposta], 
-[Site_Proposta].[DataHora] AS [DataHora]
-FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="ctrain_atividade_empresa" Association="Self.ctrain_atividade_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -855,14 +715,8 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
           <EntitySet Name="Gateway" EntityType="ConnectorModel.Gateway" />
           <EntitySet Name="LogAtividade" EntityType="ConnectorModel.LogAtividade" />
           <EntitySet Name="MaquinaHorario" EntityType="ConnectorModel.MaquinaHorario" />
-          <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
-          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
-          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
           <EntitySet Name="Setor" EntityType="ConnectorModel.Setor" />
-          <EntitySet Name="Site_Acesso" EntityType="ConnectorModel.Site_Acesso" />
           <EntitySet Name="Site_Mensagem" EntityType="ConnectorModel.Site_Mensagem" />
-          <EntitySet Name="Site_NewsLetter" EntityType="ConnectorModel.Site_NewsLetter" />
-          <EntitySet Name="Site_Proposta" EntityType="ConnectorModel.Site_Proposta" />
           <AssociationSet Name="ctrain_coletor_alerta" Association="ConnectorModel.ctrain_coletor_alerta">
             <End Role="Coletor" EntitySet="Coletor" />
             <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
@@ -931,6 +785,9 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioLogin" EntitySet="UsuarioLogin" />
           </AssociationSet>
+          <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
+          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
+          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
         </EntityContainer>
         <EntityType Name="Coletor">
           <Key>
@@ -1168,70 +1025,6 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
           <Property Name="DataHoraFim" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Maquina" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="MaquinaHorario" ToRole="Maquina" />
         </EntityType>
-        <EntityType Name="Receita">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Id_Maquina" Type="Int32" />
-          <Property Name="Id_Empresa" Type="Int32" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="ReceitaPassoCentrifugacao">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Id_Receita" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Id_Receita" Type="Int32" Nullable="false" />
-          <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Saida" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Velocidade1" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Tempo1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Velocidade2" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Tempo2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Velocidade3" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Tempo3" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Velocidade4" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Tempo4" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Velocidade5" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Tempo5" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Int32" />
-        </EntityType>
-        <EntityType Name="ReceitaPassoLavagem">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Id_Receita" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Id_Receita" Type="Int32" Nullable="false" />
-          <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="TempoOperacao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="TempoReversao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="RPM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Temperatura" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="SemVapor" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Entrada" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Nivel" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Saida" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoA" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoB" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorB" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoC" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoD" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorD" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoE" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoF" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorF" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoG" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorG" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Int32" />
-        </EntityType>
         <EntityType Name="Setor">
           <Key>
             <PropertyRef Name="Id" />
@@ -1241,16 +1034,6 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
           <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Id_Unidade" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Site_Acesso">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="IP" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="IP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Site_Mensagem">
           <Key>
@@ -1266,34 +1049,6 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Assunto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Site_NewsLetter">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Site_Proposta">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Nome" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Empresa" />
-            <PropertyRef Name="Telefone" />
-            <PropertyRef Name="Proposta" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Telefone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Proposta" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="ctrain_coletor_alerta">
@@ -1502,6 +1257,68 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Receita">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Maquina" Type="Int32" />
+          <Property Name="Id_Empresa" Type="Int32" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ReceitaPassoCentrifugacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Receita" Type="Int32" Nullable="false" />
+          <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Saida" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Velocidade1" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tempo1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Velocidade2" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tempo2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Velocidade3" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tempo3" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Velocidade4" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tempo4" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Velocidade5" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tempo5" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ReceitaPassoLavagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Receita" Type="Int32" Nullable="false" />
+          <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="TempoOperacao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="TempoReversao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="RPM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Temperatura" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SemVapor" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Entrada" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Nivel" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Saida" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoA" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoB" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorB" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoC" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoD" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorD" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoE" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoF" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorF" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoG" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorG" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1716,6 +1533,28 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Setor">
+            <EntityTypeMapping TypeName="ConnectorModel.Setor">
+              <MappingFragment StoreEntitySet="Setor">
+                <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
+                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site_Mensagem">
+            <EntityTypeMapping TypeName="ConnectorModel.Site_Mensagem">
+              <MappingFragment StoreEntitySet="Site_Mensagem">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Assunto" ColumnName="Assunto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Receita">
             <EntityTypeMapping TypeName="ConnectorModel.Receita">
               <MappingFragment StoreEntitySet="Receita">
@@ -1777,59 +1616,6 @@ FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
                 <ScalarProperty Name="TempoOperacao" ColumnName="TempoOperacao" />
                 <ScalarProperty Name="ModoTrabalho" ColumnName="ModoTrabalho" />
                 <ScalarProperty Name="Id_Receita" ColumnName="Id_Receita" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Setor">
-            <EntityTypeMapping TypeName="ConnectorModel.Setor">
-              <MappingFragment StoreEntitySet="Setor">
-                <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Site_Acesso">
-            <EntityTypeMapping TypeName="ConnectorModel.Site_Acesso">
-              <MappingFragment StoreEntitySet="Site_Acesso">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Site_Mensagem">
-            <EntityTypeMapping TypeName="ConnectorModel.Site_Mensagem">
-              <MappingFragment StoreEntitySet="Site_Mensagem">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Assunto" ColumnName="Assunto" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Site_NewsLetter">
-            <EntityTypeMapping TypeName="ConnectorModel.Site_NewsLetter">
-              <MappingFragment StoreEntitySet="Site_NewsLetter">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Site_Proposta">
-            <EntityTypeMapping TypeName="ConnectorModel.Site_Proposta">
-              <MappingFragment StoreEntitySet="Site_Proposta">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Proposta" ColumnName="Proposta" />
-                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
-                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

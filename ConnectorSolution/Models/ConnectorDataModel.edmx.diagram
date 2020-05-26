@@ -22,14 +22,8 @@
         <EntityTypeShape EntityType="ConnectorModel.Gateway" Width="1.5" PointX="3" PointY="27.125" />
         <EntityTypeShape EntityType="ConnectorModel.LogAtividade" Width="1.5" PointX="3" PointY="8.625" />
         <EntityTypeShape EntityType="ConnectorModel.MaquinaHorario" Width="1.5" PointX="5.25" PointY="11.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoCentrifugacao" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="ConnectorModel.Setor" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Site_Acesso" Width="1.5" PointX="6.75" PointY="3.75" />
         <EntityTypeShape EntityType="ConnectorModel.Site_Mensagem" Width="1.5" PointX="6.75" PointY="6.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Site_NewsLetter" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Site_Proposta" Width="1.5" PointX="8.75" PointY="3.75" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_alerta" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_empresa" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
@@ -47,6 +41,9 @@
         <AssociationConnector Association="ConnectorModel.ctrain_unidade_filial" />
         <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
         <AssociationConnector Association="ConnectorModel.id_usu_med_login" />
+        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoCentrifugacao" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="9.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
