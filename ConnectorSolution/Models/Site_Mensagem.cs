@@ -12,20 +12,13 @@ namespace Connector.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ColetorTopico
+    public partial class Site_Mensagem
     {
-        public ColetorTopico()
-        {
-            this.ColetorTopicoLog = new HashSet<ColetorTopicoLog>();
-        }
-    
         public int Id { get; set; }
-        public int Id_Coletor { get; set; }
         public string Nome { get; set; }
-        public Nullable<System.DateTime> DataHora { get; set; }
-        public Nullable<int> Ativo { get; set; }
-    
-        public virtual Coletor Coletor { get; set; }
-        public virtual ICollection<ColetorTopicoLog> ColetorTopicoLog { get; set; }
+        public string Email { get; set; }
+        public string Assunto { get; set; }
+        public string Descricao { get; set; }
+        public System.DateTime DataHora { get; set; }
     }
 }

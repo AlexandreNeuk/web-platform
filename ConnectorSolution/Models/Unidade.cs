@@ -14,17 +14,11 @@ namespace Connector.Models
     
     public partial class Unidade
     {
-        public Unidade()
-        {
-            this.Setor = new HashSet<Setor>();
-        }
-    
         public int Id { get; set; }
         public int Id_Filial { get; set; }
         public string Descricao { get; set; }
         public string Resumo { get; set; }
     
         public virtual Filial Filial { get; set; }
-        public virtual ICollection<Setor> Setor { get; set; }
     }
 }

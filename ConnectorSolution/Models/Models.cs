@@ -96,7 +96,6 @@ namespace Connector.Models
 
 
         public Empresa Empresa { get; set; }
-        public Processo Processo { get; set; }
     }
 
     public class EmpresaModel

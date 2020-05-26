@@ -16,16 +16,16 @@ namespace Connector.Models
     {
         public Maquina()
         {
-            this.MaquinaHorario = new HashSet<MaquinaHorario>();
             this.Coletor = new HashSet<Coletor>();
+            this.MaquinaHorario = new HashSet<MaquinaHorario>();
         }
     
         public int ID { get; set; }
         public int Id_Empresa { get; set; }
         public string Descricao { get; set; }
     
-        public virtual ICollection<MaquinaHorario> MaquinaHorario { get; set; }
         public virtual ICollection<Coletor> Coletor { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual ICollection<MaquinaHorario> MaquinaHorario { get; set; }
     }
 }

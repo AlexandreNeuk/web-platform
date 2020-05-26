@@ -60,7 +60,8 @@ namespace Connector.Controllers
             //
             return View();
         }
-
+        
+        /*
         public JsonResult RelatorioMaquina(int idempresa, string lista_ids, int periodo)
         {
             string sreult = string.Empty;
@@ -219,6 +220,7 @@ namespace Connector.Controllers
                 errors = String.Empty
             }, JsonRequestBehavior.AllowGet);
         }
+        */
 
         public JsonResult RelatorioTemperaturaGetDados(int idempresa, string lista_ids, string periodo, string horaini, string horafim)
         {

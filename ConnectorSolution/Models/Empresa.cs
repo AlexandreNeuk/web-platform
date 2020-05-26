@@ -18,15 +18,12 @@ namespace Connector.Models
         {
             this.Coletor = new HashSet<Coletor>();
             this.ColetorAlerta = new HashSet<ColetorAlerta>();
+            this.ColetorTipoAlerta = new HashSet<ColetorTipoAlerta>();
             this.LogAtividade = new HashSet<LogAtividade>();
             this.Filial = new HashSet<Filial>();
             this.Gateway = new HashSet<Gateway>();
             this.Usuario = new HashSet<Usuario>();
             this.Maquina = new HashSet<Maquina>();
-            this.ColetorTipoAlerta = new HashSet<ColetorTipoAlerta>();
-            this.Programa = new HashSet<Programa>();
-            this.Processo = new HashSet<Processo>();
-            this.TipoProcesso = new HashSet<TipoProcesso>();
         }
     
         public int Id { get; set; }
@@ -49,14 +46,11 @@ namespace Connector.Models
     
         public virtual ICollection<Coletor> Coletor { get; set; }
         public virtual ICollection<ColetorAlerta> ColetorAlerta { get; set; }
+        public virtual ICollection<ColetorTipoAlerta> ColetorTipoAlerta { get; set; }
         public virtual ICollection<LogAtividade> LogAtividade { get; set; }
         public virtual ICollection<Filial> Filial { get; set; }
         public virtual ICollection<Gateway> Gateway { get; set; }
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual ICollection<Maquina> Maquina { get; set; }
-        public virtual ICollection<ColetorTipoAlerta> ColetorTipoAlerta { get; set; }
-        public virtual ICollection<Programa> Programa { get; set; }
-        public virtual ICollection<Processo> Processo { get; set; }
-        public virtual ICollection<TipoProcesso> TipoProcesso { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Connector.Models
         public string Descricao { get; set; }
         public string Resumo { get; set; }
     
-        public virtual ICollection<Unidade> Unidade { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual ICollection<Unidade> Unidade { get; set; }
     }
 }

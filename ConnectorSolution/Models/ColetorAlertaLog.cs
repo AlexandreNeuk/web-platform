@@ -20,8 +20,5 @@ namespace Connector.Models
         public Nullable<System.DateTime> DataHora { get; set; }
         public string ValorRegra { get; set; }
         public string ValorEnviado { get; set; }
-    
-        public virtual Coletor Coletor { get; set; }
-        public virtual ColetorAlerta ColetorAlerta { get; set; }
     }
 }

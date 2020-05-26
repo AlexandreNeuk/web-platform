@@ -16,36 +16,36 @@ namespace Connector.Controllers
         // GET: Mqtt
         public ActionResult Index()
         {
-            string retorno = string.Empty;
-            ColetorTopicoLog ctlm = new ColetorTopicoLog();
-            ctlm.Id_ColetorTopico = 1;
-            ctlm.DataHora = getData();
-            ctlm.Valor = "IndexInicio";
-            db.ColetorTopicoLog.Add(ctlm);
-            db.SaveChanges();
+            //string retorno = string.Empty;
+            //ColetorTopicoLog ctlm = new ColetorTopicoLog();
+            //ctlm.Id_ColetorTopico = 1;
+            //ctlm.DataHora = getData();
+            //ctlm.Valor = "IndexInicio";
+            //db.ColetorTopicoLog.Add(ctlm);
+            //db.SaveChanges();
 
             try
             {
                 Thread myNewThread = new Thread(() => Run());                
                 myNewThread.Start();
-                retorno = "OK";
+                //retorno = "OK";
             }
             catch (Exception erro)
             {
-                retorno = erro.Message;
+                //retorno = erro.Message;
             }
-            ViewBag.Retorno = retorno;
+            //ViewBag.Retorno = retorno;
             return View();
         }
 
         void Run()
         {
-            ColetorTopicoLog ctlm = new ColetorTopicoLog();
-            ctlm.Id_ColetorTopico = 1;
-            ctlm.DataHora = getData();
-            ctlm.Valor = "RunInicio";
-            db.ColetorTopicoLog.Add(ctlm);
-            db.SaveChanges();
+            //ColetorTopicoLog ctlm = new ColetorTopicoLog();
+            //ctlm.Id_ColetorTopico = 1;
+            //ctlm.DataHora = getData();
+            //ctlm.Valor = "RunInicio";
+            //db.ColetorTopicoLog.Add(ctlm);
+            //db.SaveChanges();
 
             /*
              client.username_pw_set("","ESQXpO-H7-1y")
@@ -62,11 +62,11 @@ namespace Connector.Controllers
             _client.ConnectionLost += new ConnectionDelegate(_client_ConnectionLost);
             _client.PublishArrived += new PublishArrivedDelegate(client_PublishArrived);
             //
-            ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
-            ctlm2.Id_ColetorTopico = 1;
-            ctlm2.DataHora = getData();
-            ctlm2.Valor = "RunFim";
-            db.ColetorTopicoLog.Add(ctlm2);
+            //ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
+            //ctlm2.Id_ColetorTopico = 1;
+            //ctlm2.DataHora = getData();
+            //ctlm2.Valor = "RunFim";
+            //db.ColetorTopicoLog.Add(ctlm2);
             db.SaveChanges();
             Start();
         }
@@ -101,12 +101,12 @@ namespace Connector.Controllers
             catch (Exception exc)
             {
 
-                ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
-                ctlm2.Id_ColetorTopico = 1;
-                ctlm2.DataHora = getData();
-                ctlm2.Valor = "Erro: " + exc.Message;
-                db.ColetorTopicoLog.Add(ctlm2);
-                db.SaveChanges();
+                //ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
+                //ctlm2.Id_ColetorTopico = 1;
+                //ctlm2.DataHora = getData();
+                //ctlm2.Valor = "Erro: " + exc.Message;
+                //db.ColetorTopicoLog.Add(ctlm2);
+                //db.SaveChanges();
             }
             // Connect to broker in 'CleanStart' mode
             //Console.WriteLine("Client connecting\n");
@@ -124,16 +124,16 @@ namespace Connector.Controllers
 
         void client_Connected(object sender, EventArgs e)
         {
-            ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
-            ctlm2.Id_ColetorTopico = 1;
-            ctlm2.DataHora = getData();
-            ctlm2.Valor = "Client Connected";
-            db.ColetorTopicoLog.Add(ctlm2);
-            db.SaveChanges();
+            //ColetorTopicoLog ctlm2 = new ColetorTopicoLog();
+            //ctlm2.Id_ColetorTopico = 1;
+            //ctlm2.DataHora = getData();
+            //ctlm2.Valor = "Client Connected";
+            //db.ColetorTopicoLog.Add(ctlm2);
+            //db.SaveChanges();
 
-            Console.WriteLine("Client connected\n");
-            RegisterOurSubscriptions();
-            PublishStart();
+            //Console.WriteLine("Client connected\n");
+            //RegisterOurSubscriptions();
+            //PublishStart();
             //ColetorTopicoLog ctlm1 = new ColetorTopicoLog();
             //ctlm1.Id_ColetorTopico = 1;
             //ctlm1.DataHora = getData();
@@ -145,15 +145,15 @@ namespace Connector.Controllers
         void _client_ConnectionLost(object sender, EventArgs e)
         {
             //Console.WriteLine("Client connection lost\n");
-            ColetorTopicoLog ctlm = new ColetorTopicoLog();
-            ctlm.Id_ColetorTopico = 1;
-            ctlm.DataHora = getData();
-            ctlm.Valor = "lost";
-            db.ColetorTopicoLog.Add(ctlm);
-            db.SaveChanges();
+            //ColetorTopicoLog ctlm = new ColetorTopicoLog();
+            //ctlm.Id_ColetorTopico = 1;
+            //ctlm.DataHora = getData();
+            //ctlm.Valor = "lost";
+            //db.ColetorTopicoLog.Add(ctlm);
+            //db.SaveChanges();
 
-            DateTime dt = DateTime.Now;
-            _client.Publish("Desconectando", "MQTT Web Server - " + dt.ToShortTimeString(), QoS.BestEfforts, false);
+            //DateTime dt = DateTime.Now;
+            //_client.Publish("Desconectando", "MQTT Web Server - " + dt.ToShortTimeString(), QoS.BestEfforts, false);
         }
 
         void RegisterOurSubscriptions()
@@ -172,26 +172,26 @@ namespace Connector.Controllers
 
         bool client_PublishArrived(object sender, PublishArrivedArgs e)
         {
-            ColetorTopicoLog ctlm = new ColetorTopicoLog();
-            //
-            if (e.Topic.Equals("temperatura"))
-            {
-                ctlm.Id_ColetorTopico = 1;
-                ctlm.DataHora = getData();
-                ctlm.Valor = e.Payload;
-                //
-                db.ColetorTopicoLog.Add(ctlm);
-                db.SaveChanges();
-            }
-            else if (e.Topic.Equals("pressao"))
-            {
-                ctlm.Id_ColetorTopico = 2;
-                ctlm.DataHora = getData();
-                ctlm.Valor = e.Payload;
-                //
-                db.ColetorTopicoLog.Add(ctlm);
-                db.SaveChanges();
-            }
+            //ColetorTopicoLog ctlm = new ColetorTopicoLog();
+            ////
+            //if (e.Topic.Equals("temperatura"))
+            //{
+            //    ctlm.Id_ColetorTopico = 1;
+            //    ctlm.DataHora = getData();
+            //    ctlm.Valor = e.Payload;
+            //    //
+            //    db.ColetorTopicoLog.Add(ctlm);
+            //    db.SaveChanges();
+            //}
+            //else if (e.Topic.Equals("pressao"))
+            //{
+            //    ctlm.Id_ColetorTopico = 2;
+            //    ctlm.DataHora = getData();
+            //    ctlm.Valor = e.Payload;
+            //    //
+            //    db.ColetorTopicoLog.Add(ctlm);
+            //    db.SaveChanges();
+            //}
             //Console.WriteLine("Received Message");
             //Console.WriteLine("Topic: " + e.Topic);
             //Console.WriteLine("Payload: " + e.Payload);

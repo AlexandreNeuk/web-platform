@@ -168,38 +168,38 @@ namespace Connector.Controllers
             string ret = string.Empty;
             string erro = string.Empty;
             string exce = string.Empty;
-            try
-            {
-                ColetorSensorMovHistorico csm = new ColetorSensorMovHistorico();
+            //try
+            //{
+            //    ColetorSensorMovHistorico csm = new ColetorSensorMovHistorico();
 
-                csm.Coletor = id_sensor;
-                csm.Valor = valor_sensor;
-                csm.DataHora = getData();
-                db.ColetorSensorMovHistorico.Add(csm);
-                db.SaveChanges();
-                ret = "ok";
-            }
-            catch (DbEntityValidationException e)
-            {
-                exce = e.Message;
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                        erro += ve.ErrorMessage + " - ";
-                    }
-                }
-                //
-                ret = "nok";
-            }
-            catch (Exception exc)
-            {
-                ret = exc.Message;
-            }
+            //    csm.Coletor = id_sensor;
+            //    csm.Valor = valor_sensor;
+            //    csm.DataHora = getData();
+            //    db.ColetorSensorMovHistorico.Add(csm);
+            //    db.SaveChanges();
+            //    ret = "ok";
+            //}
+            //catch (DbEntityValidationException e)
+            //{
+            //    exce = e.Message;
+            //    foreach (var eve in e.EntityValidationErrors)
+            //    {
+            //        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+            //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+            //        foreach (var ve in eve.ValidationErrors)
+            //        {
+            //            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+            //                ve.PropertyName, ve.ErrorMessage);
+            //            erro += ve.ErrorMessage + " - ";
+            //        }
+            //    }
+            //    //
+            //    ret = "nok";
+            //}
+            //catch (Exception exc)
+            //{
+            //    ret = exc.Message;
+            //}
             return Json(new { data = ret, erro, exce, results = 0, success = true }, JsonRequestBehavior.AllowGet);
         }
         //

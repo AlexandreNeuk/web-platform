@@ -224,12 +224,6 @@
     <Compile Include="Models\ColetorTipoAlerta.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ColetorTopico.cs">
-      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ColetorTopicoLog.cs">
-      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ConnectorDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -266,12 +260,6 @@
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Models.cs" />
-    <Compile Include="Models\Processo.cs">
-      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Programa.cs">
-      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Receita.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
@@ -284,7 +272,16 @@
     <Compile Include="Models\Setor.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TipoProcesso.cs">
+    <Compile Include="Models\Site_Acesso.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Site_Mensagem.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Site_NewsLetter.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Site_Proposta.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unidade.cs">

@@ -12,20 +12,10 @@ namespace Connector.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Processo
+    public partial class Site_Acesso
     {
-        public Processo()
-        {
-            this.Programa = new HashSet<Programa>();
-        }
-    
-        public int ID { get; set; }
-        public int Id_Empresa { get; set; }
-        public int Id_TipoProcesso { get; set; }
-        public string Descricao { get; set; }
-    
-        public virtual Empresa Empresa { get; set; }
-        public virtual ICollection<Programa> Programa { get; set; }
-        public virtual TipoProcesso TipoProcesso { get; set; }
+        public int Id { get; set; }
+        public string IP { get; set; }
+        public System.DateTime DataHora { get; set; }
     }
 }

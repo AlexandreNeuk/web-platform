@@ -5,14 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ConnectorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Coletor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Coletor">
           <Key>
             <PropertyRef Name="Id" />
-            
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Maquina" Type="int" />
           <Property Name="Id_Empresa" Type="int" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
@@ -21,16 +18,11 @@ warning 6002: The table/view 'inequil.dbo.Coletor' does not have a primary key d
           <Property Name="MAC" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Alerta" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.ColetorAlerta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ColetorAlerta">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Id_Coletor" Type="int" Nullable="false" />
           <Property Name="Id_TipoAlerta" Type="int" Nullable="false" />
@@ -46,10 +38,10 @@ warning 6002: The table/view 'inequil.dbo.ColetorAlertaLog' does not have a prim
         <EntityType Name="ColetorAlertaLog">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
+            <PropertyRef Name="Id_Coletor" />
+            <PropertyRef Name="Id_ColetorAlerta" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Coletor" Type="int" Nullable="false" />
           <Property Name="Id_ColetorAlerta" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" />
@@ -61,9 +53,9 @@ warning 6002: The table/view 'inequil.dbo.ColetorPressaoHistorico' does not have
         <EntityType Name="ColetorPressaoHistorico">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Id_Coletor" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Coletor" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" />
           <Property Name="Pressao" Type="varchar" MaxLength="25" />
@@ -73,9 +65,9 @@ warning 6002: The table/view 'inequil.dbo.ColetorProducaoHistorico' does not hav
         <EntityType Name="ColetorProducaoHistorico">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Id_Coletor" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Coletor" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" />
           <Property Name="Valor" Type="varchar" MaxLength="25" />
@@ -85,9 +77,9 @@ warning 6002: The table/view 'inequil.dbo.ColetorSensorMovHistorico' does not ha
         <EntityType Name="ColetorSensorMovHistorico">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Coletor" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Coletor" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="DataHora" Type="datetime" />
           <Property Name="Valor" Type="varchar" MaxLength="10" />
@@ -97,21 +89,18 @@ warning 6002: The table/view 'inequil.dbo.ColetorTemperaturaHistorico' does not 
         <EntityType Name="ColetorTemperaturaHistorico">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Id_Coletor" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Coletor" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" />
           <Property Name="Temperatura" Type="varchar" MaxLength="25" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.ColetorTipoAlerta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ColetorTipoAlerta">
           <Key>
             <PropertyRef Name="Id" />
-            
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="UnidadeMedida" Type="varchar" MaxLength="50" />
@@ -125,13 +114,11 @@ warning 6013: The table/view 'inequil.dbo.ColetorTopicoLog' does not have a prim
           <Property Name="DataHora" Type="nchar" MaxLength="50" />
           <Property Name="Valor" Type="nchar" MaxLength="400" />
         </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Empresa' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="50" />
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
           <Property Name="Tipo" Type="int" />
@@ -149,14 +136,11 @@ warning 6002: The table/view 'inequil.dbo.Empresa' does not have a primary key d
           <Property Name="Email" Type="varchar" MaxLength="30" />
           <Property Name="Bairro" Type="varchar" MaxLength="30" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Filial' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Filial">
           <Key>
             <PropertyRef Name="Id" />
-            
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
@@ -166,9 +150,9 @@ warning 6002: The table/view 'inequil.dbo.Gateway' does not have a primary key d
         <EntityType Name="Gateway">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="MAC" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="IP" Type="varchar" MaxLength="20" />
@@ -181,25 +165,22 @@ warning 6002: The table/view 'inequil.dbo.LogAtividade' does not have a primary 
         <EntityType Name="LogAtividade">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
+            <PropertyRef Name="Id_Dispositivo" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="DataHora" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" />
           <Property Name="Id_Dispositivo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="Tipo" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Maquina' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Maquina">
           <Key>
             <PropertyRef Name="ID" />
-            
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="100" />
         </EntityType>
@@ -208,9 +189,9 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
         <EntityType Name="MaquinaHorario">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Id_Maquina" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Maquina" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="DataHoraInicio" Type="datetime" />
@@ -291,35 +272,89 @@ warning 6002: The table/view 'inequil.dbo.Setor' does not have a primary key def
         <EntityType Name="Setor">
           <Key>
             <PropertyRef Name="Id" />
-            
+            <PropertyRef Name="Id_Unidade" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
           <Property Name="Id_Unidade" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Unidade' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'inequil.dbo.Site_Acesso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Site_Acesso">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IP" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IP" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'inequil.dbo.Site_Mensagem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Site_Mensagem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Assunto" />
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Assunto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'inequil.dbo.Site_NewsLetter' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Site_NewsLetter">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'inequil.dbo.Site_Proposta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Site_Proposta">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Empresa" />
+            <PropertyRef Name="Telefone" />
+            <PropertyRef Name="Proposta" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Proposta" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Unidade">
           <Key>
             <PropertyRef Name="Id" />
-            
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Id_Filial" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Usuario' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="ID" />
-            
-            
-            
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Pass" Type="varchar" MaxLength="150" Nullable="false" />
@@ -331,45 +366,230 @@ warning 6002: The table/view 'inequil.dbo.Usuario' does not have a primary key d
           <Property Name="Nome" Type="varchar" MaxLength="40" />
           <Property Name="Tipo" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.UsuarioLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UsuarioLogin">
           <Key>
             <PropertyRef Name="ID" />
-            
-            
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Id_MedidorUsuario" Type="int" Nullable="false" />
           <Property Name="DataHora" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="ctrain_atividade_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="LogAtividade" Type="Self.LogAtividade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogAtividade">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_alert_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="ColetorAlerta" Type="Self.ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_alerta">
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="1" />
+          <End Role="ColetorAlerta" Type="Self.ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Coletor">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_maquina">
+          <End Role="Maquina" Type="Self.Maquina" Multiplicity="0..1" />
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Coletor">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_pressao_hist">
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="1" />
+          <End Role="ColetorPressaoHistorico" Type="Self.ColetorPressaoHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorPressaoHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_producao_hist">
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="1" />
+          <End Role="ColetorProducaoHistorico" Type="Self.ColetorProducaoHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorProducaoHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_temperatura_hist">
+          <End Role="Coletor" Type="Self.Coletor" Multiplicity="1" />
+          <End Role="ColetorTemperaturaHistorico" Type="Self.ColetorTemperaturaHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorTemperaturaHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_tipoalerta">
+          <End Role="ColetorTipoAlerta" Type="Self.ColetorTipoAlerta" Multiplicity="1" />
+          <End Role="ColetorAlerta" Type="Self.ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ColetorTipoAlerta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_TipoAlerta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_tp_alert_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="ColetorTipoAlerta" Type="Self.ColetorTipoAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorTipoAlerta">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_filial_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Filial" Type="Self.Filial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filial">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_gateway_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Gateway" Type="Self.Gateway" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gateway">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_unidade_filial">
+          <End Role="Filial" Type="Self.Filial" Multiplicity="1" />
+          <End Role="Unidade" Type="Self.Unidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Unidade">
+              <PropertyRef Name="Id_Filial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_empresa_constrain">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_empresa_maquina_constrain">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Maquina" Type="Self.Maquina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Maquina">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_usu_med_login">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioLogin" Type="Self.UsuarioLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioLogin">
+              <PropertyRef Name="Id_MedidorUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="maquina_hora_maquina">
+          <End Role="Maquina" Type="Self.Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MaquinaHorario" Type="Self.MaquinaHorario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaHorario">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ConnectorModelStoreContainer">
-          <EntitySet Name="Coletor" EntityType="Self.Coletor" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Coletor].[Id] AS [Id], 
-[Coletor].[Id_Maquina] AS [Id_Maquina], 
-[Coletor].[Id_Empresa] AS [Id_Empresa], 
-[Coletor].[Descricao] AS [Descricao], 
-[Coletor].[Resumo] AS [Resumo], 
-[Coletor].[Ativo] AS [Ativo], 
-[Coletor].[MAC] AS [MAC], 
-[Coletor].[Alerta] AS [Alerta]
-FROM [dbo].[Coletor] AS [Coletor]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ColetorAlerta" EntityType="Self.ColetorAlerta" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ColetorAlerta].[Id] AS [Id], 
-[ColetorAlerta].[Id_Empresa] AS [Id_Empresa], 
-[ColetorAlerta].[Id_Coletor] AS [Id_Coletor], 
-[ColetorAlerta].[Id_TipoAlerta] AS [Id_TipoAlerta], 
-[ColetorAlerta].[Prioridade] AS [Prioridade], 
-[ColetorAlerta].[Descricao] AS [Descricao], 
-[ColetorAlerta].[Email] AS [Email], 
-[ColetorAlerta].[Regra] AS [Regra], 
-[ColetorAlerta].[Valor] AS [Valor], 
-[ColetorAlerta].[Ativo] AS [Ativo]
-FROM [dbo].[ColetorAlerta] AS [ColetorAlerta]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Coletor" EntityType="Self.Coletor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ColetorAlerta" EntityType="Self.ColetorAlerta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ColetorTipoAlerta" EntityType="Self.ColetorTipoAlerta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filial" EntityType="Self.Filial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maquina" EntityType="Self.Maquina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidade" EntityType="Self.Unidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioLogin" EntityType="Self.UsuarioLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ColetorAlertaLog" EntityType="Self.ColetorAlertaLog" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [ColetorAlertaLog].[Id] AS [Id], 
@@ -412,45 +632,6 @@ FROM [dbo].[ColetorSensorMovHistorico] AS [ColetorSensorMovHistorico]</DefiningQ
 [ColetorTemperaturaHistorico].[Temperatura] AS [Temperatura]
 FROM [dbo].[ColetorTemperaturaHistorico] AS [ColetorTemperaturaHistorico]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="ColetorTipoAlerta" EntityType="Self.ColetorTipoAlerta" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[ColetorTipoAlerta].[Id] AS [Id], 
-[ColetorTipoAlerta].[Id_Empresa] AS [Id_Empresa], 
-[ColetorTipoAlerta].[Descricao] AS [Descricao], 
-[ColetorTipoAlerta].[UnidadeMedida] AS [UnidadeMedida], 
-[ColetorTipoAlerta].[Ativo] AS [Ativo], 
-[ColetorTipoAlerta].[Tipo] AS [Tipo]
-FROM [dbo].[ColetorTipoAlerta] AS [ColetorTipoAlerta]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Empresa" EntityType="Self.Empresa" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Empresa].[Id] AS [Id], 
-[Empresa].[Nome] AS [Nome], 
-[Empresa].[Resumo] AS [Resumo], 
-[Empresa].[Tipo] AS [Tipo], 
-[Empresa].[Empresas] AS [Empresas], 
-[Empresa].[URL] AS [URL], 
-[Empresa].[AnalitycCode] AS [AnalitycCode], 
-[Empresa].[Site] AS [Site], 
-[Empresa].[Endereco] AS [Endereco], 
-[Empresa].[CEP] AS [CEP], 
-[Empresa].[Numero] AS [Numero], 
-[Empresa].[Cidade] AS [Cidade], 
-[Empresa].[Estado] AS [Estado], 
-[Empresa].[Telefone] AS [Telefone], 
-[Empresa].[NomeFantasia] AS [NomeFantasia], 
-[Empresa].[Email] AS [Email], 
-[Empresa].[Bairro] AS [Bairro]
-FROM [dbo].[Empresa] AS [Empresa]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Filial" EntityType="Self.Filial" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Filial].[Id] AS [Id], 
-[Filial].[Id_Empresa] AS [Id_Empresa], 
-[Filial].[Descricao] AS [Descricao], 
-[Filial].[Resumo] AS [Resumo]
-FROM [dbo].[Filial] AS [Filial]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="Gateway" EntityType="Self.Gateway" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [Gateway].[Id] AS [Id], 
@@ -471,13 +652,6 @@ FROM [dbo].[Gateway] AS [Gateway]</DefiningQuery>
 [LogAtividade].[Tipo] AS [Tipo], 
 [LogAtividade].[DataHora] AS [DataHora]
 FROM [dbo].[LogAtividade] AS [LogAtividade]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Maquina" EntityType="Self.Maquina" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Maquina].[ID] AS [ID], 
-[Maquina].[Id_Empresa] AS [Id_Empresa], 
-[Maquina].[Descricao] AS [Descricao]
-FROM [dbo].[Maquina] AS [Maquina]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="MaquinaHorario" EntityType="Self.MaquinaHorario" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -555,71 +729,148 @@ FROM [dbo].[ReceitaPassoLavagem] AS [ReceitaPassoLavagem]</DefiningQuery>
 [Setor].[Id_Unidade] AS [Id_Unidade]
 FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Unidade" EntityType="Self.Unidade" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Site_Acesso" EntityType="Self.Site_Acesso" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[Unidade].[Id] AS [Id], 
-[Unidade].[Id_Filial] AS [Id_Filial], 
-[Unidade].[Descricao] AS [Descricao], 
-[Unidade].[Resumo] AS [Resumo]
-FROM [dbo].[Unidade] AS [Unidade]</DefiningQuery>
+[Site_Acesso].[Id] AS [Id], 
+[Site_Acesso].[IP] AS [IP], 
+[Site_Acesso].[DataHora] AS [DataHora]
+FROM [dbo].[Site_Acesso] AS [Site_Acesso]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Site_Mensagem" EntityType="Self.Site_Mensagem" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[Usuario].[ID] AS [ID], 
-[Usuario].[Id_Empresa] AS [Id_Empresa], 
-[Usuario].[Email] AS [Email], 
-[Usuario].[Pass] AS [Pass], 
-[Usuario].[Count] AS [Count], 
-[Usuario].[Last] AS [Last], 
-[Usuario].[Create] AS [Create], 
-[Usuario].[Ative] AS [Ative], 
-[Usuario].[Hash] AS [Hash], 
-[Usuario].[Nome] AS [Nome], 
-[Usuario].[Tipo] AS [Tipo]
-FROM [dbo].[Usuario] AS [Usuario]</DefiningQuery>
+[Site_Mensagem].[Id] AS [Id], 
+[Site_Mensagem].[Nome] AS [Nome], 
+[Site_Mensagem].[Email] AS [Email], 
+[Site_Mensagem].[Assunto] AS [Assunto], 
+[Site_Mensagem].[Descricao] AS [Descricao], 
+[Site_Mensagem].[DataHora] AS [DataHora]
+FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="UsuarioLogin" EntityType="Self.UsuarioLogin" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Site_NewsLetter" EntityType="Self.Site_NewsLetter" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[UsuarioLogin].[ID] AS [ID], 
-[UsuarioLogin].[Id_MedidorUsuario] AS [Id_MedidorUsuario], 
-[UsuarioLogin].[DataHora] AS [DataHora]
-FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
+[Site_NewsLetter].[Id] AS [Id], 
+[Site_NewsLetter].[Email] AS [Email], 
+[Site_NewsLetter].[DataHora] AS [DataHora]
+FROM [dbo].[Site_NewsLetter] AS [Site_NewsLetter]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Site_Proposta" EntityType="Self.Site_Proposta" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Site_Proposta].[Id] AS [Id], 
+[Site_Proposta].[Nome] AS [Nome], 
+[Site_Proposta].[Email] AS [Email], 
+[Site_Proposta].[Empresa] AS [Empresa], 
+[Site_Proposta].[Telefone] AS [Telefone], 
+[Site_Proposta].[Proposta] AS [Proposta], 
+[Site_Proposta].[DataHora] AS [DataHora]
+FROM [dbo].[Site_Proposta] AS [Site_Proposta]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="ctrain_atividade_empresa" Association="Self.ctrain_atividade_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="LogAtividade" EntitySet="LogAtividade" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_alert_empresa" Association="Self.ctrain_coletor_alert_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_alerta" Association="Self.ctrain_coletor_alerta">
+            <End Role="Coletor" EntitySet="Coletor" />
+            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_empresa" Association="Self.ctrain_coletor_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Coletor" EntitySet="Coletor" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_maquina" Association="Self.ctrain_coletor_maquina">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="Coletor" EntitySet="Coletor" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_pressao_hist" Association="Self.ctrain_coletor_pressao_hist">
+            <End Role="Coletor" EntitySet="Coletor" />
+            <End Role="ColetorPressaoHistorico" EntitySet="ColetorPressaoHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_producao_hist" Association="Self.ctrain_coletor_producao_hist">
+            <End Role="Coletor" EntitySet="Coletor" />
+            <End Role="ColetorProducaoHistorico" EntitySet="ColetorProducaoHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_temperatura_hist" Association="Self.ctrain_coletor_temperatura_hist">
+            <End Role="Coletor" EntitySet="Coletor" />
+            <End Role="ColetorTemperaturaHistorico" EntitySet="ColetorTemperaturaHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_tipoalerta" Association="Self.ctrain_coletor_tipoalerta">
+            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
+            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_tp_alert_empresa" Association="Self.ctrain_coletor_tp_alert_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_filial_empresa" Association="Self.ctrain_filial_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Filial" EntitySet="Filial" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_gateway_empresa" Association="Self.ctrain_gateway_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Gateway" EntitySet="Gateway" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_unidade_filial" Association="Self.ctrain_unidade_filial">
+            <End Role="Filial" EntitySet="Filial" />
+            <End Role="Unidade" EntitySet="Unidade" />
+          </AssociationSet>
+          <AssociationSet Name="id_empresa_constrain" Association="Self.id_empresa_constrain">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="id_empresa_maquina_constrain" Association="Self.id_empresa_maquina_constrain">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Maquina" EntitySet="Maquina" />
+          </AssociationSet>
+          <AssociationSet Name="id_usu_med_login" Association="Self.id_usu_med_login">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioLogin" EntitySet="UsuarioLogin" />
+          </AssociationSet>
+          <AssociationSet Name="maquina_hora_maquina" Association="Self.maquina_hora_maquina">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ConnectorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="dbConnectorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Coletor" EntityType="ConnectorModel.Coletor" />
+          <EntitySet Name="ColetorAlerta" EntityType="ConnectorModel.ColetorAlerta" />
+          <EntitySet Name="ColetorTipoAlerta" EntityType="ConnectorModel.ColetorTipoAlerta" />
+          <EntitySet Name="Empresa" EntityType="ConnectorModel.Empresa" />
           <EntitySet Name="Filial" EntityType="ConnectorModel.Filial" />
-          <EntitySet Name="MaquinaHorario" EntityType="ConnectorModel.MaquinaHorario" />
-          <EntitySet Name="Setor" EntityType="ConnectorModel.Setor" />
+          <EntitySet Name="Maquina" EntityType="ConnectorModel.Maquina" />
           <EntitySet Name="Unidade" EntityType="ConnectorModel.Unidade" />
           <EntitySet Name="Usuario" EntityType="ConnectorModel.Usuario" />
           <EntitySet Name="UsuarioLogin" EntityType="ConnectorModel.UsuarioLogin" />
-          <AssociationSet Name="ctrain_unidade_filial" Association="ConnectorModel.ctrain_unidade_filial">
-            <End Role="Filial" EntitySet="Filial" />
-            <End Role="Unidade" EntitySet="Unidade" />
-          </AssociationSet>
-          <AssociationSet Name="ctrain_setor_unidade" Association="ConnectorModel.ctrain_setor_unidade">
-            <End Role="Unidade" EntitySet="Unidade" />
-            <End Role="Setor" EntitySet="Setor" />
-          </AssociationSet>
-          <AssociationSet Name="id_usu_med_login" Association="ConnectorModel.id_usu_med_login">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="UsuarioLogin" EntitySet="UsuarioLogin" />
-          </AssociationSet>
-          <EntitySet Name="Maquina" EntityType="ConnectorModel.Maquina" />
-          <AssociationSet Name="maquina_hora_maquina" Association="ConnectorModel.maquina_hora_maquina">
-            <End Role="Maquina" EntitySet="Maquina" />
-            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
-          </AssociationSet>
-          <EntitySet Name="Gateway" EntityType="ConnectorModel.Gateway" />
+          <EntitySet Name="ColetorAlertaLog" EntityType="ConnectorModel.ColetorAlertaLog" />
           <EntitySet Name="ColetorPressaoHistorico" EntityType="ConnectorModel.ColetorPressaoHistorico" />
           <EntitySet Name="ColetorProducaoHistorico" EntityType="ConnectorModel.ColetorProducaoHistorico" />
+          <EntitySet Name="ColetorSensorMovHistorico" EntityType="ConnectorModel.ColetorSensorMovHistorico" />
           <EntitySet Name="ColetorTemperaturaHistorico" EntityType="ConnectorModel.ColetorTemperaturaHistorico" />
+          <EntitySet Name="Gateway" EntityType="ConnectorModel.Gateway" />
           <EntitySet Name="LogAtividade" EntityType="ConnectorModel.LogAtividade" />
-          <EntitySet Name="Coletor" EntityType="ConnectorModel.Coletor" />
+          <EntitySet Name="MaquinaHorario" EntityType="ConnectorModel.MaquinaHorario" />
+          <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
+          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
+          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
+          <EntitySet Name="Setor" EntityType="ConnectorModel.Setor" />
+          <EntitySet Name="Site_Acesso" EntityType="ConnectorModel.Site_Acesso" />
+          <EntitySet Name="Site_Mensagem" EntityType="ConnectorModel.Site_Mensagem" />
+          <EntitySet Name="Site_NewsLetter" EntityType="ConnectorModel.Site_NewsLetter" />
+          <EntitySet Name="Site_Proposta" EntityType="ConnectorModel.Site_Proposta" />
+          <AssociationSet Name="ctrain_coletor_alerta" Association="ConnectorModel.ctrain_coletor_alerta">
+            <End Role="Coletor" EntitySet="Coletor" />
+            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_empresa" Association="ConnectorModel.ctrain_coletor_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Coletor" EntitySet="Coletor" />
+          </AssociationSet>
           <AssociationSet Name="ctrain_coletor_maquina" Association="ConnectorModel.ctrain_coletor_maquina">
             <End Role="Maquina" EntitySet="Maquina" />
             <End Role="Coletor" EntitySet="Coletor" />
@@ -636,19 +887,17 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
             <End Role="Coletor" EntitySet="Coletor" />
             <End Role="ColetorTemperaturaHistorico" EntitySet="ColetorTemperaturaHistorico" />
           </AssociationSet>
-          <EntitySet Name="ColetorAlerta" EntityType="ConnectorModel.ColetorAlerta" />
-          <AssociationSet Name="ctrain_coletor_alerta" Association="ConnectorModel.ctrain_coletor_alerta">
-            <End Role="Coletor" EntitySet="Coletor" />
-            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
-          </AssociationSet>
-          <EntitySet Name="Empresa" EntityType="ConnectorModel.Empresa" />
-          <AssociationSet Name="ctrain_coletor_empresa" Association="ConnectorModel.ctrain_coletor_empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Coletor" EntitySet="Coletor" />
-          </AssociationSet>
           <AssociationSet Name="ctrain_coletor_alert_empresa" Association="ConnectorModel.ctrain_coletor_alert_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_tipoalerta" Association="ConnectorModel.ctrain_coletor_tipoalerta">
+            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
+            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_coletor_tp_alert_empresa" Association="ConnectorModel.ctrain_coletor_tp_alert_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
           </AssociationSet>
           <AssociationSet Name="ctrain_atividade_empresa" Association="ConnectorModel.ctrain_atividade_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -670,253 +919,24 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Maquina" EntitySet="Maquina" />
           </AssociationSet>
-          <EntitySet Name="ColetorSensorMovHistorico" EntityType="ConnectorModel.ColetorSensorMovHistorico" />
-          <EntitySet Name="ColetorAlertaLog" EntityType="ConnectorModel.ColetorAlertaLog" />
-          <AssociationSet Name="ctrain_coletor_lg_col" Association="ConnectorModel.ctrain_coletor_lg_col">
-            <End Role="Coletor" EntitySet="Coletor" />
-            <End Role="ColetorAlertaLog" EntitySet="ColetorAlertaLog" />
+          <AssociationSet Name="ctrain_unidade_filial" Association="ConnectorModel.ctrain_unidade_filial">
+            <End Role="Filial" EntitySet="Filial" />
+            <End Role="Unidade" EntitySet="Unidade" />
           </AssociationSet>
-          <AssociationSet Name="ctrain_coletor_lg_cola" Association="ConnectorModel.ctrain_coletor_lg_cola">
-            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
-            <End Role="ColetorAlertaLog" EntitySet="ColetorAlertaLog" />
+          <AssociationSet Name="maquina_hora_maquina" Association="ConnectorModel.maquina_hora_maquina">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
           </AssociationSet>
-          <EntitySet Name="ColetorTipoAlerta" EntityType="ConnectorModel.ColetorTipoAlerta" />
-          <AssociationSet Name="ctrain_coletor_tipoalerta" Association="ConnectorModel.ctrain_coletor_tipoalerta">
-            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
-            <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
+          <AssociationSet Name="id_usu_med_login" Association="ConnectorModel.id_usu_med_login">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioLogin" EntitySet="UsuarioLogin" />
           </AssociationSet>
-          <AssociationSet Name="ctrain_coletor_tp_alert_empresa" Association="ConnectorModel.ctrain_coletor_tp_alert_empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="ColetorTipoAlerta" EntitySet="ColetorTipoAlerta" />
-          </AssociationSet>
-          <EntitySet Name="ColetorTopico" EntityType="ConnectorModel.ColetorTopico" />
-          <AssociationSet Name="ctrain_coletortopico" Association="ConnectorModel.ctrain_coletortopico">
-            <End Role="Coletor" EntitySet="Coletor" />
-            <End Role="ColetorTopico" EntitySet="ColetorTopico" />
-          </AssociationSet>
-          <EntitySet Name="ColetorTopicoLog" EntityType="ConnectorModel.ColetorTopicoLog" />
-          <AssociationSet Name="ctrain_coletor_topico_log" Association="ConnectorModel.ctrain_coletor_topico_log">
-            <End Role="ColetorTopico" EntitySet="ColetorTopico" />
-            <End Role="ColetorTopicoLog" EntitySet="ColetorTopicoLog" />
-          </AssociationSet>
-          <EntitySet Name="Processo" EntityType="ConnectorModel.Processo" />
-          <EntitySet Name="Programa" EntityType="ConnectorModel.Programa" />
-          <AssociationSet Name="ctrain_programa_empresa" Association="ConnectorModel.ctrain_programa_empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Programa" EntitySet="Programa" />
-          </AssociationSet>
-          <AssociationSet Name="id_empresa_processo_constrain" Association="ConnectorModel.id_empresa_processo_constrain">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Processo" EntitySet="Processo" />
-          </AssociationSet>
-          <AssociationSet Name="ctrain_programa_processo" Association="ConnectorModel.ctrain_programa_processo">
-            <End Role="Processo" EntitySet="Processo" />
-            <End Role="Programa" EntitySet="Programa" />
-          </AssociationSet>
-          <EntitySet Name="TipoProcesso" EntityType="ConnectorModel.TipoProcesso" />
-          <AssociationSet Name="id_empresa_tipoprocesso_constrain" Association="ConnectorModel.id_empresa_tipoprocesso_constrain">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="TipoProcesso" EntitySet="TipoProcesso" />
-          </AssociationSet>
-          <AssociationSet Name="id_tipoprocesso_processo_constrain" Association="ConnectorModel.id_tipoprocesso_processo_constrain">
-            <End Role="TipoProcesso" EntitySet="TipoProcesso" />
-            <End Role="Processo" EntitySet="Processo" />
-          </AssociationSet>
-          <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
-          <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
-          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
-          </EntityContainer>
-        <EntityType Name="Filial">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Unidade" Relationship="ConnectorModel.ctrain_unidade_filial" FromRole="Filial" ToRole="Unidade" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_filial_empresa" FromRole="Filial" ToRole="Empresa" />
-        </EntityType>
-        <EntityType Name="MaquinaHorario">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Maquina" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DataHoraInicio" Type="DateTime" Precision="3" />
-          <Property Name="DataHoraFim" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="MaquinaHorario" ToRole="Maquina" />
-        </EntityType>
-        <EntityType Name="Setor">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Id_Unidade" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Unidade" Relationship="ConnectorModel.ctrain_setor_unidade" FromRole="Setor" ToRole="Unidade" />
-        </EntityType>
-        <EntityType Name="Unidade">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Filial" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Filial" Relationship="ConnectorModel.ctrain_unidade_filial" FromRole="Unidade" ToRole="Filial" />
-          <NavigationProperty Name="Setor" Relationship="ConnectorModel.ctrain_setor_unidade" FromRole="Unidade" ToRole="Setor" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Pass" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="Last" Type="DateTime" Precision="3" />
-          <Property Name="Create" Type="DateTime" Precision="3" />
-          <Property Name="Ative" Type="Int32" />
-          <Property Name="Hash" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Nome" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo" Type="Int32" />
-          <NavigationProperty Name="UsuarioLogin" Relationship="ConnectorModel.id_usu_med_login" FromRole="Usuario" ToRole="UsuarioLogin" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_constrain" FromRole="Usuario" ToRole="Empresa" />
-        </EntityType>
-        <EntityType Name="UsuarioLogin">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_MedidorUsuario" Type="Int32" Nullable="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Usuario" Relationship="ConnectorModel.id_usu_med_login" FromRole="UsuarioLogin" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="ctrain_unidade_filial">
-          <End Type="ConnectorModel.Filial" Role="Filial" Multiplicity="1" />
-          <End Type="ConnectorModel.Unidade" Role="Unidade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Filial">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Unidade">
-              <PropertyRef Name="Id_Filial" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_setor_unidade">
-          <End Type="ConnectorModel.Unidade" Role="Unidade" Multiplicity="1" />
-          <End Type="ConnectorModel.Setor" Role="Setor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unidade">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Setor">
-              <PropertyRef Name="Id_Unidade" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_usu_med_login">
-          <End Type="ConnectorModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ConnectorModel.UsuarioLogin" Role="UsuarioLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UsuarioLogin">
-              <PropertyRef Name="Id_MedidorUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Maquina">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MaquinaHorario" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="Maquina" ToRole="MaquinaHorario" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Maquina" ToRole="Coletor" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Maquina" ToRole="Empresa" />
-        </EntityType>
-        <Association Name="maquina_hora_maquina">
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ConnectorModel.MaquinaHorario" Role="MaquinaHorario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maquina">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaquinaHorario">
-              <PropertyRef Name="Id_Maquina" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Gateway">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Boolean" />
-          <Property Name="MAC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_gateway_empresa" FromRole="Gateway" ToRole="Empresa" />
-        </EntityType>
-        <EntityType Name="ColetorPressaoHistorico">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
-          <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Pressao" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_pressao_hist" FromRole="ColetorPressaoHistorico" ToRole="Coletor" />
-        </EntityType>
-        <EntityType Name="ColetorProducaoHistorico">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
-          <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Valor" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_producao_hist" FromRole="ColetorProducaoHistorico" ToRole="Coletor" />
-        </EntityType>
-        <EntityType Name="ColetorTemperaturaHistorico">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
-          <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Temperatura" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_temperatura_hist" FromRole="ColetorTemperaturaHistorico" ToRole="Coletor" />
-        </EntityType>
-        <EntityType Name="LogAtividade">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" />
-          <Property Name="Id_Dispositivo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo" Type="Int32" Nullable="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_atividade_empresa" FromRole="LogAtividade" ToRole="Empresa" />
-        </EntityType>
+        </EntityContainer>
         <EntityType Name="Coletor">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Id_Maquina" Type="Int32" />
           <Property Name="Id_Empresa" Type="Int32" />
           <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -924,68 +944,18 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
           <Property Name="Ativo" Type="Boolean" />
           <Property Name="MAC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Alerta" Type="Int32" />
+          <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_alerta" FromRole="Coletor" ToRole="ColetorAlerta" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_empresa" FromRole="Coletor" ToRole="Empresa" />
           <NavigationProperty Name="Maquina" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Coletor" ToRole="Maquina" />
           <NavigationProperty Name="ColetorPressaoHistorico" Relationship="ConnectorModel.ctrain_coletor_pressao_hist" FromRole="Coletor" ToRole="ColetorPressaoHistorico" />
           <NavigationProperty Name="ColetorProducaoHistorico" Relationship="ConnectorModel.ctrain_coletor_producao_hist" FromRole="Coletor" ToRole="ColetorProducaoHistorico" />
           <NavigationProperty Name="ColetorTemperaturaHistorico" Relationship="ConnectorModel.ctrain_coletor_temperatura_hist" FromRole="Coletor" ToRole="ColetorTemperaturaHistorico" />
-          <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_alerta" FromRole="Coletor" ToRole="ColetorAlerta" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_empresa" FromRole="Coletor" ToRole="Empresa" />
-          <NavigationProperty Name="ColetorAlertaLog" Relationship="ConnectorModel.ctrain_coletor_lg_col" FromRole="Coletor" ToRole="ColetorAlertaLog" />
-          <NavigationProperty Name="ColetorTopico" Relationship="ConnectorModel.ctrain_coletortopico" FromRole="Coletor" ToRole="ColetorTopico" />
         </EntityType>
-        <Association Name="ctrain_coletor_maquina">
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maquina">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Coletor">
-              <PropertyRef Name="Id_Maquina" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_pressao_hist">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorPressaoHistorico" Role="ColetorPressaoHistorico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorPressaoHistorico">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_producao_hist">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorProducaoHistorico" Role="ColetorProducaoHistorico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorProducaoHistorico">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_temperatura_hist">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorTemperaturaHistorico" Role="ColetorTemperaturaHistorico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorTemperaturaHistorico">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ColetorAlerta">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
           <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
           <Property Name="Id_TipoAlerta" Type="Int32" Nullable="false" />
@@ -997,26 +967,26 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
           <Property Name="Ativo" Type="Int32" />
           <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_alerta" FromRole="ColetorAlerta" ToRole="Coletor" />
           <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_alert_empresa" FromRole="ColetorAlerta" ToRole="Empresa" />
-          <NavigationProperty Name="ColetorAlertaLog" Relationship="ConnectorModel.ctrain_coletor_lg_cola" FromRole="ColetorAlerta" ToRole="ColetorAlertaLog" />
           <NavigationProperty Name="ColetorTipoAlerta" Relationship="ConnectorModel.ctrain_coletor_tipoalerta" FromRole="ColetorAlerta" ToRole="ColetorTipoAlerta" />
         </EntityType>
-        <Association Name="ctrain_coletor_alerta">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorAlerta">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="ColetorTipoAlerta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnidadeMedida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Boolean" />
+          <Property Name="Tipo" Type="Int32" />
+          <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_tipoalerta" FromRole="ColetorTipoAlerta" ToRole="ColetorAlerta" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_tp_alert_empresa" FromRole="ColetorTipoAlerta" ToRole="Empresa" />
+        </EntityType>
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Tipo" Type="Int32" />
@@ -1035,323 +1005,169 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
           <Property Name="Bairro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_empresa" FromRole="Empresa" ToRole="Coletor" />
           <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_alert_empresa" FromRole="Empresa" ToRole="ColetorAlerta" />
+          <NavigationProperty Name="ColetorTipoAlerta" Relationship="ConnectorModel.ctrain_coletor_tp_alert_empresa" FromRole="Empresa" ToRole="ColetorTipoAlerta" />
           <NavigationProperty Name="LogAtividade" Relationship="ConnectorModel.ctrain_atividade_empresa" FromRole="Empresa" ToRole="LogAtividade" />
           <NavigationProperty Name="Filial" Relationship="ConnectorModel.ctrain_filial_empresa" FromRole="Empresa" ToRole="Filial" />
           <NavigationProperty Name="Gateway" Relationship="ConnectorModel.ctrain_gateway_empresa" FromRole="Empresa" ToRole="Gateway" />
           <NavigationProperty Name="Usuario" Relationship="ConnectorModel.id_empresa_constrain" FromRole="Empresa" ToRole="Usuario" />
           <NavigationProperty Name="Maquina" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Empresa" ToRole="Maquina" />
-          <NavigationProperty Name="ColetorTipoAlerta" Relationship="ConnectorModel.ctrain_coletor_tp_alert_empresa" FromRole="Empresa" ToRole="ColetorTipoAlerta" />
-          <NavigationProperty Name="Programa" Relationship="ConnectorModel.ctrain_programa_empresa" FromRole="Empresa" ToRole="Programa" />
-          <NavigationProperty Name="Processo" Relationship="ConnectorModel.id_empresa_processo_constrain" FromRole="Empresa" ToRole="Processo" />
-          <NavigationProperty Name="TipoProcesso" Relationship="ConnectorModel.id_empresa_tipoprocesso_constrain" FromRole="Empresa" ToRole="TipoProcesso" />
         </EntityType>
-        <Association Name="ctrain_coletor_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Coletor">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_alert_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorAlerta">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_atividade_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="ConnectorModel.LogAtividade" Role="LogAtividade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogAtividade">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_filial_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.Filial" Role="Filial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Filial">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_gateway_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Gateway" Role="Gateway" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Gateway">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_empresa_constrain">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.Usuario" Role="Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_empresa_maquina_constrain">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Maquina">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ColetorSensorMovHistorico">
+        <EntityType Name="Filial">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Coletor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Valor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_filial_empresa" FromRole="Filial" ToRole="Empresa" />
+          <NavigationProperty Name="Unidade" Relationship="ConnectorModel.ctrain_unidade_filial" FromRole="Filial" ToRole="Unidade" />
+        </EntityType>
+        <EntityType Name="Maquina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Maquina" ToRole="Coletor" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Maquina" ToRole="Empresa" />
+          <NavigationProperty Name="MaquinaHorario" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="Maquina" ToRole="MaquinaHorario" />
+        </EntityType>
+        <EntityType Name="Unidade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Filial" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Filial" Relationship="ConnectorModel.ctrain_unidade_filial" FromRole="Unidade" ToRole="Filial" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Last" Type="DateTime" Precision="3" />
+          <Property Name="Create" Type="DateTime" Precision="3" />
+          <Property Name="Ative" Type="Int32" />
+          <Property Name="Hash" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="Int32" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_constrain" FromRole="Usuario" ToRole="Empresa" />
+          <NavigationProperty Name="UsuarioLogin" Relationship="ConnectorModel.id_usu_med_login" FromRole="Usuario" ToRole="UsuarioLogin" />
+        </EntityType>
+        <EntityType Name="UsuarioLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Id_MedidorUsuario" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="ConnectorModel.id_usu_med_login" FromRole="UsuarioLogin" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="ColetorAlertaLog">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Coletor" />
+            <PropertyRef Name="Id_ColetorAlerta" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
           <Property Name="Id_ColetorAlerta" Type="Int32" Nullable="false" />
           <Property Name="DataHora" Type="DateTime" Precision="3" />
           <Property Name="ValorRegra" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="ValorEnviado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_lg_col" FromRole="ColetorAlertaLog" ToRole="Coletor" />
-          <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_lg_cola" FromRole="ColetorAlertaLog" ToRole="ColetorAlerta" />
         </EntityType>
-        <Association Name="ctrain_coletor_lg_col">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorAlertaLog" Role="ColetorAlertaLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorAlertaLog">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_lg_cola">
-          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorAlertaLog" Role="ColetorAlertaLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ColetorAlerta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorAlertaLog">
-              <PropertyRef Name="Id_ColetorAlerta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ColetorTipoAlerta">
+        <EntityType Name="ColetorPressaoHistorico">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Coletor" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UnidadeMedida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Boolean" />
-          <Property Name="Tipo" Type="Int32" />
-          <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_tipoalerta" FromRole="ColetorTipoAlerta" ToRole="ColetorAlerta" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_tp_alert_empresa" FromRole="ColetorTipoAlerta" ToRole="Empresa" />
-        </EntityType>
-        <Association Name="ctrain_coletor_tipoalerta">
-          <End Type="ConnectorModel.ColetorTipoAlerta" Role="ColetorTipoAlerta" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ColetorTipoAlerta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorAlerta">
-              <PropertyRef Name="Id_TipoAlerta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_coletor_tp_alert_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorTipoAlerta" Role="ColetorTipoAlerta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorTipoAlerta">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ColetorTopico">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Ativo" Type="Int32" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletortopico" FromRole="ColetorTopico" ToRole="Coletor" />
-          <NavigationProperty Name="ColetorTopicoLog" Relationship="ConnectorModel.ctrain_coletor_topico_log" FromRole="ColetorTopico" ToRole="ColetorTopicoLog" />
+          <Property Name="Pressao" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_pressao_hist" FromRole="ColetorPressaoHistorico" ToRole="Coletor" />
         </EntityType>
-        <Association Name="ctrain_coletortopico">
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorTopico" Role="ColetorTopico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Coletor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorTopico">
-              <PropertyRef Name="Id_Coletor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ColetorTopicoLog">
+        <EntityType Name="ColetorProducaoHistorico">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Coletor" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_ColetorTopico" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
           <Property Name="DataHora" Type="DateTime" Precision="3" />
-          <Property Name="Valor" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ColetorTopico" Relationship="ConnectorModel.ctrain_coletor_topico_log" FromRole="ColetorTopicoLog" ToRole="ColetorTopico" />
+          <Property Name="Valor" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_producao_hist" FromRole="ColetorProducaoHistorico" ToRole="Coletor" />
         </EntityType>
-        <Association Name="ctrain_coletor_topico_log">
-          <End Type="ConnectorModel.ColetorTopico" Role="ColetorTopico" Multiplicity="1" />
-          <End Type="ConnectorModel.ColetorTopicoLog" Role="ColetorTopicoLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ColetorTopico">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ColetorTopicoLog">
-              <PropertyRef Name="Id_ColetorTopico" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Processo">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Id_TipoProcesso" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_processo_constrain" FromRole="Processo" ToRole="Empresa" />
-          <NavigationProperty Name="Programa" Relationship="ConnectorModel.ctrain_programa_processo" FromRole="Processo" ToRole="Programa" />
-          <NavigationProperty Name="TipoProcesso" Relationship="ConnectorModel.id_tipoprocesso_processo_constrain" FromRole="Processo" ToRole="TipoProcesso" />
-        </EntityType>
-        <EntityType Name="Programa">
+        <EntityType Name="ColetorSensorMovHistorico">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="Coletor" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Coletor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Precision="3" />
+          <Property Name="Valor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ColetorTemperaturaHistorico">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Coletor" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Coletor" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Precision="3" />
+          <Property Name="Temperatura" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_temperatura_hist" FromRole="ColetorTemperaturaHistorico" ToRole="Coletor" />
+        </EntityType>
+        <EntityType Name="Gateway">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MAC" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Id_Empresa" Type="Int32" />
-          <Property Name="Id_Processo" Type="Int32" />
           <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_programa_empresa" FromRole="Programa" ToRole="Empresa" />
-          <NavigationProperty Name="Processo" Relationship="ConnectorModel.ctrain_programa_processo" FromRole="Programa" ToRole="Processo" />
+          <Property Name="IP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Boolean" />
+          <Property Name="MAC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_gateway_empresa" FromRole="Gateway" ToRole="Empresa" />
         </EntityType>
-        <Association Name="ctrain_programa_empresa">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Programa" Role="Programa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Programa">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_empresa_processo_constrain">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.Processo" Role="Processo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Processo">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ctrain_programa_processo">
-          <End Type="ConnectorModel.Processo" Role="Processo" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Programa" Role="Programa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Processo">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Programa">
-              <PropertyRef Name="Id_Processo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TipoProcesso">
+        <EntityType Name="LogAtividade">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Dispositivo" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="DataHora" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_tipoprocesso_constrain" FromRole="TipoProcesso" ToRole="Empresa" />
-          <NavigationProperty Name="Processo" Relationship="ConnectorModel.id_tipoprocesso_processo_constrain" FromRole="TipoProcesso" ToRole="Processo" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" />
+          <Property Name="Id_Dispositivo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_atividade_empresa" FromRole="LogAtividade" ToRole="Empresa" />
         </EntityType>
-        <Association Name="id_empresa_tipoprocesso_constrain">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.TipoProcesso" Role="TipoProcesso" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TipoProcesso">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_tipoprocesso_processo_constrain">
-          <End Type="ConnectorModel.TipoProcesso" Role="TipoProcesso" Multiplicity="1" />
-          <End Type="ConnectorModel.Processo" Role="Processo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoProcesso">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Processo">
-              <PropertyRef Name="Id_TipoProcesso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="MaquinaHorario">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Maquina" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Maquina" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DataHoraInicio" Type="DateTime" Precision="3" />
+          <Property Name="DataHoraFim" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="MaquinaHorario" ToRole="Maquina" />
+        </EntityType>
         <EntityType Name="Receita">
           <Key>
             <PropertyRef Name="Id" />
@@ -1416,12 +1232,347 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
           <Property Name="ValorG" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Ativo" Type="Int32" />
         </EntityType>
+        <EntityType Name="Setor">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Unidade" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Unidade" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Site_Acesso">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IP" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Site_Mensagem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Assunto" />
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Assunto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Site_NewsLetter">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Site_Proposta">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Empresa" />
+            <PropertyRef Name="Telefone" />
+            <PropertyRef Name="Proposta" />
+            <PropertyRef Name="DataHora" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Proposta" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="ctrain_coletor_alerta">
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Coletor">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_maquina">
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="0..1" />
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Coletor">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_pressao_hist">
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorPressaoHistorico" Role="ColetorPressaoHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorPressaoHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_producao_hist">
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorProducaoHistorico" Role="ColetorProducaoHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorProducaoHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_temperatura_hist">
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorTemperaturaHistorico" Role="ColetorTemperaturaHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coletor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorTemperaturaHistorico">
+              <PropertyRef Name="Id_Coletor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_alert_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_tipoalerta">
+          <End Type="ConnectorModel.ColetorTipoAlerta" Role="ColetorTipoAlerta" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorAlerta" Role="ColetorAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ColetorTipoAlerta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorAlerta">
+              <PropertyRef Name="Id_TipoAlerta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_coletor_tp_alert_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.ColetorTipoAlerta" Role="ColetorTipoAlerta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ColetorTipoAlerta">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_atividade_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="ConnectorModel.LogAtividade" Role="LogAtividade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogAtividade">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_filial_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.Filial" Role="Filial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filial">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_gateway_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="ConnectorModel.Gateway" Role="Gateway" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Gateway">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_empresa_constrain">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_empresa_maquina_constrain">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Maquina">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_unidade_filial">
+          <End Type="ConnectorModel.Filial" Role="Filial" Multiplicity="1" />
+          <End Type="ConnectorModel.Unidade" Role="Unidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Unidade">
+              <PropertyRef Name="Id_Filial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="maquina_hora_maquina">
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ConnectorModel.MaquinaHorario" Role="MaquinaHorario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaHorario">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_usu_med_login">
+          <End Type="ConnectorModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ConnectorModel.UsuarioLogin" Role="UsuarioLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioLogin">
+              <PropertyRef Name="Id_MedidorUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ConnectorModelStoreContainer" CdmEntityContainer="dbConnectorEntities">
+          <EntitySetMapping Name="Coletor">
+            <EntityTypeMapping TypeName="ConnectorModel.Coletor">
+              <MappingFragment StoreEntitySet="Coletor">
+                <ScalarProperty Name="Alerta" ColumnName="Alerta" />
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ColetorAlerta">
+            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlerta">
+              <MappingFragment StoreEntitySet="ColetorAlerta">
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Regra" ColumnName="Regra" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Prioridade" ColumnName="Prioridade" />
+                <ScalarProperty Name="Id_TipoAlerta" ColumnName="Id_TipoAlerta" />
+                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ColetorTipoAlerta">
+            <EntityTypeMapping TypeName="ConnectorModel.ColetorTipoAlerta">
+              <MappingFragment StoreEntitySet="ColetorTipoAlerta">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="UnidadeMedida" ColumnName="UnidadeMedida" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="ConnectorModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NomeFantasia" ColumnName="NomeFantasia" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="AnalitycCode" ColumnName="AnalitycCode" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Empresas" ColumnName="Empresas" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Filial">
             <EntityTypeMapping TypeName="ConnectorModel.Filial">
               <MappingFragment StoreEntitySet="Filial">
@@ -1432,24 +1583,12 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MaquinaHorario">
-            <EntityTypeMapping TypeName="ConnectorModel.MaquinaHorario">
-              <MappingFragment StoreEntitySet="MaquinaHorario">
-                <ScalarProperty Name="DataHoraFim" ColumnName="DataHoraFim" />
-                <ScalarProperty Name="DataHoraInicio" ColumnName="DataHoraInicio" />
+          <EntitySetMapping Name="Maquina">
+            <EntityTypeMapping TypeName="ConnectorModel.Maquina">
+              <MappingFragment StoreEntitySet="Maquina">
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Setor">
-            <EntityTypeMapping TypeName="ConnectorModel.Setor">
-              <MappingFragment StoreEntitySet="Setor">
-                <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1489,24 +1628,14 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Maquina">
-            <EntityTypeMapping TypeName="ConnectorModel.Maquina">
-              <MappingFragment StoreEntitySet="Maquina">
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gateway">
-            <EntityTypeMapping TypeName="ConnectorModel.Gateway">
-              <MappingFragment StoreEntitySet="Gateway">
-                <ScalarProperty Name="MAC" ColumnName="MAC" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <EntitySetMapping Name="ColetorAlertaLog">
+            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlertaLog">
+              <MappingFragment StoreEntitySet="ColetorAlertaLog">
+                <ScalarProperty Name="ValorEnviado" ColumnName="ValorEnviado" />
+                <ScalarProperty Name="ValorRegra" ColumnName="ValorRegra" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Id_ColetorAlerta" ColumnName="Id_ColetorAlerta" />
+                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1531,12 +1660,35 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ColetorSensorMovHistorico">
+            <EntityTypeMapping TypeName="ConnectorModel.ColetorSensorMovHistorico">
+              <MappingFragment StoreEntitySet="ColetorSensorMovHistorico">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Coletor" ColumnName="Coletor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ColetorTemperaturaHistorico">
             <EntityTypeMapping TypeName="ConnectorModel.ColetorTemperaturaHistorico">
               <MappingFragment StoreEntitySet="ColetorTemperaturaHistorico">
                 <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
                 <ScalarProperty Name="DataHora" ColumnName="DataHora" />
                 <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gateway">
+            <EntityTypeMapping TypeName="ConnectorModel.Gateway">
+              <MappingFragment StoreEntitySet="Gateway">
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1553,89 +1705,13 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Coletor">
-            <EntityTypeMapping TypeName="ConnectorModel.Coletor">
-              <MappingFragment StoreEntitySet="Coletor">
-                <ScalarProperty Name="Alerta" ColumnName="Alerta" />
-                <ScalarProperty Name="MAC" ColumnName="MAC" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+          <EntitySetMapping Name="MaquinaHorario">
+            <EntityTypeMapping TypeName="ConnectorModel.MaquinaHorario">
+              <MappingFragment StoreEntitySet="MaquinaHorario">
+                <ScalarProperty Name="DataHoraFim" ColumnName="DataHoraFim" />
+                <ScalarProperty Name="DataHoraInicio" ColumnName="DataHoraInicio" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
                 <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorAlerta">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlerta">
-              <MappingFragment StoreEntitySet="ColetorAlerta">
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Regra" ColumnName="Regra" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Prioridade" ColumnName="Prioridade" />
-                <ScalarProperty Name="Id_TipoAlerta" ColumnName="Id_TipoAlerta" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empresa">
-            <EntityTypeMapping TypeName="ConnectorModel.Empresa">
-              <MappingFragment StoreEntitySet="Empresa">
-                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="NomeFantasia" ColumnName="NomeFantasia" />
-                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="CEP" ColumnName="CEP" />
-                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
-                <ScalarProperty Name="Site" ColumnName="Site" />
-                <ScalarProperty Name="AnalitycCode" ColumnName="AnalitycCode" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Empresas" ColumnName="Empresas" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorSensorMovHistorico">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorSensorMovHistorico">
-              <MappingFragment StoreEntitySet="ColetorSensorMovHistorico">
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Coletor" ColumnName="Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorAlertaLog">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlertaLog">
-              <MappingFragment StoreEntitySet="ColetorAlertaLog">
-                <ScalarProperty Name="ValorEnviado" ColumnName="ValorEnviado" />
-                <ScalarProperty Name="ValorRegra" ColumnName="ValorRegra" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_ColetorAlerta" ColumnName="Id_ColetorAlerta" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorTipoAlerta">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorTipoAlerta">
-              <MappingFragment StoreEntitySet="ColetorTipoAlerta">
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="UnidadeMedida" ColumnName="UnidadeMedida" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1705,7 +1781,60 @@ FROM [dbo].[UsuarioLogin] AS [UsuarioLogin]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="Setor">
+            <EntityTypeMapping TypeName="ConnectorModel.Setor">
+              <MappingFragment StoreEntitySet="Setor">
+                <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
+                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site_Acesso">
+            <EntityTypeMapping TypeName="ConnectorModel.Site_Acesso">
+              <MappingFragment StoreEntitySet="Site_Acesso">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site_Mensagem">
+            <EntityTypeMapping TypeName="ConnectorModel.Site_Mensagem">
+              <MappingFragment StoreEntitySet="Site_Mensagem">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Assunto" ColumnName="Assunto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site_NewsLetter">
+            <EntityTypeMapping TypeName="ConnectorModel.Site_NewsLetter">
+              <MappingFragment StoreEntitySet="Site_NewsLetter">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Site_Proposta">
+            <EntityTypeMapping TypeName="ConnectorModel.Site_Proposta">
+              <MappingFragment StoreEntitySet="Site_Proposta">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Proposta" ColumnName="Proposta" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

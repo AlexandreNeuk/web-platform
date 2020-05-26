@@ -18,7 +18,5 @@ namespace Connector.Models
         public string Descricao { get; set; }
         public string Resumo { get; set; }
         public int Id_Unidade { get; set; }
-    
-        public virtual Unidade Unidade { get; set; }
     }
 }

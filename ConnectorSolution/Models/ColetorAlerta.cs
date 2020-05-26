@@ -14,11 +14,6 @@ namespace Connector.Models
     
     public partial class ColetorAlerta
     {
-        public ColetorAlerta()
-        {
-            this.ColetorAlertaLog = new HashSet<ColetorAlertaLog>();
-        }
-    
         public int Id { get; set; }
         public int Id_Empresa { get; set; }
         public int Id_Coletor { get; set; }
@@ -32,7 +27,6 @@ namespace Connector.Models
     
         public virtual Coletor Coletor { get; set; }
         public virtual Empresa Empresa { get; set; }
-        public virtual ICollection<ColetorAlertaLog> ColetorAlertaLog { get; set; }
         public virtual ColetorTipoAlerta ColetorTipoAlerta { get; set; }
     }
 }

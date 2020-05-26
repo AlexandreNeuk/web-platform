@@ -31,7 +31,7 @@ namespace Connector.Models
         public string Nome { get; set; }
         public Nullable<int> Tipo { get; set; }
     
-        public virtual ICollection<UsuarioLogin> UsuarioLogin { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual ICollection<UsuarioLogin> UsuarioLogin { get; set; }
     }
 }

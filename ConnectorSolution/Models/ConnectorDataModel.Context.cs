@@ -25,31 +25,30 @@ namespace Connector.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Coletor> Coletor { get; set; }
+        public DbSet<ColetorAlerta> ColetorAlerta { get; set; }
+        public DbSet<ColetorTipoAlerta> ColetorTipoAlerta { get; set; }
+        public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Filial> Filial { get; set; }
-        public DbSet<MaquinaHorario> MaquinaHorario { get; set; }
-        public DbSet<Setor> Setor { get; set; }
+        public DbSet<Maquina> Maquina { get; set; }
         public DbSet<Unidade> Unidade { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioLogin> UsuarioLogin { get; set; }
-        public DbSet<Maquina> Maquina { get; set; }
-        public DbSet<Gateway> Gateway { get; set; }
+        public DbSet<ColetorAlertaLog> ColetorAlertaLog { get; set; }
         public DbSet<ColetorPressaoHistorico> ColetorPressaoHistorico { get; set; }
         public DbSet<ColetorProducaoHistorico> ColetorProducaoHistorico { get; set; }
-        public DbSet<ColetorTemperaturaHistorico> ColetorTemperaturaHistorico { get; set; }
-        public DbSet<LogAtividade> LogAtividade { get; set; }
-        public DbSet<Coletor> Coletor { get; set; }
-        public DbSet<ColetorAlerta> ColetorAlerta { get; set; }
-        public DbSet<Empresa> Empresa { get; set; }
         public DbSet<ColetorSensorMovHistorico> ColetorSensorMovHistorico { get; set; }
-        public DbSet<ColetorAlertaLog> ColetorAlertaLog { get; set; }
-        public DbSet<ColetorTipoAlerta> ColetorTipoAlerta { get; set; }
-        public DbSet<ColetorTopico> ColetorTopico { get; set; }
-        public DbSet<ColetorTopicoLog> ColetorTopicoLog { get; set; }
-        public DbSet<Processo> Processo { get; set; }
-        public DbSet<Programa> Programa { get; set; }
-        public DbSet<TipoProcesso> TipoProcesso { get; set; }
+        public DbSet<ColetorTemperaturaHistorico> ColetorTemperaturaHistorico { get; set; }
+        public DbSet<Gateway> Gateway { get; set; }
+        public DbSet<LogAtividade> LogAtividade { get; set; }
+        public DbSet<MaquinaHorario> MaquinaHorario { get; set; }
         public DbSet<Receita> Receita { get; set; }
         public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
         public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
+        public DbSet<Setor> Setor { get; set; }
+        public DbSet<Site_Acesso> Site_Acesso { get; set; }
+        public DbSet<Site_Mensagem> Site_Mensagem { get; set; }
+        public DbSet<Site_NewsLetter> Site_NewsLetter { get; set; }
+        public DbSet<Site_Proposta> Site_Proposta { get; set; }
     }
 }
