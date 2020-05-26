@@ -3241,9 +3241,6 @@
                 //
                 var table = $('#dtreceitas');
                 var select = table.bootstrapTable('getSelections');
-                var alerta = $(d.getid('slcoletorgeraalerta')).children(":selected").attr("id");
-                var empresa_anterior = select.length == 0 ? $(d.getid('slempresacoletor')).children(":selected").attr("id") : select[0].Id_Empresa;
-                var empresa_nova = $(d.getid('slempresacoletor')).children(":selected").attr("id");
                 var id_receita = select.length == 0 ? 0 : select[0].Id;
                 //
                 var url = m.g.rsvlurl('receita/receitapost') + '?descricao=' + d.getid('txtdescreceita').value + '&idreceita=' + id_receita;
@@ -3253,7 +3250,7 @@
                     success: function (resp) {
                         if (resp && resp.data == 'ok') {
                             $('#idreceitamodal').modal('hide');
-                            m.receita.loadcoletores();
+                            m.receita.loadreceitas();
                         }
                         else {
                             try { m.receita.l.out() } catch (err) { }
@@ -3273,10 +3270,11 @@
                 var select = table.bootstrapTable('getSelections');
                 if (select && select.length > 0) {
                     if (select.length == 1) {
+
                         if (!select[0].Id_Maquina) {
                             bootbox.confirm({
-                                title: "Excluir Coletor?",
-                                message: "Você deseja realmente excluir o coletor ('" + select[0].Descricao + "')? <br />Esta ação não poderá ser disfeita.",
+                                title: "Excluir Receita?",
+                                message: "Você deseja realmente excluir a Receita ('" + select[0].Descricao + "')? <br />Esta ação não poderá ser disfeita.",
                                 centerVertical: true,
                                 buttons: {
                                     cancel: {
@@ -3289,12 +3287,11 @@
                                 callback: function (result) {
                                     //
                                     if (result) {
-                                        m.coletor.l = m.g.load('Excluindo...');
-                                        m.coletor.idreceita = select[0].Id;
-                                        m.coletor.idempresa = select[0].Id_Empresa;
-                                        $.get(m.g.rsvlurl('coletor/excluicoletorpost') + '?idreceita=' + select[0].Id + '&idempresa=' + select[0].Id_Empresa, function (data) {
+                                        m.receita.l = m.g.load('Excluindo receita...');
+                                        m.receita.idreceita = select[0].Id;
+                                        $.get(m.g.rsvlurl('receita/ExcluiReceitaPost') + '?idreceita=' + select[0].Id, function (data) {
                                             if (data.ret && data.ret == 'ok') {
-                                                m.coletor.loadcoletores();
+                                                m.receita.loadreceitas();
                                             }
                                             else if (data.ret && data.ret == 'erro') {
                                                 m.coletor.loadingout();
@@ -3310,16 +3307,13 @@
                                                 bootbox.alert({
                                                     size: "large",
                                                     title: "Ocorreu um erro",
-                                                    message: "Coletor não encontrado!",
+                                                    message: "Receita não encontrada!",
                                                     centerVertical: true
                                                 });
                                             }
-                                            else if ((data.ret.indexOf('hpres') > -1) || (data.ret.indexOf('htemp') > -1) || (data.ret.indexOf('hpro') > -1)) {
-                                                m.coletor.excluicoletorhistorico();
-                                            }
                                             else {
-                                                m.coletor.loadingout();
-                                                m.g.alert('Atenção', 'Ocorreu um erro ao tentar excluir o coletor. Erro: ' + data.erro);
+                                                m.receita.loadingout();
+                                                m.g.alert('Atenção', 'Ocorreu um erro ao tentar excluir a Receita. Erro: ' + data.erro);
                                             }
                                         });
                                     }
@@ -3353,64 +3347,17 @@
                     });
                 }
             },
-            excluicoletorhistorico: function () {
-                //
-                m.coletor.loadingout();
-                bootbox.confirm({
-                    title: "Excluir receita e histórico?",
-                    message: "Esta receita possui passos! Você deseja realmente excluir a receita e os passos?<br /><br />Esta ação não poderá ser disfeita.<br />Esta ação poderá demorar alguns minutos.",
-                    centerVertical: true,
-                    buttons: {
-                        cancel: {
-                            label: '<i class="fa fa-times"></i> Cancelar'
-                        },
-                        confirm: {
-                            label: '<i class="fa fa-check"></i> Confirmar'
-                        }
-                    },
-                    callback: function (result) {
-                        //
-                        if (result) {
-                            m.receita.l = m.g.load('Excluindo...');
-                            $.get(m.g.rsvlurl('receita/excluicoletorposthistorico') + '?idreceita=' + m.coletor.idreceita + '&idempresa=' + m.coletor.idempresa, function (data) {
-                                if (data.ret && data.ret == 'ok') {
-                                    //
-                                    bootbox.alert({
-                                        size: "small",
-                                        title: "Confirmação de Exclusão",
-                                        message: "Receita excluída com sucesso!<br />Foram excluídos " + data.total_excl + " registros de log.",
-                                        centerVertical: true
-                                    });
-                                    //
-                                    m.receita.idreceita = null;
-                                    m.receita.idempresa = null;
-                                    m.receita.loadmaquinas();
-                                }
-                                else {
-                                    try { m.receita.l.out() } catch (err) { }
-                                    bootbox.alert({
-                                        size: "large",
-                                        title: "Erro",
-                                        message: "Ocorreu um erro ao tentar excluir a receita ou seus passos: " + data.ret,
-                                        centerVertical: true
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            },
             setcoletorinclui: function () {
                 idreceita = 0;
                 $('#modalColetorLabel').text('Incluir Coletor');
                 $('input[id=txtdescreceita').val('');
-                $('input[id=txtmaccoletor').val('');
+                //$('input[id=txtmaccoletor').val('');
                 $('#divalertas').css('display', 'none');
                 $('#idreceitamodal').modal('show');
             },
-            editcoletor: function () {
+            editreceita: function () {
                 //
-                m.receita.l = m.g.load('Carregando coletor...');
+                m.receita.l = m.g.load('Carregando receita...');
                 m.receita.alertaedit = false;
                 var table = $('#dtreceitas');
                 var select = table.bootstrapTable('getSelections');
@@ -3422,28 +3369,17 @@
                         tablealertas.bootstrapTable('hideColumn', 'Valor');
                         tablealertas.bootstrapTable('hideColumn', 'Id');
 
-                        m.g.setcomboval('slempresacoletor', select[0].Id_Empresa);
                         $('input[id=txtdescreceita').val(select[0].Descricao);
-                        $('input[id=txtmaccoletor').val(select[0].MAC);
-                        if (select[0].Alerta == 1) {
-                            m.g.setcomboval('slcoletorgeraalerta', 1);
-                            m.receita.setenabdisabbtnalerta(false);
-                        }
-                        else {
-                            m.g.setcomboval('slcoletorgeraalerta', 0);
-                            m.receita.setenabdisabbtnalerta(true);
-                        }
-                        $('#divalertas').css('display', 'inline');
-                        $('#modalColetorLabel').text('Editar Coletor');
-                        //
-                        m.receita.loadalertascoletor();
+                        $('.modal-title').text('Editar Receita');
+                        $('#idreceitamodal').modal('show');
+                        m.receita.loadingout();
                     }
                     else {
                         m.receita.loadingout();
                         bootbox.alert({
                             size: "small",
                             title: "Restrição",
-                            message: "Selecione apenas um coletor para editar.",
+                            message: "Selecione apenas uma receita para editar.",
                             centerVertical: true
                         });
                     }
@@ -3453,17 +3389,16 @@
                     bootbox.alert({
                         size: "small",
                         title: "Restrição",
-                        message: "Selecione um coletor para editar.",
+                        message: "Selecione uma receita para editar.",
                         centerVertical: true
                     });
                 }
             },
-
             loadreceitas: function () {
                 $.get(m.g.rsvlurl('receita/carregadados'), function (data) {
                     if (data && data.data == 'ok') {
                         var $table = $('#dtreceitas');
-                        $table.bootstrapTable('load', data.lista_coletor);
+                        $table.bootstrapTable('load', data.lista_receita);
                         m.receita.loadingout();
                     }
                     else {

@@ -40,5 +40,7 @@ namespace Connector.Models
         public string ProdutoG { get; set; }
         public string ValorG { get; set; }
         public Nullable<int> Ativo { get; set; }
+    
+        public virtual Receita Receita { get; set; }
     }
 }

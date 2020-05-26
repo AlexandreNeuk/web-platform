@@ -15,7 +15,7 @@ namespace Connector.Controllers
         {
             //ViewBag.ListaReceitas
             ViewBag.FabricaAtivo = "active";
-            ViewBag.FabricaReceitaAtivo = "active";
+            ViewBag.FabricaPassoAtivo = "active";
             ViewBag.FabricaShow = "show";
             ViewBag.ListaReceitasPasso = CarregaDadosReceitas();
             ViewBag.ListaEmpresas = PegaEmpresas();

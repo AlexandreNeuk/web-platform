@@ -14,11 +14,21 @@ namespace Connector.Models
     
     public partial class Receita
     {
+        public Receita()
+        {
+            this.ReceitaPassoCentrifugacao = new HashSet<ReceitaPassoCentrifugacao>();
+            this.ReceitaPassoLavagem = new HashSet<ReceitaPassoLavagem>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> Id_Maquina { get; set; }
         public Nullable<int> Id_Empresa { get; set; }
         public string Descricao { get; set; }
         public string Resumo { get; set; }
         public Nullable<bool> Ativo { get; set; }
+    
+        public virtual Empresa Empresa { get; set; }
+        public virtual ICollection<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
+        public virtual ICollection<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
     }
 }

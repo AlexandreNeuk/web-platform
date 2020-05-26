@@ -24,6 +24,7 @@ namespace Connector.Models
             this.Gateway = new HashSet<Gateway>();
             this.Usuario = new HashSet<Usuario>();
             this.Maquina = new HashSet<Maquina>();
+            this.Receita = new HashSet<Receita>();
         }
     
         public int Id { get; set; }
@@ -52,5 +53,6 @@ namespace Connector.Models
         public virtual ICollection<Gateway> Gateway { get; set; }
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual ICollection<Maquina> Maquina { get; set; }
+        public virtual ICollection<Receita> Receita { get; set; }
     }
 }

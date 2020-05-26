@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="45389045526f45b588576827df305472" Name="Diagram1" ZoomLevel="103">
+      <Diagram DiagramId="45389045526f45b588576827df305472" Name="Diagram1" ZoomLevel="66">
         <EntityTypeShape EntityType="ConnectorModel.Coletor" Width="1.5" PointX="8.25" PointY="14.625" />
         <EntityTypeShape EntityType="ConnectorModel.ColetorAlerta" Width="1.5" PointX="10.5" PointY="22" />
         <EntityTypeShape EntityType="ConnectorModel.ColetorTipoAlerta" Width="1.5" PointX="3" PointY="30.375" />
@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="ConnectorModel.LogAtividade" Width="1.5" PointX="3" PointY="8.625" />
         <EntityTypeShape EntityType="ConnectorModel.MaquinaHorario" Width="1.5" PointX="5.25" PointY="11.75" />
         <EntityTypeShape EntityType="ConnectorModel.Setor" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Site_Mensagem" Width="1.5" PointX="6.75" PointY="6.75" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_alerta" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_empresa" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
@@ -41,9 +40,12 @@
         <AssociationConnector Association="ConnectorModel.ctrain_unidade_filial" />
         <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
         <AssociationConnector Association="ConnectorModel.id_usu_med_login" />
-        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoCentrifugacao" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="3" PointY="40.875" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoCentrifugacao" Width="1.5" PointX="5.25" PointY="36.75" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="5.25" PointY="41.625" />
+        <AssociationConnector Association="ConnectorModel.ctrain_rec_empresa" />
+        <AssociationConnector Association="ConnectorModel.ctrain_pass_centr" />
+        <AssociationConnector Association="ConnectorModel.ctrain_pass_lava" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -194,7 +194,7 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Maquina" Type="int" />
           <Property Name="Id_Empresa" Type="int" />
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
@@ -205,7 +205,7 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Receita" Type="int" Nullable="false" />
           <Property Name="ModoTrabalho" Type="varchar" MaxLength="3" />
           <Property Name="Saida" Type="varchar" MaxLength="30" />
@@ -225,7 +225,7 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Receita" Type="int" Nullable="false" />
           <Property Name="ModoTrabalho" Type="varchar" MaxLength="3" />
           <Property Name="TempoOperacao" Type="varchar" MaxLength="3" />
@@ -263,24 +263,6 @@ warning 6002: The table/view 'inequil.dbo.Setor' does not have a primary key def
           <Property Name="Descricao" Type="varchar" MaxLength="50" />
           <Property Name="Resumo" Type="varchar" MaxLength="250" />
           <Property Name="Id_Unidade" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.Site_Mensagem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Site_Mensagem">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Nome" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Assunto" />
-            <PropertyRef Name="Descricao" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Assunto" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="DataHora" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidade">
           <Key>
@@ -459,6 +441,42 @@ warning 6002: The table/view 'inequil.dbo.Site_Mensagem' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ctrain_pass_centr">
+          <End Role="Receita" Type="Self.Receita" Multiplicity="1" />
+          <End Role="ReceitaPassoCentrifugacao" Type="Self.ReceitaPassoCentrifugacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receita">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceitaPassoCentrifugacao">
+              <PropertyRef Name="Id_Receita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_pass_lava">
+          <End Role="Receita" Type="Self.Receita" Multiplicity="1" />
+          <End Role="ReceitaPassoLavagem" Type="Self.ReceitaPassoLavagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receita">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceitaPassoLavagem">
+              <PropertyRef Name="Id_Receita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_rec_empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Receita" Type="Self.Receita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receita">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ctrain_unidade_filial">
           <End Role="Filial" Type="Self.Filial" Multiplicity="1" />
           <End Role="Unidade" Type="Self.Unidade" Multiplicity="*" />
@@ -614,16 +632,6 @@ FROM [dbo].[MaquinaHorario] AS [MaquinaHorario]</DefiningQuery>
 [Setor].[Id_Unidade] AS [Id_Unidade]
 FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Site_Mensagem" EntityType="Self.Site_Mensagem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Site_Mensagem].[Id] AS [Id], 
-[Site_Mensagem].[Nome] AS [Nome], 
-[Site_Mensagem].[Email] AS [Email], 
-[Site_Mensagem].[Assunto] AS [Assunto], 
-[Site_Mensagem].[Descricao] AS [Descricao], 
-[Site_Mensagem].[DataHora] AS [DataHora]
-FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="ctrain_atividade_empresa" Association="Self.ctrain_atividade_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="LogAtividade" EntitySet="LogAtividade" />
@@ -672,6 +680,18 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Gateway" EntitySet="Gateway" />
           </AssociationSet>
+          <AssociationSet Name="ctrain_pass_centr" Association="Self.ctrain_pass_centr">
+            <End Role="Receita" EntitySet="Receita" />
+            <End Role="ReceitaPassoCentrifugacao" EntitySet="ReceitaPassoCentrifugacao" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_pass_lava" Association="Self.ctrain_pass_lava">
+            <End Role="Receita" EntitySet="Receita" />
+            <End Role="ReceitaPassoLavagem" EntitySet="ReceitaPassoLavagem" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_rec_empresa" Association="Self.ctrain_rec_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Receita" EntitySet="Receita" />
+          </AssociationSet>
           <AssociationSet Name="ctrain_unidade_filial" Association="Self.ctrain_unidade_filial">
             <End Role="Filial" EntitySet="Filial" />
             <End Role="Unidade" EntitySet="Unidade" />
@@ -716,7 +736,6 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <EntitySet Name="LogAtividade" EntityType="ConnectorModel.LogAtividade" />
           <EntitySet Name="MaquinaHorario" EntityType="ConnectorModel.MaquinaHorario" />
           <EntitySet Name="Setor" EntityType="ConnectorModel.Setor" />
-          <EntitySet Name="Site_Mensagem" EntityType="ConnectorModel.Site_Mensagem" />
           <AssociationSet Name="ctrain_coletor_alerta" Association="ConnectorModel.ctrain_coletor_alerta">
             <End Role="Coletor" EntitySet="Coletor" />
             <End Role="ColetorAlerta" EntitySet="ColetorAlerta" />
@@ -788,6 +807,18 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
           <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
           <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
+          <AssociationSet Name="ctrain_rec_empresa" Association="ConnectorModel.ctrain_rec_empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Receita" EntitySet="Receita" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_pass_centr" Association="ConnectorModel.ctrain_pass_centr">
+            <End Role="Receita" EntitySet="Receita" />
+            <End Role="ReceitaPassoCentrifugacao" EntitySet="ReceitaPassoCentrifugacao" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_pass_lava" Association="ConnectorModel.ctrain_pass_lava">
+            <End Role="Receita" EntitySet="Receita" />
+            <End Role="ReceitaPassoLavagem" EntitySet="ReceitaPassoLavagem" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Coletor">
           <Key>
@@ -868,6 +899,7 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <NavigationProperty Name="Gateway" Relationship="ConnectorModel.ctrain_gateway_empresa" FromRole="Empresa" ToRole="Gateway" />
           <NavigationProperty Name="Usuario" Relationship="ConnectorModel.id_empresa_constrain" FromRole="Empresa" ToRole="Usuario" />
           <NavigationProperty Name="Maquina" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Empresa" ToRole="Maquina" />
+          <NavigationProperty Name="Receita" Relationship="ConnectorModel.ctrain_rec_empresa" FromRole="Empresa" ToRole="Receita" />
         </EntityType>
         <EntityType Name="Filial">
           <Key>
@@ -1034,22 +1066,6 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Id_Unidade" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Site_Mensagem">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Nome" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Assunto" />
-            <PropertyRef Name="Descricao" />
-            <PropertyRef Name="DataHora" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Assunto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="ctrain_coletor_alerta">
           <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
@@ -1261,18 +1277,21 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Maquina" Type="Int32" />
           <Property Name="Id_Empresa" Type="Int32" />
           <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Ativo" Type="Boolean" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_rec_empresa" FromRole="Receita" ToRole="Empresa" />
+          <NavigationProperty Name="ReceitaPassoCentrifugacao" Relationship="ConnectorModel.ctrain_pass_centr" FromRole="Receita" ToRole="ReceitaPassoCentrifugacao" />
+          <NavigationProperty Name="ReceitaPassoLavagem" Relationship="ConnectorModel.ctrain_pass_lava" FromRole="Receita" ToRole="ReceitaPassoLavagem" />
         </EntityType>
         <EntityType Name="ReceitaPassoCentrifugacao">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Receita" Type="Int32" Nullable="false" />
           <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Saida" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1287,12 +1306,13 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <Property Name="Velocidade5" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="Tempo5" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Ativo" Type="Int32" />
+          <NavigationProperty Name="Receita" Relationship="ConnectorModel.ctrain_pass_centr" FromRole="ReceitaPassoCentrifugacao" ToRole="Receita" />
         </EntityType>
         <EntityType Name="ReceitaPassoLavagem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Receita" Type="Int32" Nullable="false" />
           <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="TempoOperacao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -1318,7 +1338,44 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
           <Property Name="ProdutoG" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="ValorG" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Ativo" Type="Int32" />
+          <NavigationProperty Name="Receita" Relationship="ConnectorModel.ctrain_pass_lava" FromRole="ReceitaPassoLavagem" ToRole="Receita" />
         </EntityType>
+        <Association Name="ctrain_rec_empresa">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="ConnectorModel.Receita" Role="Receita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receita">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_pass_centr">
+          <End Type="ConnectorModel.Receita" Role="Receita" Multiplicity="1" />
+          <End Type="ConnectorModel.ReceitaPassoCentrifugacao" Role="ReceitaPassoCentrifugacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receita">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceitaPassoCentrifugacao">
+              <PropertyRef Name="Id_Receita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_pass_lava">
+          <End Type="ConnectorModel.Receita" Role="Receita" Multiplicity="1" />
+          <End Type="ConnectorModel.ReceitaPassoLavagem" Role="ReceitaPassoLavagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receita">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceitaPassoLavagem">
+              <PropertyRef Name="Id_Receita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1539,18 +1596,6 @@ FROM [dbo].[Site_Mensagem] AS [Site_Mensagem]</DefiningQuery>
                 <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
                 <ScalarProperty Name="Resumo" ColumnName="Resumo" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Site_Mensagem">
-            <EntityTypeMapping TypeName="ConnectorModel.Site_Mensagem">
-              <MappingFragment StoreEntitySet="Site_Mensagem">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Assunto" ColumnName="Assunto" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

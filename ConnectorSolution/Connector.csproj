@@ -273,9 +273,6 @@
     <Compile Include="Models\Setor.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Site_Mensagem.cs">
-      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Unidade.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>

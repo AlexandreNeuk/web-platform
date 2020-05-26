@@ -43,7 +43,6 @@ namespace Connector.Models
         public DbSet<LogAtividade> LogAtividade { get; set; }
         public DbSet<MaquinaHorario> MaquinaHorario { get; set; }
         public DbSet<Setor> Setor { get; set; }
-        public DbSet<Site_Mensagem> Site_Mensagem { get; set; }
         public DbSet<Receita> Receita { get; set; }
         public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
         public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }

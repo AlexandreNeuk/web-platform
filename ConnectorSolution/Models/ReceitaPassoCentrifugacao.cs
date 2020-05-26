@@ -29,5 +29,7 @@ namespace Connector.Models
         public string Velocidade5 { get; set; }
         public string Tempo5 { get; set; }
         public Nullable<int> Ativo { get; set; }
+    
+        public virtual Receita Receita { get; set; }
     }
 }

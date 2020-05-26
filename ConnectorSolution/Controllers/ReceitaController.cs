@@ -116,5 +116,33 @@ namespace Connector.Controllers
             //
             return Json(new { data = sret, lista_receita, results = 0, success = true }, JsonRequestBehavior.AllowGet);
         }
+        //
+        public JsonResult ExcluiReceitaPost(int idreceita)
+        {
+            string ret = string.Empty;
+            string erro = string.Empty;
+            try
+            {
+                Receita oReceita = db.Receita.Where(a => a.Id == idreceita && a.Id_Empresa == Codigo_Empresa).FirstOrDefault();
+                //
+                if (oReceita != null)
+                {
+                    db.Entry(oReceita).State = System.Data.EntityState.Deleted;
+                    db.SaveChanges();
+                    ret = "ok";
+                }
+                else
+                {
+                    ret = "nao_encontrada";
+                }
+            }
+            catch (Exception exc)
+            {
+                ret = "erro";
+                erro = exc.Message;
+            }
+
+            return Json(new { ret, results = 0, erro, success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
