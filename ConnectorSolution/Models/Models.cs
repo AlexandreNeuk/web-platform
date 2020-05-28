@@ -81,6 +81,61 @@ namespace Connector.Models
         public Nullable<bool> Ativo { get; set; }
     }
 
+    public class ReceitaPassoGridModel
+    {
+        public int Id { get; set; }
+        public string Tipo { get; set; }
+        public string Descricao { get; set; }
+        public string Variavel { get; set; }
+        public string Valor { get; set; }
+    }
+
+    public class ReceitaPassoModel
+    {
+        public int Id { get; set; }
+        public int Id_Receita { get; set; }
+        public string ModoTrabalho { get; set; }
+        public string TempoOperacao { get; set; }
+        public string TempoReversao { get; set; }
+        public string RPM { get; set; }
+        public string Temperatura { get; set; }
+        public string SemVapor { get; set; }
+        public string Entrada { get; set; }
+        public string Nivel { get; set; }
+        public string Saida { get; set; }
+        public string ProdutoA { get; set; }
+        public string ValorA { get; set; }
+        public string ProdutoB { get; set; }
+        public string ValorB { get; set; }
+        public string ProdutoC { get; set; }
+        public string ValorC { get; set; }
+        public string ProdutoD { get; set; }
+        public string ValorD { get; set; }
+        public string ProdutoE { get; set; }
+        public string ValorE { get; set; }
+        public string ProdutoF { get; set; }
+        public string ValorF { get; set; }
+        public string ProdutoG { get; set; }
+        public string ValorG { get; set; }
+        public Nullable<int> Ativo { get; set; }
+        public int IdCentrifuga { get; set; }
+        public int Id_ReceitaCentrifuga { get; set; }
+        public string ModoTrabalhoCentrifuga { get; set; }
+        public string SaidaCentrifuga { get; set; }
+        public string Velocidade1 { get; set; }
+        public string Tempo1 { get; set; }
+        public string Velocidade2 { get; set; }
+        public string Tempo2 { get; set; }
+        public string Velocidade3 { get; set; }
+        public string Tempo3 { get; set; }
+        public string Velocidade4 { get; set; }
+        public string Tempo4 { get; set; }
+        public string Velocidade5 { get; set; }
+        public string Tempo5 { get; set; }
+        public Nullable<int> AtivoCentrifuga { get; set; }
+    }
+
+
     public class ColetorModel
     {
         public int Id { get; set; }

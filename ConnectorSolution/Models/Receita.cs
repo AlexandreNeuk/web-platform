@@ -16,8 +16,7 @@ namespace Connector.Models
     {
         public Receita()
         {
-            this.ReceitaPassoCentrifugacao = new HashSet<ReceitaPassoCentrifugacao>();
-            this.ReceitaPassoLavagem = new HashSet<ReceitaPassoLavagem>();
+            this.ReceitaPasso = new HashSet<ReceitaPasso>();
         }
     
         public int Id { get; set; }
@@ -28,7 +27,6 @@ namespace Connector.Models
         public Nullable<bool> Ativo { get; set; }
     
         public virtual Empresa Empresa { get; set; }
-        public virtual ICollection<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
-        public virtual ICollection<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
+        public virtual ICollection<ReceitaPasso> ReceitaPasso { get; set; }
     }
 }

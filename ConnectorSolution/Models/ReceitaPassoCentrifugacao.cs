@@ -15,7 +15,7 @@ namespace Connector.Models
     public partial class ReceitaPassoCentrifugacao
     {
         public int Id { get; set; }
-        public int Id_Receita { get; set; }
+        public int Id_ReceitaPasso { get; set; }
         public string ModoTrabalho { get; set; }
         public string Saida { get; set; }
         public string Velocidade1 { get; set; }
@@ -30,6 +30,6 @@ namespace Connector.Models
         public string Tempo5 { get; set; }
         public Nullable<int> Ativo { get; set; }
     
-        public virtual Receita Receita { get; set; }
+        public virtual ReceitaPasso ReceitaPasso { get; set; }
     }
 }

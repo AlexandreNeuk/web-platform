@@ -41,8 +41,8 @@ namespace Connector.Controllers
                     //
                     oReceitaModel.Ativo = item.Ativo;
                     oReceitaModel.Descricao = item.Descricao;
-                    int tot_recei_centr = db.ReceitaPassoCentrifugacao.Where(x => x.Id_Receita == item.Id).ToList().Count;
-                    int tot_recei_lava = db.ReceitaPassoLavagem.Where(x => x.Id_Receita == item.Id).ToList().Count;
+                    int tot_recei_centr = 0; // db.ReceitaPassoCentrifugacao.Where(x => x.Id_Receita == item.Id).ToList().Count;
+                    int tot_recei_lava = 0; // db.ReceitaPassoLavagem.Where(x => x.Id_Receita == item.Id).ToList().Count;
                     //
                     oReceitaModel.TotalPassos = tot_recei_centr + tot_recei_lava;
                     //

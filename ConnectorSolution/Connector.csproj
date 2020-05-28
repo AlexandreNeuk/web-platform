@@ -264,6 +264,9 @@
     <Compile Include="Models\Receita.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReceitaPasso.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReceitaPassoCentrifugacao.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>

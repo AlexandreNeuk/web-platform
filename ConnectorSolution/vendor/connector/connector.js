@@ -3413,5 +3413,271 @@
         }
     })()
     //
+    _m.receita_passo = (function () {
+        return {
+            l: null, idreceita: null, alertaedit: null, alertainit: null,
+            init: function (data) {
+                var $table = $('#dtreceitas')
+                $table.bootstrapTable({ data: data });
+                if (m.sessao.tipo_empresa_logado != 1) {
+                    $table.bootstrapTable('hideColumn', 'Empresa');
+                }
+            },
+            salva: function () {
+                //
+                if (!$('input[id=txtdescreceita').val()) {
+                    m.g.alert('Atenção', 'Informe a descrição da Receita!');
+                    return;
+                }
+                m.receita.l = m.g.load('Salvando');
+                //
+                var table = $('#dtreceitas');
+                var select = table.bootstrapTable('getSelections');
+                var id_receita = select.length == 0 ? 0 : select[0].Id;
+                //
+                var url = m.g.rsvlurl('receita/receitapost') + '?descricao=' + d.getid('txtdescreceita').value + '&idreceita=' + id_receita;
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    success: function (resp) {
+                        if (resp && resp.data == 'ok') {
+                            $('#idreceitamodal').modal('hide');
+                            m.receita.loadreceitas();
+                        }
+                        else {
+                            try { m.receita.l.out() } catch (err) { }
+                            $('#maquinaModal').modal('hide');
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar incluir a máquina. Erro: ' + data.erro);
+                        }
+                        $('#coletorModal').modal('hide');
+                    },
+                    error: function (xhr, error) {
+                        console.log(xhr);
+                        console.log(error);
+                    }
+                });
+            },
+            exclui: function () {
+                var table = $('#dtreceitas');
+                var select = table.bootstrapTable('getSelections');
+                if (select && select.length > 0) {
+                    if (select.length == 1) {
+
+                        if (!select[0].Id_Maquina) {
+                            bootbox.confirm({
+                                title: "Excluir Receita?",
+                                message: "Você deseja realmente excluir a Receita ('" + select[0].Descricao + "')? <br />Esta ação não poderá ser disfeita.",
+                                centerVertical: true,
+                                buttons: {
+                                    cancel: {
+                                        label: '<i class="fa fa-times"></i> Cancelar'
+                                    },
+                                    confirm: {
+                                        label: '<i class="fa fa-check"></i> Confirmar'
+                                    }
+                                },
+                                callback: function (result) {
+                                    //
+                                    if (result) {
+                                        m.receita.l = m.g.load('Excluindo receita...');
+                                        m.receita.idreceita = select[0].Id;
+                                        $.get(m.g.rsvlurl('receita/ExcluiReceitaPost') + '?idreceita=' + select[0].Id, function (data) {
+                                            if (data.ret && data.ret == 'ok') {
+                                                m.receita.loadreceitas();
+                                            }
+                                            else if (data.ret && data.ret == 'erro') {
+                                                m.coletor.loadingout();
+                                                bootbox.alert({
+                                                    size: "large",
+                                                    title: "Ocorreu um erro",
+                                                    message: data.erro,
+                                                    centerVertical: true
+                                                });
+                                            }
+                                            else if (data.ret && data.ret == 'nao_encontrada') {
+                                                m.coletor.loadingout();
+                                                bootbox.alert({
+                                                    size: "large",
+                                                    title: "Ocorreu um erro",
+                                                    message: "Receita não encontrada!",
+                                                    centerVertical: true
+                                                });
+                                            }
+                                            else {
+                                                m.receita.loadingout();
+                                                m.g.alert('Atenção', 'Ocorreu um erro ao tentar excluir a Receita. Erro: ' + data.erro);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            bootbox.alert({
+                                size: "large",
+                                title: "Restriçao",
+                                message: "Primeiro desassocie a máquina '" + select[0].Maquina + "' do coletor!",
+                                centerVertical: true
+                            });
+                        }
+                    }
+                    else {
+                        bootbox.alert({
+                            size: "small",
+                            title: "Restriçao",
+                            message: "Selecione apenas um coletor para excluir.",
+                            centerVertical: true
+                        })
+                    }
+                }
+                else {
+                    bootbox.alert({
+                        size: "small",
+                        title: "Restriçao",
+                        message: "Selecione uma receita para excluir.",
+                        centerVertical: true
+                    });
+                }
+            },
+            setcoletorinclui: function () {
+                idreceita = 0;
+                $('#modalColetorLabel').text('Incluir Coletor');
+                $('input[id=txtdescreceita').val('');
+                //$('input[id=txtmaccoletor').val('');
+                $('#divalertas').css('display', 'none');
+                $('#idreceitamodal').modal('show');
+            },
+            editreceita: function () {
+                //
+                m.receita.l = m.g.load('Carregando receita...');
+                m.receita.alertaedit = false;
+                var table = $('#dtreceitas');
+                var select = table.bootstrapTable('getSelections');
+                if (select && select.length > 0) {
+                    //
+                    if (select.length == 1) {
+                        //
+                        var tablealertas = $('#dtalertas')
+                        tablealertas.bootstrapTable('hideColumn', 'Valor');
+                        tablealertas.bootstrapTable('hideColumn', 'Id');
+
+                        $('input[id=txtdescreceita').val(select[0].Descricao);
+                        $('.modal-title').text('Editar Receita');
+                        $('#idreceitamodal').modal('show');
+                        m.receita.loadingout();
+                    }
+                    else {
+                        m.receita.loadingout();
+                        bootbox.alert({
+                            size: "small",
+                            title: "Restrição",
+                            message: "Selecione apenas uma receita para editar.",
+                            centerVertical: true
+                        });
+                    }
+                }
+                else {
+                    m.receita.loadingout();
+                    bootbox.alert({
+                        size: "small",
+                        title: "Restrição",
+                        message: "Selecione uma receita para editar.",
+                        centerVertical: true
+                    });
+                }
+            },
+            loadreceita_passos: function () {
+                $.get(m.g.rsvlurl('receita/carregadados'), function (data) {
+                    if (data && data.data == 'ok') {
+                        var $table = $('#dtreceitas');
+                        $table.bootstrapTable('load', data.lista_receita);
+                        m.receita.loadingout();
+                    }
+                    else {
+                        m.receita.loadingout();
+                        alert('Erro: ' + data.ret);
+                    }
+                });
+            },
+            busca_receita_passo: function () {
+                //
+                //var select = table.bootstrapTable('getSelections');
+                var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
+                //
+                if (id_receita) {
+                    //
+                    $.get(m.g.rsvlurl('receitapasso/carregadadosbyid') + '?id=' + id_receita, function (data) {
+                        console.log('data: ', data)
+                        if (data && data.data == 'ok') {
+                            //
+                            var $table = $('#dtreceitapassos');
+                            if (data.lista_receita_passos_grid.length > 0) {
+                                $table.bootstrapTable({ data: data.lista_receita_passos_grid });
+                            }
+                            //m.receita.loadingout();
+                            //m.receita_passo.loadreceita_passos();
+                        }
+                        else if (data.ret && data.ret == 'erro') {
+                            m.coletor.loadingout();
+                            bootbox.alert({
+                                size: "large",
+                                title: "Ocorreu um erro",
+                                message: data.erro,
+                                centerVertical: true
+                            });
+                        }
+                        else if (data.ret && data.ret == 'nao_encontrada') {
+                            m.coletor.loadingout();
+                            bootbox.alert({
+                                size: "large",
+                                title: "Ocorreu um erro",
+                                message: "Receita não encontrada!",
+                                centerVertical: true
+                            });
+                        }
+                        else {
+                            m.receita.loadingout();
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar excluir a Receita. Erro: ' + data.erro);
+                        }
+                    });
+                }
+            },
+            carregar: function () {
+                //
+                var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
+                //
+                if (id_receita) {
+                    //Carrega
+                    $.get(m.g.rsvlurl('receitapasso/Ccarrega') + '?id=' + id_receita, function (data) {
+                        //
+                        console.log('data: -> ', data)
+                        if (data.ret && data.ret == 'ok') {
+                            m.receita.loadreceitas();
+                        }
+                        else if (data.ret && data.ret == 'erro') {
+                            m.coletor.loadingout();
+                            bootbox.alert({
+                                size: "large",
+                                title: "Ocorreu um erro",
+                                message: data.erro,
+                                centerVertical: true
+                            });
+                        }
+                        else if (data.ret && data.ret == 'nao_encontrada') {
+                        }
+                        else {
+                            m.receita.loadingout();
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar carregar a Receita. Erro: ' + data.erro);
+                        }
+                    });
+                }
+            },
+            loadingout: function () {
+                try { m.receita.l.out() } catch (e) { }
+            }
+        }
+    })()
+
+    //
     return _m;
 }()
