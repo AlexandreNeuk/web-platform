@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Connector.Controllers
@@ -233,40 +234,40 @@ namespace Connector.Controllers
             return lista_receita_passo_grid_models;
         }
         //
-        public JsonResult ReceitaPost(string descricao, int idreceita)
+        public JsonResult Passo(int id, int id_receita, string descricao, int tipo, string txtmodotrabalho, string rpm)
         {
             string sret = string.Empty;
             string erro = string.Empty;
             //
             try
             {
-                Receita oReceita = new Receita();
+                ReceitaPasso oReceitaPasso = db.ReceitaPasso.Where(a => a.Id == id_receita).FirstOrDefault();
                 //
-                if (idreceita > 0)
+                if (oReceitaPasso == null)
+                    oReceitaPasso = new ReceitaPasso();
+                //
+                oReceitaPasso.Id_Receita = id_receita;
+                oReceitaPasso.Decricao = descricao;
+                oReceitaPasso.Tipo = tipo.ToString();
+                oReceitaPasso.Ativo = 1;
+                //
+                if (id > 0)
                 {
-                    oReceita = db.Receita.Where(a => a.Id_Empresa == Codigo_Empresa && a.Id == idreceita).FirstOrDefault();
-                    //
-                    if (oReceita != null)
-                    {
-                        oReceita.Descricao = descricao;
-                        db.Entry(oReceita).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        sret = "Coletor não encontrado!";
-                    }
+                    db.Entry(oReceitaPasso).State = EntityState.Modified;
                 }
                 else
                 {
-                    oReceita.Descricao = descricao;
-                    oReceita.Ativo = true;
-                    oReceita.Id_Empresa = Codigo_Empresa;
-                    //
-                    db.Receita.Add(oReceita);
-                    db.SaveChanges();
-                    db.Entry(oReceita).Reload();
+                    db.ReceitaPasso.Add(oReceitaPasso);
                 }
+                //
+                db.SaveChanges();
+                db.Entry(oReceitaPasso).Reload();
+                //
+                ReceitaPassoLavagem rpl = db.ReceitaPassoLavagem.Where(a => a.Id == id).FirstOrDefault();
+                //
+                if (rpl == null) rpl = new ReceitaPassoLavagem();
+                //
+                rpl.ModoTrabalho = txtmodotrabalho;
                 //
                 sret = "ok";
             }

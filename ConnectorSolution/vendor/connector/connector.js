@@ -118,6 +118,17 @@
                     node.nodeValue = cssText;
                     return node;
                 })(cssText)
+            },
+            check_item: function (id, id2) {
+                //
+                if (d.getid(id).disabled) {
+                    d.getid(id).disabled = false
+                    d.getid(id2).disabled = false
+                }
+                else {
+                    d.getid(id).disabled = true
+                    d.getid(id2).disabled = true
+                }                
             }
         }
     })();
@@ -3414,7 +3425,9 @@
     })()
     //
     _m.receita_passo = (function () {
+        //
         return {
+            //
             l: null, idreceita: null, alertaedit: null, alertainit: null,
             init: function (data) {
                 var $table = $('#dtreceitas')
@@ -3423,19 +3436,36 @@
                     $table.bootstrapTable('hideColumn', 'Empresa');
                 }
             },
-            salva: function () {
+            salva: function (id) {
                 //
-                if (!$('input[id=txtdescreceita').val()) {
-                    m.g.alert('Atenção', 'Informe a descrição da Receita!');
-                    return;
+                if (!id) id = 0
+
+                if (document.getid('divlavagem').style.display == 'inline') {
+                    //
+                    if (!$('input[id=txtpassodesc').val()) {
+                        m.g.alert('Atenção', 'Informe a descrição do Passo!');
+                        return;
+                    }
+                    //
+                    if (!$('input[id=txtmodotrabalho').val()) {
+                        m.g.alert('Atenção', 'Informe a descrição do Modo de Trabalho!');
+                        return;
+                    }
+                    //
+
                 }
-                m.receita.l = m.g.load('Salvando');
+                else if (document.getid('divcentrifugacao').style.display == 'inline') {
+                    //
+                }
+                //m.receita_passo.l = m.g.load('Salvando');
                 //
-                var table = $('#dtreceitas');
-                var select = table.bootstrapTable('getSelections');
-                var id_receita = select.length == 0 ? 0 : select[0].Id;
+                var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
+                var tipo = "1";
+                var txtpassodesc = $('input[id=txtpassodesc').val();
+                var txtmodotrabalho = $('input[id=txtmodotrabalho').val();
+                var txtrpm = $('input[id=txtrpm').val();
                 //
-                var url = m.g.rsvlurl('receita/receitapost') + '?descricao=' + d.getid('txtdescreceita').value + '&idreceita=' + id_receita;
+                var url = m.g.rsvlurl('receitapasso/passo') + '?id=' + id + '&id_receita=' + id_receita + '&descricao=' + txtpassodesc + '&tipo=' + tipo + '&modotrabalho=' + txtmodotrabalho + '&rpm=' + txtrpm;
                 $.ajax({
                     url: url,
                     type: "post",
@@ -3539,13 +3569,29 @@
                     });
                 }
             },
-            setcoletorinclui: function () {
+            set_receita_passo_inclui: function () {
                 idreceita = 0;
-                $('#modalColetorLabel').text('Incluir Coletor');
+                $('#modalReceitaPassoLabel').text('Incluir Passos');
                 $('input[id=txtdescreceita').val('');
                 //$('input[id=txtmaccoletor').val('');
                 $('#divalertas').css('display', 'none');
                 $('#idreceitamodal').modal('show');
+            },
+            change_tipo_passo: function (item) {
+                //
+                let id = item.options[item.selectedIndex].id
+                if (id) {
+                    if (id == '1') {
+                        //
+                        d.getid('divlavagem').style.display = 'inline';
+                        d.getid('divcentrifugacao').style.display = 'none';
+                    }
+                    else if (id == '2') {
+                        //
+                        d.getid('divlavagem').style.display = 'none';
+                        d.getid('divcentrifugacao').style.display = 'inline';
+                    }
+                }
             },
             editreceita: function () {
                 //

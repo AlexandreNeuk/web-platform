@@ -14,7 +14,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-primary" onclick="m.receita_passo.setcoletorinclui()">
+            <button class="btn btn-primary" onclick="m.receita_passo.set_receita_passo_inclui()">
                 Incluir
             </button>
             <button class="btn btn-primary" onclick="m.receita_passo.editreceita()">
@@ -31,7 +31,7 @@
             </button>
         </div>
 
-        <div class="form-group" style="padding-top: 44px !important; padding-left: 22px !important; width: 25%;">
+        <div class="form-group" style="padding-top: 0px !important; padding-left: 22px !important; width: 25%;">
             <table>
                 <tr>
                     <td>
@@ -59,45 +59,235 @@
                 </tr>
             </table>
         </div>
-
-
-
         <div class="card-body">
-
             <!-- Modal Novo/Edita Coletor -->
             <div class="modal fade" id="idreceitamodal" tabindex="-1" role="dialog" aria-labelledby="modalReceitaLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content-insert-alerta">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="modalReceitaLabel"></h4>
+                            <h4 class="modal-title" id="modalReceitaPassoLabel"></h4>
                         </div>
-                        <div class="form-group-insert-alerta">
-                            <label>Empresa:</label>
-                            <select class="form-control" id="slempresacoletor">
-                                @if (ViewBag.ListaEmpresas != null)
-                                {
-                                    foreach (var item in ViewBag.ListaEmpresas)
-                                    {
-                                        if (item != null)
-                                        {
-                                            <option id="@item.Id">@item.Nome</option>
-                                        }
-                                    }
-                                }
-                            </select>
-                        </div>
-
-                        <div class="form-group-insert-alerta">
-                            <label>Descrição da Receita</label>
-                            <input id="txtdescreceita" class="form-control">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tipo Passo:</label>
+                                    <select class="form-control" id="slempresacoletor" onchange="m.receita_passo.change_tipo_passo(this)">
+                                        <option id="1">Lavagem</option>
+                                        <option id="2">Centrifugação</option>
+                                    </select>
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Descrição do Passo</label>
+                                    <input id="txtpassodesc" class="form-control">
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group-insert-alerta">
+                        <div class="container" id="divlavagem" style="display: inline;">
+                            <div class="row">
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkmodotravalholava" onclick="m.g.check_item('txtmodotrabalho')" />
+                                    <label>Modo de Trabalho</label>
+                                    <input id="txtmodotrabalho" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkrpm" onclick="m.g.check_item('txtrpm')" />
+                                    <label>RPM</label>
+                                    <input id="txtrpm" class="form-control">
+                                </div>
 
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chktemporeversao" onclick="m.g.check_item('txttemporeversao')" />
+                                    <label>Tempo Reversão</label>
+                                    <input id="txttemporeversao" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chktempooperacao" onclick="m.g.check_item('txttempooperacao')" />
+                                    <label>Tempo Operação</label>
+                                    <input id="txttempooperacao" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkentrada" onclick="m.g.check_item('txtentrada')" />
+                                    <label>Entrada</label>
+                                    <input id="txtentrada" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkentrada" onclick="m.g.check_item('txtsaida')" />
+                                    <label>Saída</label>
+                                    <input id="txtsaida" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chknivel" onclick="m.g.check_item('txtnivel')" />
+                                    <label>Nível</label>
+                                    <input id="txtnivel" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkativo" onclick="m.g.check_item('txtativo')" />
+                                    <label>Ativo</label>
+                                    <input id="txtativo" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chktemp" onclick="m.g.check_item('txttemperatura')" />
+                                    <label>Temperatura</label>
+                                    <input id="txttemperatura" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chksemvapor" onclick="m.g.check_item('txtsemvapor')" />
+                                    <label>Sem Vapor</label>
+                                    <input id="txtsemvapor" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkproda" onclick="m.g.check_item('txtprodutoa', 'txtvalora')" />
+                                    <label>Produto A</label>
+                                    <input id="txtprodutoa" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor A</label>
+                                    <input id="txtvalora" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprodb" onclick="m.g.check_item('txtprodutob', 'txtvalorb')" />
+                                    <label>Produto B</label>
+                                    <input id="txtprodutob" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor B</label>
+                                    <input id="txtvalorb" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprodc" onclick="m.g.check_item('txtprodutoc', 'txtvalorc')" />
+                                    <label>Produto C</label>
+                                    <input id="txtprodutoc" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor C</label>
+                                    <input id="txtvalorc" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprodd" onclick="m.g.check_item('txtprodutod', 'txtvalord')" />
+                                    <label>Produto D</label>
+                                    <input id="txtprodutod" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor D</label>
+                                    <input id="txtvalord" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprode" onclick="m.g.check_item('txtprodutoe', 'txtvalore')" />
+                                    <label>Produto E</label>
+                                    <input id="txtprodutoe" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor E</label>
+                                    <input id="txtvalore" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprodf" onclick="m.g.check_item('txtprodutof', 'txtvalorf')" />
+                                    <label>Produto F</label>
+                                    <input id="txtprodutof" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor F</label>
+                                    <input id="txtvalorf" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" id="chkprodg" onclick="m.g.check_item('txtprodutog', 'txtvalorg')" />
+                                    <label>Produto G</label>
+                                    <input id="txtprodutog" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Valor G</label>
+                                    <input id="txtvalorg" class="form-control">
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="container" id="divcentrifugacao" style="display: none;">
+                            <div class="row">
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtmododetrabalhocentrifuga')" />
+                                    <label>ModoTrabalho</label>
+                                    <input id="txtmododetrabalhocentrifuga" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtsaidacentrifuga')" />
+                                    <label>Saída</label>
+                                    <input id="txtsaidacentrifuga" class="form-control">
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtvelocidade1', 'txttempo1')" />
+                                    <label>Velocidade 1</label>
+                                    <input id="txtvelocidade1" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tempo 1</label>
+                                    <input id="txttempo1" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtvelocidade2', 'txttempo2')" />
+                                    <label>Velocidade 2</label>
+                                    <input id="txtvelocidade2" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tempo 2</label>
+                                    <input id="txttempo2" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtvelocidade3', 'txttempo3')" />
+                                    <label>Velocidade 3</label>
+                                    <input id="txtvelocidade3" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tempo 3</label>
+                                    <input id="txttempo3" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtvelocidade4', 'txttempo4')" />
+                                    <label>Velocidade 4</label>
+                                    <input id="txtvelocidade4" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tempo 4</label>
+                                    <input id="txttempo4" class="form-control">
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col form-group-insert-alerta">
+                                    <input type="checkbox" onclick="m.g.check_item('txtvelocidade5', 'txttempo5')" />
+                                    <label>Velocidade 5</label>
+                                    <input id="txtvelocidade5" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                    <label>Tempo 5</label>
+                                    <input id="txttempo5" class="form-control">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                </div>
+                                <div class="col form-group-insert-alerta">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-insert-alerta">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-cancelar btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" onclick="m.receita.salva();" class="btn btn-primary">Salvar</button>
+                            <button type="button" onclick="m.receita_passo.salva();" class="btn btn-primary">Salvar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
