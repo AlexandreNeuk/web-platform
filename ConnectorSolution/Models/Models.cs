@@ -84,6 +84,7 @@ namespace Connector.Models
     public class ReceitaPassoGridModel
     {
         public int Id { get; set; }
+        public int IdReceitaPasso { get; set; }
         public string Tipo { get; set; }
         public string Descricao { get; set; }
         public string Variavel { get; set; }
@@ -91,6 +92,14 @@ namespace Connector.Models
     }
 
     public class ReceitaPassoModel
+    {
+        public int Id { get; set; }
+        public int Id_Receita { get; set; }
+        public string Decricao { get; set; }
+        public string Tipo { get; set; }
+    }
+
+    public class ReceitaPassoLavagemModel
     {
         public int Id { get; set; }
         public int Id_Receita { get; set; }

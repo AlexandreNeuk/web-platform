@@ -237,29 +237,29 @@ warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primar
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_ReceitaPasso" Type="int" Nullable="false" />
-          <Property Name="ModoTrabalho" Type="varchar" MaxLength="3" />
-          <Property Name="TempoOperacao" Type="varchar" MaxLength="3" />
-          <Property Name="TempoReversao" Type="varchar" MaxLength="3" />
-          <Property Name="RPM" Type="varchar" MaxLength="3" />
-          <Property Name="Temperatura" Type="varchar" MaxLength="3" />
-          <Property Name="SemVapor" Type="varchar" MaxLength="3" />
-          <Property Name="Entrada" Type="varchar" MaxLength="3" />
-          <Property Name="Nivel" Type="varchar" MaxLength="3" />
-          <Property Name="Saida" Type="varchar" MaxLength="3" />
+          <Property Name="ModoTrabalho" Type="varchar" MaxLength="40" />
+          <Property Name="TempoOperacao" Type="varchar" MaxLength="40" />
+          <Property Name="TempoReversao" Type="varchar" MaxLength="40" />
+          <Property Name="RPM" Type="varchar" MaxLength="40" />
+          <Property Name="Temperatura" Type="varchar" MaxLength="30" />
+          <Property Name="SemVapor" Type="varchar" MaxLength="40" />
+          <Property Name="Entrada" Type="varchar" MaxLength="40" />
+          <Property Name="Nivel" Type="varchar" MaxLength="40" />
+          <Property Name="Saida" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoA" Type="varchar" MaxLength="70" />
-          <Property Name="ValorA" Type="varchar" MaxLength="3" />
+          <Property Name="ValorA" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoB" Type="varchar" MaxLength="70" />
-          <Property Name="ValorB" Type="varchar" MaxLength="3" />
+          <Property Name="ValorB" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoC" Type="varchar" MaxLength="70" />
-          <Property Name="ValorC" Type="varchar" MaxLength="3" />
+          <Property Name="ValorC" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoD" Type="varchar" MaxLength="70" />
-          <Property Name="ValorD" Type="varchar" MaxLength="3" />
+          <Property Name="ValorD" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoE" Type="varchar" MaxLength="70" />
-          <Property Name="ValorE" Type="varchar" MaxLength="3" />
+          <Property Name="ValorE" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoF" Type="varchar" MaxLength="70" />
-          <Property Name="ValorF" Type="varchar" MaxLength="3" />
+          <Property Name="ValorF" Type="varchar" MaxLength="40" />
           <Property Name="ProdutoG" Type="varchar" MaxLength="70" />
-          <Property Name="ValorG" Type="varchar" MaxLength="3" />
+          <Property Name="ValorG" Type="varchar" MaxLength="40" />
           <Property Name="Ativo" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -834,7 +834,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <EntitySet Name="Receita" EntityType="ConnectorModel.Receita" />
           <EntitySet Name="ReceitaPasso" EntityType="ConnectorModel.ReceitaPasso" />
           <EntitySet Name="ReceitaPassoCentrifugacao" EntityType="ConnectorModel.ReceitaPassoCentrifugacao" />
-          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
           <AssociationSet Name="ctrain_rec_empresa" Association="ConnectorModel.ctrain_rec_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Receita" EntitySet="Receita" />
@@ -847,6 +846,7 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="ReceitaPasso" EntitySet="ReceitaPasso" />
             <End Role="ReceitaPassoCentrifugacao" EntitySet="ReceitaPassoCentrifugacao" />
           </AssociationSet>
+          <EntitySet Name="ReceitaPassoLavagem" EntityType="ConnectorModel.ReceitaPassoLavagem" />
           <AssociationSet Name="ctrain_pass_lava" Association="ConnectorModel.ctrain_pass_lava">
             <End Role="ReceitaPasso" EntitySet="ReceitaPasso" />
             <End Role="ReceitaPassoLavagem" EntitySet="ReceitaPassoLavagem" />
@@ -1352,38 +1352,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <Property Name="Ativo" Type="Int32" />
           <NavigationProperty Name="ReceitaPasso" Relationship="ConnectorModel.ctrain_pass_centr" FromRole="ReceitaPassoCentrifugacao" ToRole="ReceitaPasso" />
         </EntityType>
-        <EntityType Name="ReceitaPassoLavagem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_ReceitaPasso" Type="Int32" Nullable="false" />
-          <Property Name="ModoTrabalho" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="TempoOperacao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="TempoReversao" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="RPM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Temperatura" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="SemVapor" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Entrada" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Nivel" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Saida" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoA" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoB" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorB" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoC" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoD" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorD" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoE" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoF" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorF" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProdutoG" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ValorG" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Ativo" Type="Int32" />
-          <NavigationProperty Name="ReceitaPasso" Relationship="ConnectorModel.ctrain_pass_lava" FromRole="ReceitaPassoLavagem" ToRole="ReceitaPasso" />
-        </EntityType>
         <Association Name="ctrain_rec_empresa">
           <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="0..1" />
           <End Type="ConnectorModel.Receita" Role="Receita" Multiplicity="*" />
@@ -1420,6 +1388,38 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ReceitaPassoLavagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_ReceitaPasso" Type="Int32" Nullable="false" />
+          <Property Name="ModoTrabalho" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TempoOperacao" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TempoReversao" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RPM" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Temperatura" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SemVapor" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Entrada" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Nivel" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Saida" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoA" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorA" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoB" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorB" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoC" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorC" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoD" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorD" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoE" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoF" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorF" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoG" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ValorG" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Int32" />
+          <NavigationProperty Name="ReceitaPasso" Relationship="ConnectorModel.ctrain_pass_lava" FromRole="ReceitaPassoLavagem" ToRole="ReceitaPasso" />
+        </EntityType>
         <Association Name="ctrain_pass_lava">
           <End Type="ConnectorModel.ReceitaPasso" Role="ReceitaPasso" Multiplicity="1" />
           <End Type="ConnectorModel.ReceitaPassoLavagem" Role="ReceitaPassoLavagem" Multiplicity="*" />

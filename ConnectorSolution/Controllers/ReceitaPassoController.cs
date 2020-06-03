@@ -14,11 +14,9 @@ namespace Connector.Controllers
         // GET: ReceitaPasso
         public ActionResult Index()
         {
-            //ViewBag.ListaReceitas
             ViewBag.FabricaAtivo = "active";
             ViewBag.FabricaPassoAtivo = "active";
             ViewBag.FabricaShow = "show";
-            //ViewBag.ListaReceitasPasso = CarregaDadosReceitas();
             ViewBag.ListaReceitas = CarregaDadosReceitas();
             ViewBag.ListaEmpresas = PegaEmpresas();
             return View();
@@ -72,6 +70,7 @@ namespace Connector.Controllers
                     {
                         ReceitaPassoGridModel tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Modo Trabalho";
@@ -80,6 +79,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Tempo Operação";
@@ -88,6 +88,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Tempo Reversão";
@@ -96,6 +97,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Temperatura";
@@ -104,6 +106,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "RPM";
@@ -112,6 +115,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Sem Vapor";
@@ -120,6 +124,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Entrada";
@@ -128,6 +133,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Saída";
@@ -136,6 +142,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "Nível";
@@ -144,6 +151,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoA";
@@ -152,6 +160,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoB";
@@ -160,6 +169,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoC";
@@ -168,6 +178,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoD";
@@ -176,6 +187,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoE";
@@ -184,6 +196,7 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoF";
@@ -192,56 +205,34 @@ namespace Connector.Controllers
                         //
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
+                        tmp.IdReceitaPasso = item.Id;
                         tmp.Tipo = "Lavagem";
                         tmp.Descricao = item.Decricao;
                         tmp.Variavel = "ProdutoG";
                         tmp.Valor = item_filho.ValorG;
                         lista_receita_passo_grid_models.Add(tmp);
-                        /*
-                        tmp.ProdutoB = item_filho.ProdutoB;
-                        tmp.ProdutoC = item_filho.ProdutoC;
-                        tmp.ProdutoD = item_filho.ProdutoD;
-                        tmp.ProdutoE = item_filho.ProdutoE;
-                        tmp.ProdutoF = item_filho.ProdutoF;
-                        tmp.ProdutoG = item_filho.ProdutoG;
-                        ////
-                        tmp.ValorA = item_filho.ValorA;
-                        tmp.ValorB = item_filho.ValorB;
-                        tmp.ValorC = item_filho.ValorC;
-                        tmp.ValorD = item_filho.ValorD;
-                        tmp.ValorE = item_filho.ValorE;
-                        tmp.ValorF = item_filho.ValorF;
-                        tmp.ValorG = item_filho.ValorG;
-                        ////
-                        tmp.RPM = item_filho.RPM;
-                        tmp.SemVapor = item_filho.SemVapor;
-                        tmp.Temperatura = item_filho.Temperatura;
-                        tmp.TempoOperacao = item_filho.TempoOperacao;
-                        tmp.TempoReversao = item_filho.TempoReversao;
-                        tmp.Entrada = item_filho.Entrada;
-                        tmp.Saida = item_filho.Saida;
-                        //
-                        */
                     }
-                }
-                //
-                foreach (var item in model.ReceitaPasso)
-                {
+                    //
+                    foreach (var item_centri in item.ReceitaPassoCentrifugacao)
+                    {
 
+                    }
                 }
             }
             //
             return lista_receita_passo_grid_models;
         }
         //
-        public JsonResult Passo(int id, int id_receita, string descricao, int tipo, string txtmodotrabalho, string rpm)
+        public JsonResult Passo(int id_receita, int id_receita_passo, int id_receita_passo_lavagem, string descricao, int tipo, string modotrabalho, string rpm, string temporeversao, string tempooperacao, string entrada, 
+            string saida, string nivel, int ativo, string temperatura, string semvapor, string produtoa, string valora, string produtob, string valorb,
+            string produtoc, string valorc, string produtod, string valord, string produtoe, string valore, string produtof, string valorf, string produtog, string valorg)
         {
             string sret = string.Empty;
             string erro = string.Empty;
             //
             try
             {
-                ReceitaPasso oReceitaPasso = db.ReceitaPasso.Where(a => a.Id == id_receita).FirstOrDefault();
+                ReceitaPasso oReceitaPasso = db.ReceitaPasso.Where(a => a.Id == id_receita_passo).FirstOrDefault();
                 //
                 if (oReceitaPasso == null)
                     oReceitaPasso = new ReceitaPasso();
@@ -251,7 +242,7 @@ namespace Connector.Controllers
                 oReceitaPasso.Tipo = tipo.ToString();
                 oReceitaPasso.Ativo = 1;
                 //
-                if (id > 0)
+                if (id_receita_passo > 0)
                 {
                     db.Entry(oReceitaPasso).State = EntityState.Modified;
                 }
@@ -263,11 +254,46 @@ namespace Connector.Controllers
                 db.SaveChanges();
                 db.Entry(oReceitaPasso).Reload();
                 //
-                ReceitaPassoLavagem rpl = db.ReceitaPassoLavagem.Where(a => a.Id == id).FirstOrDefault();
+                ReceitaPassoLavagem rpl = db.ReceitaPassoLavagem.Where(a => a.Id == id_receita_passo_lavagem).FirstOrDefault();
                 //
                 if (rpl == null) rpl = new ReceitaPassoLavagem();
                 //
-                rpl.ModoTrabalho = txtmodotrabalho;
+                rpl.Id_ReceitaPasso = oReceitaPasso.Id;
+                rpl.ModoTrabalho = modotrabalho == null ? rpl.ModoTrabalho : modotrabalho;
+                rpl.Entrada = entrada == null ? rpl.Entrada : entrada;
+                rpl.Saida = saida == null ? rpl.Saida : saida;
+                rpl.Nivel = nivel == null ? rpl.Nivel : nivel;
+                rpl.RPM = rpm == null ? rpl.RPM : rpm;
+                rpl.SemVapor = semvapor == null ? rpl.SemVapor : semvapor;
+                rpl.Temperatura = temperatura == null ? rpl.Temperatura : temperatura;
+                rpl.TempoOperacao = tempooperacao == null ? rpl.TempoOperacao : tempooperacao;
+                rpl.TempoReversao = temporeversao == null ? rpl.TempoReversao : temporeversao;
+                rpl.ProdutoA = produtoa == null ? rpl.ProdutoA : produtoa;
+                rpl.ValorA = valora == null ? rpl.ValorA : valora;
+                rpl.ProdutoB = produtob == null ? rpl.ProdutoB : produtob;
+                rpl.ValorB = valorb == null ? rpl.ValorB : valorb;
+                rpl.ProdutoC = produtoc == null ? rpl.ProdutoC : produtoc;
+                rpl.ValorC = valorc == null ? rpl.ValorC : valorc;
+                rpl.ProdutoD = produtod == null ? rpl.ProdutoD : produtod;
+                rpl.ValorD = valord == null ? rpl.ValorD : valord;
+                rpl.ProdutoE = produtoe == null ? rpl.ProdutoE : produtoe;
+                rpl.ValorE = valore == null ? rpl.ValorE : valore;
+                rpl.ProdutoF = produtof == null ? rpl.ProdutoF : produtof;
+                rpl.ValorF = valorf == null ? rpl.ValorF : valorf;
+                rpl.ProdutoG = produtog == null ? rpl.ProdutoG : produtog;
+                rpl.ValorG = valorg == null ? rpl.ValorG : valorg;
+                rpl.Ativo = ativo == null ? rpl.Ativo : ativo;
+                //
+                if (id_receita_passo > 0)
+                {
+                    db.Entry(rpl).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.ReceitaPassoLavagem.Add(rpl);
+                }
+                //
+                db.SaveChanges();
                 //
                 sret = "ok";
             }
@@ -298,6 +324,64 @@ namespace Connector.Controllers
             return Json(new { data = sret, lista_receita_passos_grid, results = 0, success = true }, JsonRequestBehavior.AllowGet);
         }
         //
+        public JsonResult CarregaDadosEdit(int id_receita, int id_passo, string tipo)
+        {
+            string sret = string.Empty;
+            ReceitaPassoLavagem oReceitaPassoLavagem = new ReceitaPassoLavagem();
+            ReceitaPassoModel oReceitaPassoModel = new ReceitaPassoModel();
+            //
+            try
+            {
+                Receita oReceita = db.Receita.Where(a => a.Id == id_receita).FirstOrDefault();
+                //
+                bool bacho = false;
+                if (oReceita != null)
+                {
+                    foreach (ReceitaPasso item in oReceita.ReceitaPasso)
+                    {
+                        if (tipo.ToLower().Equals("lavagem"))
+                        {
+                            foreach (var item_lavagem in item.ReceitaPassoLavagem)
+                            {
+                                if (item_lavagem.Id == id_passo)
+                                {
+                                    oReceitaPassoModel.Id = item.Id;
+                                    oReceitaPassoModel.Decricao = item.Decricao;
+                                    oReceitaPassoModel.Id = item.Id;
+                                    oReceitaPassoLavagem = item_lavagem;
+                                    oReceitaPassoLavagem.ReceitaPasso = null;
+                                    bacho = true;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item_centrifuga in item.ReceitaPassoCentrifugacao)
+                            {
+                                bacho = true;
+                            }
+                        }
+                        //
+                        if (bacho)
+                            break;
+                    }
+                    //
+                    sret = "ok";
+                }
+                else
+                {
+                    sret = "receita";
+                }
+            }
+            catch (Exception exc)
+            {
+                sret = exc.Message;
+            }
+            //
+            return Json(new { data = sret, receita_passo = oReceitaPassoModel, receita_passo_lavagem = oReceitaPassoLavagem, results = 0, success = true }, JsonRequestBehavior.AllowGet);
+        }
+        //
         public JsonResult CarregaDados()
         {
             string sret = string.Empty;
@@ -314,6 +398,55 @@ namespace Connector.Controllers
             }
             //
             return Json(new { data = sret, lista_receita, results = 0, success = true }, JsonRequestBehavior.AllowGet);
+        }
+        //
+        public JsonResult Deleta(int id_receita, int id_receita_passo, int id_passo, string tipo)
+        {
+            string sret = string.Empty;
+            //
+            try
+            {
+                Receita oReceita = db.Receita.Where(a => a.Id == id_receita).FirstOrDefault();
+                //
+                if (oReceita != null)
+                {
+                    ReceitaPasso oReceitaPasso = db.ReceitaPasso.Where(a => a.Id == id_receita_passo).FirstOrDefault();
+                    //
+                    if (oReceitaPasso != null)
+                    {
+                        if (tipo.ToLower().Equals("lavagem"))
+                        {
+                            ReceitaPassoLavagem rpl = db.ReceitaPassoLavagem.Where(a => a.Id == id_passo).FirstOrDefault();
+                            //
+                            if (rpl != null)
+                            {
+                                db.Entry(rpl).State = EntityState.Deleted;
+                                db.Entry(oReceitaPasso).State = EntityState.Deleted;
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            ReceitaPassoCentrifugacao rpc = db.ReceitaPassoCentrifugacao.Where(a => a.Id == id_passo).FirstOrDefault();
+                            //
+                            if (rpc != null)
+                            {
+                                db.Entry(rpc).State = EntityState.Deleted;
+                                db.Entry(oReceitaPasso).State = EntityState.Deleted;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+                //
+                sret = "ok";
+            }
+            catch (Exception exc)
+            {
+                sret = exc.Message;
+            }
+            //
+            return Json(new { data = sret, results = 0, success = true }, JsonRequestBehavior.AllowGet);
         }
         //
         public JsonResult Carrega()
