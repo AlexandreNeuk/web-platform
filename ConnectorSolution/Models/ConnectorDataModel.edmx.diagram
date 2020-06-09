@@ -46,7 +46,7 @@
         <AssociationConnector Association="ConnectorModel.ctrain_rec_empresa" />
         <AssociationConnector Association="ConnectorModel.ctrain_rec_pass" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_centr" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="7.5" PointY="42.125" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="7.5" PointY="42" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_lava" />
       </Diagram>
     </edmx:Diagrams>

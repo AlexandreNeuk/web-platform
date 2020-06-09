@@ -3475,53 +3475,26 @@
                     return;
                 }
                 //
-                if (document.getid('chkmodotravalholava').checked && !$('input[id=txtmodotrabalho').val()) {
-                    m.g.alert('Atenção', 'Informe a descrição do Modo de Trabalho!');
-                    return;
-                }
-                if (document.getid('chkrpm').checked && !$('input[id=txtrpm').val()) {
+                if (!$('input[id=txtrpm').val()) {
                     m.g.alert('Atenção', 'Informe o RPM!');
                     return;
                 }
-                if (document.getid('chktemporeversao').checked && !$('input[id=txttemporeversao').val()) {
+                if (!$('input[id=txttemporeversao').val()) {
                     m.g.alert('Atenção', 'Informe o tempo de reversão!');
                     return;
                 }
-                if (document.getid('chktempooperacao').checked && !$('input[id=txttempooperacao').val()) {
-                    m.g.alert('Atenção', 'Informe o tempo de reversão!');
+                if (!$('input[id=txttempooperacao').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo de operação!');
                     return;
                 }
-                if (document.getid('chkentrada').checked && !$('input[id=txtentrada').val()) {
-                    m.g.alert('Atenção', 'Informe o tempo de reversão!');
-                    return;
-                }
-                if (document.getid('chksaida').checked && !$('input[id=txtsaida').val()) {
-                    m.g.alert('Atenção', 'Informe a saída!');
-                    return;
-                }
-                if (document.getid('chknivel').checked && !$('input[id=txtnivel').val()) {
-                    m.g.alert('Atenção', 'Informe o nível!');
-                    return;
-                }
-                if (document.getid('chkativo').checked && !$('input[id=txtativo').val()) {
-                    m.g.alert('Atenção', 'Informe o valor para ativo!');
-                    return;
-                }
-                if (document.getid('chktemp').checked && !$('input[id=txttemperatura').val()) {
+                if (!$('input[id=txttemperatura').val()) {
                     m.g.alert('Atenção', 'Informe a temperatura!');
                     return;
                 }
-                if (document.getid('chksemvapor').checked && !$('input[id=txtsemvapor').val()) {
-                    m.g.alert('Atenção', 'Informe o vapor!');
-                    return;
-                }
+
                 if (document.getid('chkproda').checked) {
                     if (!$('input[id=txtprodutoa').val()) {
                         m.g.alert('Atenção', 'Informe o produto A!');
-                        return;
-                    }
-                    if (!$('input[id=txtvalora').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto A!');
                         return;
                     }
                 }
@@ -3530,18 +3503,10 @@
                         m.g.alert('Atenção', 'Informe o produto B!');
                         return;
                     }
-                    if (!$('input[id=txtvalorb').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto B!');
-                        return;
-                    }
                 }
                 if (document.getid('chkprodc').checked) {
                     if (!$('input[id=txtprodutoc').val()) {
                         m.g.alert('Atenção', 'Informe o produto C!');
-                        return;
-                    }
-                    if (!$('input[id=txtvalorc').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto C!');
                         return;
                     }
                 }
@@ -3550,18 +3515,10 @@
                         m.g.alert('Atenção', 'Informe o produto D!');
                         return;
                     }
-                    if (!$('input[id=txtvalord').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto D!');
-                        return;
-                    }
                 }
                 if (document.getid('chkprode').checked) {
                     if (!$('input[id=txtprodutoe').val()) {
                         m.g.alert('Atenção', 'Informe o produto E!');
-                        return;
-                    }
-                    if (!$('input[id=txtvalore').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto E!');
                         return;
                     }
                 }
@@ -3570,18 +3527,10 @@
                         m.g.alert('Atenção', 'Informe o produto F!');
                         return;
                     }
-                    if (!$('input[id=txtvalorf').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto F!');
-                        return;
-                    }
                 }
                 if (document.getid('chkprodg').checked) {
                     if (!$('input[id=txtprodutog').val()) {
                         m.g.alert('Atenção', 'Informe o produto G!');
-                        return;
-                    }
-                    if (!$('input[id=txtvalorg').val()) {
-                        m.g.alert('Atenção', 'Informe o valor do produto G!');
                         return;
                     }
                 }            
@@ -3589,39 +3538,33 @@
                 m.receita_passo.l = m.g.load('Salvando');
                 //
                 var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
-                var tipo = "1";
                 var txtpassodesc = $('input[id=txtpassodesc').val();
-                var txtmodotrabalho = d.getid('chkmodotravalholava').checked ? $('input[id=txtmodotrabalho').val() : '';
-                var txtrpm = d.get('chkrpm').checked ? $('input[id=txtrpm').val() : '';
-                var txttemporeversao = d.get('chktemporeversao').checked ? $('input[id=txttemporeversao').val() : '';
-                var txttempooperacao = d.get('chktempooperacao').checked ? $('input[id=txttempooperacao').val() : '';
-                var txtentrada = d.get('chkentrada').checked ? $('input[id=txtentrada').val() : '';
-                var txtsaida = d.get('chksaida').checked ? $('input[id=txtsaida').val() : '';
-                var txtnivel = d.get('chknivel').checked ? $('input[id=txtnivel').val() : '';
-                var txttemperatura = d.get('chktemp').checked ? $('input[id=txttemperatura').val() : '';
-                var txtsemvapor = d.get('chksemvapor').checked ? $('input[id=txtsemvapor').val() : '';
                 var txtprodutoa = d.get('chkproda').checked ? $('input[id=txtprodutoa').val() : '';
-                var txtvalora = d.get('chkproda').checked ? $('input[id=txtvalora').val() : '';
                 var txtprodutob = d.get('chkprodb').checked ? $('input[id=txtprodutob').val() : '';
-                var txtvalorb = d.get('chkprodb').checked ? $('input[id=txtvalorb').val() : '';
                 var txtprodutoc = d.get('chkprodc').checked ? $('input[id=txtprodutoc').val() : '';
-                var txtvalorc = d.get('chkprodc').checked ? $('input[id=txtvalorc').val() : '';
                 var txtprodutod = d.get('chkprodd').checked ? $('input[id=txtprodutod').val() : '';
-                var txtvalord = d.get('chkprodd').checked ? $('input[id=txtvalord').val() : '';
                 var txtprodutoe = d.get('chkprode').checked ? $('input[id=txtprodutoe').val() : '';
-                var txtvalore = d.get('chkprode').checked ? $('input[id=txtvalore').val() : '';
                 var txtprodutof = d.get('chkprodf').checked ? $('input[id=txtprodutof').val() : '';
-                var txtvalorf = d.get('chkprodf').checked ? $('input[id=txtvalorf').val() : '';
                 var txtprodutog = d.get('chkprodg').checked ? $('input[id=txtprodutog').val() : '';
-                var txtvalorg = d.get('chkprodg').checked ? $('input[id=txtvalorg').val() : '';
-                var txtativo = d.get('chkativo').checked ? $('input[id=txtativo').val() : '0';
                 //
                 var url = m.g.rsvlurl('receitapasso/passo') + '?id_receita=' + id_receita + '&id_receita_passo=' + id_receita_passo + '&id_receita_passo_lavagem=' + id_receita_passo_lavagem +
-                    '&descricao=' + txtpassodesc + '&tipo=' + tipo + '&modotrabalho=' + txtmodotrabalho + '&rpm=' + txtrpm +
-                    '&temporeversao=' + txttemporeversao + '&tempooperacao=' + txttempooperacao + '&entrada=' + txtentrada + '&saida=' + txtsaida + '&nivel=' + txtnivel + '&ativo=' + txtativo +
-                    '&temperatura=' + txttemperatura + '&semvapor=' + txtsemvapor + '&produtoa=' + txtprodutoa + '&valora=' + txtvalora +
-                    '&produtob=' + txtprodutob + '&valorb=' + txtvalorb + '&produtoc=' + txtprodutoc + '&valorc=' + txtvalorc + '&produtod=' + txtprodutod + '&valord=' + txtvalord +
-                    '&produtoe=' + txtprodutoe + '&valore=' + txtvalore + '&produtof=' + txtprodutof + '&valorf=' + txtvalorf + '&produtog=' + txtprodutog + '&valorg=' + txtvalorg;
+                    '&descricao=' + txtpassodesc +
+                    '&tipo=' + + $(document.getid('sltipolavagem')).children(":selected").attr("id") +
+                    '&rpm=' + $('input[id=txtrpm').val() +
+                    '&temporeversao=' + $('input[id=txttemporeversao').val() +
+                    '&tempooperacao=' + $('input[id=txttempooperacao').val() +
+                    '&entrada=' + $(document.getid('slentrada')).children(":selected").attr("id") +
+                    '&saida=' + $(document.getid('slsaida')).children(":selected").attr("id") +
+                    '&nivel=' + $(document.getid('slnivel')).children(":selected").attr("id") +
+                    '&temperatura=' + $('input[id=txttemperatura').val() +
+                    '&semvapor=' + $(document.getid('slvapor')).children(":selected").attr("id") +
+                    '&produtoa=' + txtprodutoa +
+                    '&produtob=' + txtprodutob +
+                    '&produtoc=' + txtprodutoc +
+                    '&produtod=' + txtprodutod +
+                    '&produtoe=' + txtprodutoe +
+                    '&produtof=' + txtprodutof +
+                    '&produtog=' + txtprodutog;
                 //
                 $.ajax({
                     url: url,
@@ -3723,79 +3666,79 @@
                 $('#1').attr('disabled', false);
                 $('#2').attr('disabled', false);
                 //
-                d.get('chkativo').checked = false;
-                $('input[id=txtativo').val('');
-                document.get('txtativo').disabled = true;
+                //d.get('chkativo').checked = false;
+                //$('input[id=txtativo').val('');
+                //document.get('txtativo').disabled = true;
                 $('input[id=txtpassodesc').val('');
-                d.getid('chkmodotravalholava').checked = false;
-                $('input[id=txtmodotrabalho').val('');
-                document.get('txtmodotrabalho').disabled = true;
-                d.get('chkrpm').checked = false;
+                //d.getid('chkmodotravalholava').checked = false;
+                //$('input[id=txtmodotrabalho').val('');
+                //document.get('txtmodotrabalho').disabled = true;
+                //d.get('chkrpm').checked = false;
                 $('input[id=txtrpm').val('');
-                document.get('txtrpm').disabled = true;
-                d.get('chktemporeversao').checked = false;
+                //document.get('txtrpm').disabled = true;
+                //d.get('chktemporeversao').checked = false;
                 $('input[id=txttemporeversao').val('');
-                document.get('txttemporeversao').disabled = true;
-                d.get('chktempooperacao').checked = false;
+                //document.get('txttemporeversao').disabled = true;
+                //d.get('chktempooperacao').checked = false;
                 $('input[id=txttempooperacao').val('');
-                document.get('txttempooperacao').disabled = true;
-                d.get('chkentrada').checked = false;
-                $('input[id=txtentrada').val('');
-                document.get('txtentrada').disabled = true;
-                d.get('chksaida').checked = false;
-                $('input[id=txtsaida').val('');
-                document.get('txtsaida').disabled = true;
-                d.get('chknivel').checked = false;
-                $('input[id=txtnivel').val('');
-                document.get('txtnivel').disabled = true;
-                d.get('chktemp').checked = false;
+                //document.get('txttempooperacao').disabled = true;
+                //d.get('chkentrada').checked = false;
+                //$('input[id=txtentrada').val('');
+                //document.get('txtentrada').disabled = true;
+                //d.get('chksaida').checked = false;
+                //$('input[id=txtsaida').val('');
+                //document.get('txtsaida').disabled = true;
+                //d.get('chknivel').checked = false;
+                //$('input[id=txtnivel').val('');
+                //document.get('txtnivel').disabled = true;
+                //d.get('chktemp').checked = false;
                 $('input[id=txttemperatura').val('');
-                document.get('txttemperatura').disabled = true;
-                d.get('chksemvapor').checked = false;
-                $('input[id=txtsemvapor').val('');
-                document.get('txtsemvapor').disabled = true;
+                //document.get('txttemperatura').disabled = true;
+                //d.get('chksemvapor').checked = false;
+                //$('input[id=txtsemvapor').val('');
+                //document.get('txtsemvapor').disabled = true;
                 d.get('chkproda').checked = false;
                 $('input[id=txtprodutoa').val('');
                 document.get('txtprodutoa').disabled = true;
-                d.get('chkproda').checked = false;
-                $('input[id=txtvalora').val('');
-                document.get('txtvalora').disabled = true;
+                //d.get('chkproda').checked = false;
+                //$('input[id=txtvalora').val('');
+                //document.get('txtvalora').disabled = true;
                 d.get('chkprodb').checked = false;
                 $('input[id=txtprodutob').val('');
                 document.get('txtprodutob').disabled = true;
-                d.get('chkprodb').checked = false;
-                $('input[id=txtvalorb').val('');
-                document.get('txtvalorb').disabled = true;
+                //d.get('chkprodb').checked = false;
+                //$('input[id=txtvalorb').val('');
+                //document.get('txtvalorb').disabled = true;
                 d.get('chkprodc').checked = false;
                 $('input[id=txtprodutoc').val('');
                 document.get('txtprodutoc').disabled = true;
-                d.get('chkprodc').checked = false;
-                $('input[id=txtvalorc').val('');
-                document.get('txtvalorc').disabled = true;
+                //d.get('chkprodc').checked = false;
+                //$('input[id=txtvalorc').val('');
+                //document.get('txtvalorc').disabled = true;
                 d.get('chkprodd').checked = false;
                 $('input[id=txtprodutod').val('');
                 document.get('txtprodutod').disabled = true;
-                d.get('chkprodd').checked = false;
-                $('input[id=txtvalord').val('');
-                document.get('txtvalord').disabled = true;
+                //d.get('chkprodd').checked = false;
+                //$('input[id=txtvalord').val('');
+                //document.get('txtvalord').disabled = true;
                 d.get('chkprode').checked = false;
                 $('input[id=txtprodutoe').val('');
                 document.get('txtprodutoe').disabled = true;
-                d.get('chkprode').checked = false;
-                $('input[id=txtvalore').val('');
-                document.get('txtvalore').disabled = true;
+                //d.get('chkprode').checked = false;
+                //$('input[id=txtvalore').val('');
+                //document.get('txtvalore').disabled = true;
                 d.get('chkprodf').checked = false;
                 $('input[id=txtprodutof').val('');
                 document.get('txtprodutof').disabled = true;
-                d.get('chkprodf').checked = false;
-                $('input[id=txtvalorf').val('');
-                document.get('txtvalorf').disabled = true;
+                //d.get('chkprodf').checked = false;
+                //$('input[id=txtvalorf').val('');
+                //document.get('txtvalorf').disabled = true;
                 d.get('chkprodg').checked = false;
                 $('input[id=txtprodutog').val('');
                 document.get('txtprodutog').disabled = true;
-                d.get('chkprodg').checked = false;
-                $('input[id=txtvalorg').val('');
-                document.get('txtvalorg').disabled = true;
+                //d.get('chkprodg').checked = false;
+                //$('input[id=txtvalorg').val('');
+                //document.get('txtvalorg').disabled = true;
                 //
                 $('#modalReceitaPassoLabel').text('Incluir Passos');
                 $('input[id=txtdescreceita').val('');
@@ -3805,15 +3748,15 @@
                 //
                 let id = item.options[item.selectedIndex].id
                 if (id) {
-                    if (id == '1') {
-                        //
-                        d.getid('divlavagem').style.display = 'inline';
-                        d.getid('divcentrifugacao').style.display = 'none';
-                    }
-                    else if (id == '2') {
+                    if (id == '3') {
                         //
                         d.getid('divlavagem').style.display = 'none';
                         d.getid('divcentrifugacao').style.display = 'inline';
+                    }
+                    else {
+                        //
+                        d.getid('divlavagem').style.display = 'inline';
+                        d.getid('divcentrifugacao').style.display = 'none';
                     }
                 }
             },
@@ -3822,35 +3765,40 @@
                 var table = $('#dtreceitapassos');
                 var select = table.bootstrapTable('getSelections');
                 var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
-                m.receita_passo.id_passo_edit = select[0].Id;
-                m.receita_passo.id_passo_edit = {
-                    id_receita: id_receita,
-                    id_passo: select[0].Id,
-                    id_receita_passo: select[0].IdReceitaPasso,
-                    tipo: select[0].Tipo
-                }
                 //
-                if (select && select.length > 0 && id_receita) {
+                if (select && select.length > 0 && id_receita && select[0].Id) {
+                    //
+                    m.receita_passo.id_passo_edit = select[0].Id;
+                    m.receita_passo.id_passo_edit = {
+                        id_receita: id_receita,
+                        id_passo: select[0].Id,
+                        id_receita_passo: select[0].IdReceitaPasso,
+                        tipo: select[0].Tipo
+                    }
                     //
                     m.receita_passo.l = m.g.load('Carregando passos...');
                     $('#modalReceitaPassoLabel').text('Editar Passos');
                     $.get(m.g.rsvlurl('receitapasso/carregadadosedit') + '?id_receita=' + id_receita + '&id_passo=' + select[0].Id + '&tipo=' + select[0].Tipo, function (data) {
                         //
                         if (data && data.data == 'ok') {
-                            //
-                            if (m.receita_passo.id_passo_edit.tipo == '1') {
-                                //
-                                m.g.setcomboval('sltipolavagem', '1');
-                                d.getid('divlavagem').style.display = 'inline';
-                                d.getid('divcentrifugacao').style.display = 'none';
-                            }
-                            else if (m.receita_passo.id_passo_edit.tipo == '2') {
-                                //
-                                m.g.setcomboval('sltipolavagem', '2');
+                            //                            
+                            if (data.receita_passo.Tipo == '3') {  // centrifugação
+                                //                                
                                 d.getid('divlavagem').style.display = 'none';
                                 d.getid('divcentrifugacao').style.display = 'inline';
                             }
+                            else {
+                                d.getid('divlavagem').style.display = 'inline';
+                                d.getid('divcentrifugacao').style.display = 'none';
+                            }
                             //
+                            m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
+                            m.g.setcomboval('slentrada', data.receita_passo_lavagem.Entrada);
+                            m.g.setcomboval('slsaida', data.receita_passo_lavagem.Saida);
+                            m.g.setcomboval('slnivel', data.receita_passo_lavagem.Nivel);
+                            m.g.setcomboval('slvapor', data.receita_passo_lavagem.SemVapor);
+
+                            
                             $('#1').attr('disabled', 'disabled');
                             $('#2').attr('disabled', 'disabled');
                             //var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
@@ -3858,7 +3806,7 @@
                             //
                             $('#idreceitappassomodal').modal('show');
 
-                            $('input[id=txtmodotrabalho').val(data.receita_passo_lavagem.ModoTrabalho);
+                            //$('input[id=txtmodotrabalho').val(data.receita_passo_lavagem.ModoTrabalho);
                             $('input[id=txtrpm').val(data.receita_passo_lavagem.RPM);
                             $('input[id=txttemporeversao').val(data.receita_passo_lavagem.TempoReversao);
                             $('input[id=txttempooperacao').val(data.receita_passo_lavagem.TempoOperacao);
@@ -3868,63 +3816,56 @@
                             $('input[id=txttemperatura').val(data.receita_passo_lavagem.Temperatura);
                             $('input[id=txtsemvapor').val(data.receita_passo_lavagem.SemVapor);
                             //
+                            m.g.setcomboval('sltipolavagem', '2');
                             $('input[id=txtprodutoa').val(data.receita_passo_lavagem.ProdutoA);
-                            $('input[id=txtvalora').val(data.receita_passo_lavagem.ValorA);
+                            //$('input[id=txtvalora').val(data.receita_passo_lavagem.ValorA);
                             $('input[id=txtprodutob').val(data.receita_passo_lavagem.ProdutoB);
-                            $('input[id=txtvalorb').val(data.receita_passo_lavagem.ValorB);
+                            //$('input[id=txtvalorb').val(data.receita_passo_lavagem.ValorB);
                             $('input[id=txtprodutoc').val(data.receita_passo_lavagem.ProdutoC);
-                            $('input[id=txtvalorc').val(data.receita_passo_lavagem.ValorC);
+                            //$('input[id=txtvalorc').val(data.receita_passo_lavagem.ValorC);
                             $('input[id=txtprodutod').val(data.receita_passo_lavagem.ProdutoD);
-                            $('input[id=txtvalord').val(data.receita_passo_lavagem.ValorD);
+                            //$('input[id=txtvalord').val(data.receita_passo_lavagem.ValorD);
                             $('input[id=txtprodutoe').val(data.receita_passo_lavagem.ProdutoE);
-                            $('input[id=txtvalore').val(data.receita_passo_lavagem.ValorE);
+                            //$('input[id=txtvalore').val(data.receita_passo_lavagem.ValorE);
                             $('input[id=txtprodutof').val(data.receita_passo_lavagem.ProdutoF);
-                            $('input[id=txtvalorf').val(data.receita_passo_lavagem.ValorF);
+                            //$('input[id=txtvalorf').val(data.receita_passo_lavagem.ValorF);
                             $('input[id=txtprodutog').val(data.receita_passo_lavagem.ProdutoG);
-                            $('input[id=txtvalorg').val(data.receita_passo_lavagem.ValorG);
+                            //$('input[id=txtvalorg').val(data.receita_passo_lavagem.ValorG);
                             //
-                            d.getid('chkmodotravalholava').checked = data.receita_passo_lavagem.ModoTrabalho == '' ? false : true;
-                            d.getid('txtmodotrabalho').disabled = data.receita_passo_lavagem.ModoTrabalho != '' ? false : true;
-                            d.getid('chkrpm').checked = data.receita_passo_lavagem.RPM == '' ? false : true;
+                            //d.getid('chkmodotravalholava').checked = data.receita_passo_lavagem.ModoTrabalho == '' ? false : true;
+                            //d.getid('txtmodotrabalho').disabled = data.receita_passo_lavagem.ModoTrabalho != '' ? false : true;
+                            //d.getid('chkrpm').checked = data.receita_passo_lavagem.RPM == '' ? false : true;
                             d.getid('txtrpm').disabled = data.receita_passo_lavagem.RPM != '' ? false : true;
-                            d.getid('chktemporeversao').checked = data.receita_passo_lavagem.TempoReversao == '' ? false : true;
+                            //d.getid('chktemporeversao').checked = data.receita_passo_lavagem.TempoReversao == '' ? false : true;
                             d.getid('txttemporeversao').disabled = data.receita_passo_lavagem.TempoReversao != '' ? false : true;
-                            d.getid('chktempooperacao').checked = data.receita_passo_lavagem.TempoOperacao == '' ? false : true;
+                            //d.getid('chktempooperacao').checked = data.receita_passo_lavagem.TempoOperacao == '' ? false : true;
                             d.getid('txttempooperacao').disabled = data.receita_passo_lavagem.TempoOperacao != '' ? false : true;
-                            d.getid('chkentrada').checked = data.receita_passo_lavagem.Entrada == '' ? false : true;
-                            d.getid('txtentrada').disabled = data.receita_passo_lavagem.Entrada != '' ? false : true;
-                            d.getid('chksaida').checked = data.receita_passo_lavagem.Saida == '' ? false : true;
-                            d.getid('txtsaida').disabled = data.receita_passo_lavagem.Saida != '' ? false : true;
-                            d.getid('chknivel').checked = data.receita_passo_lavagem.Nivel == '' ? false : true;
-                            d.getid('txtnivel').disabled = data.receita_passo_lavagem.Nivel != '' ? false : true;
-                            d.getid('chkativo').checked = data.receita_passo_lavagem.Ativo == '' ? false : true;
-                            d.getid('txtativo').disabled = data.receita_passo_lavagem.Ativo != '' ? false : true;
-                            d.getid('chktemp').checked = data.receita_passo_lavagem.Temperatura == '' ? false : true;
+
                             d.getid('txttemperatura').disabled = data.receita_passo_lavagem.Temperatura != '' ? false : true;
-                            d.getid('chksemvapor').checked = data.receita_passo_lavagem.SemVapor == '' ? false : true;
-                            d.getid('txtsemvapor').disabled = data.receita_passo_lavagem.SemVapor != '' ? false : true;
+                            //d.getid('chksemvapor').checked = data.receita_passo_lavagem.SemVapor == '' ? false : true;
+                            //d.getid('txtsemvapor').disabled = data.receita_passo_lavagem.SemVapor != '' ? false : true;
                             //
                             d.getid('chkproda').checked = data.receita_passo_lavagem.ProdutoA == '' ? false : true;
                             d.getid('txtprodutoa').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
-                            d.getid('txtvalora').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
+                            //d.getid('txtvalora').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
                             d.getid('chkprodb').checked = data.receita_passo_lavagem.ProdutoB == '' ? false : true;
                             d.getid('txtprodutob').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
-                            d.getid('txtvalorb').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
+                            //d.getid('txtvalorb').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
                             d.getid('chkprodc').checked = data.receita_passo_lavagem.ProdutoC == '' ? false : true;
                             d.getid('txtprodutoc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
-                            d.getid('txtvalorc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
+                            //d.getid('txtvalorc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
                             d.getid('chkprodd').checked = data.receita_passo_lavagem.ProdutoD == '' ? false : true;
                             d.getid('txtprodutod').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
-                            d.getid('txtvalord').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
+                            //d.getid('txtvalord').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
                             d.getid('chkprode').checked = data.receita_passo_lavagem.ProdutoE == '' ? false : true;
                             d.getid('txtprodutoe').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
-                            d.getid('txtvalore').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
+                            //d.getid('txtvalore').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
                             d.getid('chkprodf').checked = data.receita_passo_lavagem.ProdutoF == '' ? false : true;
                             d.getid('txtprodutof').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
-                            d.getid('txtvalorf').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
+                            //d.getid('txtvalorf').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
                             d.getid('chkprodg').checked = data.receita_passo_lavagem.ProdutoG == '' ? false : true;
                             d.getid('txtprodutog').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
-                            d.getid('txtvalorg').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
+                            //d.getid('txtvalorg').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
                         }
                         //
                         m.receita_passo.loadingout();

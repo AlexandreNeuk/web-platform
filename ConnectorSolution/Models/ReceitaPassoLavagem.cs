@@ -16,7 +16,6 @@ namespace Connector.Models
     {
         public int Id { get; set; }
         public int Id_ReceitaPasso { get; set; }
-        public string ModoTrabalho { get; set; }
         public string TempoOperacao { get; set; }
         public string TempoReversao { get; set; }
         public string RPM { get; set; }
@@ -26,20 +25,12 @@ namespace Connector.Models
         public string Nivel { get; set; }
         public string Saida { get; set; }
         public string ProdutoA { get; set; }
-        public string ValorA { get; set; }
         public string ProdutoB { get; set; }
-        public string ValorB { get; set; }
         public string ProdutoC { get; set; }
-        public string ValorC { get; set; }
         public string ProdutoD { get; set; }
-        public string ValorD { get; set; }
         public string ProdutoE { get; set; }
-        public string ValorE { get; set; }
         public string ProdutoF { get; set; }
-        public string ValorF { get; set; }
         public string ProdutoG { get; set; }
-        public string ValorG { get; set; }
-        public Nullable<int> Ativo { get; set; }
     
         public virtual ReceitaPasso ReceitaPasso { get; set; }
     }
