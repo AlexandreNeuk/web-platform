@@ -42,10 +42,10 @@ namespace Connector.Controllers
                     //
                     oReceitaModel.Ativo = item.Ativo;
                     oReceitaModel.Descricao = item.Descricao;
-                    int tot_recei_centr = 0;//db.ReceitaPassoCentrifugacao.Where(x => x.Id_Receita == item.Id).ToList().Count;
-                    int tot_recei_lava = 0; // db.ReceitaPassoLavagem.Where(x => x.Id_Receita == item.Id).ToList().Count;
+                    //int tot_recei_centr = 0;//db.ReceitaPassoCentrifugacao.Where(x => x.Id_Receita == item.Id).ToList().Count;
+                    //int tot_recei_lava = 0; // db.ReceitaPassoLavagem.Where(x => x.Id_Receita == item.Id).ToList().Count;
                     //
-                    oReceitaModel.TotalPassos = tot_recei_centr + tot_recei_lava;
+                    //oReceitaModel.TotalPassos = tot_recei_centr + tot_recei_lava;
                     //
                     lista_receita_models.Add(oReceitaModel);
                 }
@@ -206,7 +206,113 @@ namespace Connector.Controllers
                     //
                     foreach (var item_centri in item.ReceitaPassoCentrifugacao)
                     {
-
+                        ReceitaPassoGridModel tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Saída";
+                        tmp.Valor = item_centri.Saida;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 1";
+                        tmp.Valor = item_centri.Velocidade1;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 2";
+                        tmp.Valor = item_centri.Velocidade2;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 3";
+                        tmp.Valor = item_centri.Velocidade3;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 4";
+                        tmp.Valor = item_centri.Velocidade4;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 4";
+                        tmp.Valor = item_centri.Velocidade4;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Velociade 5";
+                        tmp.Valor = item_centri.Velocidade5;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Tempo 1";
+                        tmp.Valor = item_centri.Tempo1;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Tempo 2";
+                        tmp.Valor = item_centri.Tempo2;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Tempo 3";
+                        tmp.Valor = item_centri.Tempo3;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Tempo 4";
+                        tmp.Valor = item_centri.Tempo4;
+                        lista_receita_passo_grid_models.Add(tmp);
+                        //
+                        tmp = new ReceitaPassoGridModel();
+                        tmp.Id = item_centri.Id;
+                        tmp.IdReceitaPasso = item.Id;
+                        tmp.Tipo = "Centrifugação";
+                        tmp.Descricao = item.Decricao;
+                        tmp.Variavel = "Tempo 5";
+                        tmp.Valor = item_centri.Tempo5;
+                        lista_receita_passo_grid_models.Add(tmp);
                     }
                 }
             }
@@ -283,6 +389,79 @@ namespace Connector.Controllers
                 else
                 {
                     db.ReceitaPassoLavagem.Add(rpl);
+                }
+                //
+                db.SaveChanges();
+                //
+                sret = "ok";
+            }
+            catch (Exception exc)
+            {
+                erro = exc.Message;
+                sret = "erro";
+            }
+            //
+            return Json(new { data = sret, results = 0, success = true, erro }, JsonRequestBehavior.AllowGet);
+        }
+        //
+        public JsonResult Passocentrifuga(int id_receita, int id_receita_passo, int id_receita_passo_centrifuga,
+                                          string descricao, string saida, 
+                                          string txtvelocidade1, string txtvelocidade2, string txtvelocidade3, string txtvelocidade4, string txtvelocidade5,
+                                          string txttempo1, string txttempo2, string txttempo3, string txttempo4, string txttempo5)
+        {
+            string sret = string.Empty;
+            string erro = string.Empty;
+            //
+            try
+            {
+                ReceitaPasso oReceitaPasso = db.ReceitaPasso.Where(a => a.Id == id_receita_passo).FirstOrDefault();
+                //
+                if (oReceitaPasso == null)
+                    oReceitaPasso = new ReceitaPasso();
+                //
+                oReceitaPasso.Id_Receita = id_receita;
+                oReceitaPasso.Decricao = descricao;
+                oReceitaPasso.Tipo = "2";
+                oReceitaPasso.Ativo = 1;
+                //
+                if (id_receita_passo > 0)
+                {
+                    db.Entry(oReceitaPasso).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.ReceitaPasso.Add(oReceitaPasso);
+                }
+                //
+                db.SaveChanges();
+                db.Entry(oReceitaPasso).Reload();
+                //
+                ReceitaPassoCentrifugacao rpc = db.ReceitaPassoCentrifugacao.Where(a => a.Id == id_receita_passo_centrifuga).FirstOrDefault();
+                //
+                if (rpc == null) rpc = new ReceitaPassoCentrifugacao();
+                //
+                rpc.Id_ReceitaPasso = oReceitaPasso.Id;
+                rpc.Saida = saida;
+                //
+                rpc.Velocidade1 = txtvelocidade1 == null ? rpc.Velocidade1 : txtvelocidade1;
+                rpc.Velocidade2 = txtvelocidade2 == null ? rpc.Velocidade2 : txtvelocidade2;
+                rpc.Velocidade3 = txtvelocidade3 == null ? rpc.Velocidade3 : txtvelocidade3;
+                rpc.Velocidade4 = txtvelocidade4 == null ? rpc.Velocidade4 : txtvelocidade4;
+                rpc.Velocidade5 = txtvelocidade5 == null ? rpc.Velocidade5 : txtvelocidade5;
+                //
+                rpc.Tempo1 = txttempo1 == null ? rpc.Tempo1 : txttempo1;
+                rpc.Tempo2 = txttempo2 == null ? rpc.Tempo2 : txttempo2;
+                rpc.Tempo3 = txttempo3 == null ? rpc.Tempo3 : txttempo3;
+                rpc.Tempo4 = txttempo4 == null ? rpc.Tempo4 : txttempo4;
+                rpc.Tempo5 = txttempo5 == null ? rpc.Tempo5 : txttempo5;
+                //
+                if (id_receita_passo > 0)
+                {
+                    db.Entry(rpc).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.ReceitaPassoCentrifugacao.Add(rpc);
                 }
                 //
                 db.SaveChanges();

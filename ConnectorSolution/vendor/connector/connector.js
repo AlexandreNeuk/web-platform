@@ -3431,6 +3431,117 @@
                     }
                 });
             },
+            carrega_mqtt: function () {
+                //
+                var tableReceitas = $('#dtreceitas');
+                var selectedReceitas = tableReceitas.bootstrapTable('getSelections');
+                if (selectedReceitas && selectedReceitas.length > 0) {
+                    //
+                    $('#idenvioreceita').modal('show');
+                }
+                else {
+                    bootbox.alert({
+                        size: "small",
+                        title: "Restrição",
+                        message: "Selecione uma Receita para enviar!",
+                        centerVertical: true
+                    });
+                }
+            },
+            carrega_mqtt_enviar: function () {
+                //
+                var ids = [];
+                var table = document.getElementById("dtreceitasmaquinas");
+                for (var i = 0, row; row = table.rows[i]; i++) {
+                    //
+                    if (row.cells[0].children[0] && row.cells[0].children[0].checked) {
+                        //
+                        ids.push(row.cells[1].innerText)
+                    }
+                }
+                //
+                if (ids.length > 0) {
+                    //
+                    var tableReceitas = $('#dtreceitas');
+                    var selectedReceitas = tableReceitas.bootstrapTable('getSelections');
+                    var id_receita = selectedReceitas[0].Id;
+                    //
+                    var url = m.g.rsvlurl('receita/montapacotemqtt') + '?idreceita=' + id_receita + '&id_maquinas=' + ids;
+                    //
+                    $.ajax({
+                        url: url,
+                        type: "post",
+                        success: function (resp) {
+                            if (resp && resp.ret == 'ok') {
+                                //
+                                for (var i = 0; i < resp.list_ret.length; i++) {
+                                    //
+                                    var data = {
+                                        topico: resp.list_ret[i].Topico,
+                                        mensagem: resp.list_ret[i].Mensagem,
+                                        id: resp.list_ret[i].Id
+                                    };
+                                    var url_mqtt = 'http://localhost:3000/carregar';
+                                    //
+                                    $.ajax({
+                                        url: url_mqtt,
+                                        type: "post",
+                                        data: JSON.stringify(data),
+                                        contentType: 'application/json; charset=utf-8',
+                                        success: function (resp) {
+                                            if (resp.publish_success) {
+                                                //
+                                                //alert(resp.id)
+                                                //m.g.alert('Sucesso', 'Ocorreu um erro ao enviar os dados para o Broker MQTT. Erro: ' + resp.erro);
+                                            }
+                                            else {
+                                                m.g.alert('Atenção', 'Ocorreu um erro ao enviar os dados para o Broker MQTT. Erro: ' + resp.erro);
+                                            }
+                                        },
+                                        error: function (xhr, error) {
+                                            console.log('Xhr: ', xhr, ' - Error: ', error);
+                                        }
+                                    });
+                                    //
+                                    m.receita.wait(500);
+                                }
+                            }
+                            else {
+                                m.g.alert('Atenção', 'Ocorreu um erro ao buscar os dados da Receita. Erro: ' + resp.erro);
+                            }
+                            //
+                            try { m.receita_passo.l.out() } catch (err) { }
+                            $('#idreceitappassomodal').modal('hide');
+                        },
+                        error: function (xhr, error) {
+                            console.log(xhr);
+                            console.log(error);
+                        }
+                    });
+                }
+                else {
+                    bootbox.alert({
+                        size: "small",
+                        title: "Restrição",
+                        message: "Selecione uma Máquina para enviar!",
+                        centerVertical: true
+                    });
+                }
+            },
+            wait: function (ms) {
+                var start = new Date().getTime();
+                var end = start;
+                while (end < start + ms) {
+                    end = new Date().getTime();
+                }
+                return new Date();
+            },
+            getUserAsync: async function(name) 
+            {
+                let response = await fetch(`https://api.github.com/users/${name}`);
+                let data = await response.json()
+                return data;
+            },
             loadingout: function () {
                 try { m.receita.l.out() } catch (e) { }
             }
@@ -3459,6 +3570,111 @@
                     //
                     m.receita_passo.salva_passo_centrifugacao();
                 }                 
+            },
+            salva_passo_centrifugacao: function (id_receita_passo, id_receita_passo_centrifuga) {
+                //
+                if (!id_receita_passo) id_receita_passo = 0
+                if (!id_receita_passo_centrifuga) id_receita_passo_centrifuga = 0
+                //
+                if (m.receita_passo.id_passo_edit) {
+                    id_receita_passo = m.receita_passo.id_passo_edit.id_receita_passo;
+                    id_receita_passo_centrifuga = m.receita_passo.id_passo_edit.id_passo;
+                }
+                //
+                if (!$('input[id=txtpassodesc').val()) {
+                    m.g.alert('Atenção', 'Informe a descrição do Passo!');
+                    return;
+                }
+                //
+                if (!$('input[id=txtvelocidade1').val()) {
+                    m.g.alert('Atenção', 'Informe a velocidade 1!');
+                    return;
+                }
+                //
+                if (!$('input[id=txttempo1').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo 1!');
+                    return;
+                }
+                //
+                if (!$('input[id=txtvelocidade2').val()) {
+                    m.g.alert('Atenção', 'Informe a velocidade 2!');
+                    return;
+                }
+                //
+                if (!$('input[id=txttempo2').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo 2!');
+                    return;
+                }
+                //
+                if (!$('input[id=txtvelocidade3').val()) {
+                    m.g.alert('Atenção', 'Informe a velocidade 3!');
+                    return;
+                }
+                //
+                if (!$('input[id=txttempo3').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo 3!');
+                    return;
+                }
+                //
+                if (!$('input[id=txtvelocidade4').val()) {
+                    m.g.alert('Atenção', 'Informe a velocidade 4!');
+                    return;
+                }
+                //
+                if (!$('input[id=txttempo4').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo 4!');
+                    return;
+                }
+                //
+                if (!$('input[id=txtvelocidade5').val()) {
+                    m.g.alert('Atenção', 'Informe a velocidade 5!');
+                    return;
+                }
+                //
+                if (!$('input[id=txttempo5').val()) {
+                    m.g.alert('Atenção', 'Informe o tempo 5!');
+                    return;
+                }
+                //
+                m.receita_passo.l = m.g.load('Salvando');
+                //
+                var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
+                //
+                var url = m.g.rsvlurl('receitapasso/passocentrifuga') + '?id_receita=' + id_receita + '&id_receita_passo=' + id_receita_passo + '&id_receita_passo_centrifuga=' + id_receita_passo_centrifuga +
+                    '&descricao=' + $('input[id=txtpassodesc').val() +
+                    '&saida=' + $(document.getid('slsaidacentrifuga')).children(":selected").attr("id") +
+                    '&txtvelocidade1=' + $('input[id=txtvelocidade1').val() +
+                    '&txtvelocidade2=' + $('input[id=txtvelocidade2').val() +
+                    '&txtvelocidade3=' + $('input[id=txtvelocidade3').val() +
+                    '&txtvelocidade4=' + $('input[id=txtvelocidade4').val() +
+                    '&txtvelocidade5=' + $('input[id=txtvelocidade5').val() +
+                    '&txttempo1=' + $('input[id=txttempo1').val() +
+                    '&txttempo2=' + $('input[id=txttempo2').val() +
+                    '&txttempo3=' + $('input[id=txttempo3').val() +
+                    '&txttempo4=' + $('input[id=txttempo4').val() +
+                    '&txttempo5=' + $('input[id=txttempo5').val();
+                //
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    success: function (resp) {
+                        if (resp && resp.data == 'ok') {
+                            m.receita_passo.busca = true;
+                            m.receita_passo.busca_receita_passo();
+                            m.receita_passo.id_passo_edit = null;
+                        }
+                        else {
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar incluir o Passo. Erro: ' + resp.erro);
+                        }
+                        //
+                        try { m.receita_passo.l.out() } catch (err) { }
+                        $('#idreceitappassomodal').modal('hide');
+                    },
+                    error: function (xhr, error) {
+                        console.log(xhr);
+                        console.log(error);
+                    }
+                });
             },
             salva_passo_lavagem: function (id_receita_passo, id_receita_passo_lavagem) {                
                 //
@@ -3576,7 +3792,7 @@
                             m.receita_passo.id_passo_edit = null;
                         }
                         else {                            
-                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar incluir a máquina. Erro: ' + resp.erro);
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar incluir o Passo. Erro: ' + resp.erro);
                         }
                         //
                         try { m.receita_passo.l.out() } catch (err) { }
@@ -3666,79 +3882,32 @@
                 $('#1').attr('disabled', false);
                 $('#2').attr('disabled', false);
                 //
-                //d.get('chkativo').checked = false;
-                //$('input[id=txtativo').val('');
-                //document.get('txtativo').disabled = true;
                 $('input[id=txtpassodesc').val('');
-                //d.getid('chkmodotravalholava').checked = false;
-                //$('input[id=txtmodotrabalho').val('');
-                //document.get('txtmodotrabalho').disabled = true;
-                //d.get('chkrpm').checked = false;
                 $('input[id=txtrpm').val('');
-                //document.get('txtrpm').disabled = true;
-                //d.get('chktemporeversao').checked = false;
                 $('input[id=txttemporeversao').val('');
-                //document.get('txttemporeversao').disabled = true;
-                //d.get('chktempooperacao').checked = false;
                 $('input[id=txttempooperacao').val('');
-                //document.get('txttempooperacao').disabled = true;
-                //d.get('chkentrada').checked = false;
-                //$('input[id=txtentrada').val('');
-                //document.get('txtentrada').disabled = true;
-                //d.get('chksaida').checked = false;
-                //$('input[id=txtsaida').val('');
-                //document.get('txtsaida').disabled = true;
-                //d.get('chknivel').checked = false;
-                //$('input[id=txtnivel').val('');
-                //document.get('txtnivel').disabled = true;
-                //d.get('chktemp').checked = false;
                 $('input[id=txttemperatura').val('');
-                //document.get('txttemperatura').disabled = true;
-                //d.get('chksemvapor').checked = false;
-                //$('input[id=txtsemvapor').val('');
-                //document.get('txtsemvapor').disabled = true;
                 d.get('chkproda').checked = false;
                 $('input[id=txtprodutoa').val('');
                 document.get('txtprodutoa').disabled = true;
-                //d.get('chkproda').checked = false;
-                //$('input[id=txtvalora').val('');
-                //document.get('txtvalora').disabled = true;
                 d.get('chkprodb').checked = false;
                 $('input[id=txtprodutob').val('');
                 document.get('txtprodutob').disabled = true;
-                //d.get('chkprodb').checked = false;
-                //$('input[id=txtvalorb').val('');
-                //document.get('txtvalorb').disabled = true;
                 d.get('chkprodc').checked = false;
                 $('input[id=txtprodutoc').val('');
                 document.get('txtprodutoc').disabled = true;
-                //d.get('chkprodc').checked = false;
-                //$('input[id=txtvalorc').val('');
-                //document.get('txtvalorc').disabled = true;
                 d.get('chkprodd').checked = false;
                 $('input[id=txtprodutod').val('');
                 document.get('txtprodutod').disabled = true;
-                //d.get('chkprodd').checked = false;
-                //$('input[id=txtvalord').val('');
-                //document.get('txtvalord').disabled = true;
                 d.get('chkprode').checked = false;
                 $('input[id=txtprodutoe').val('');
                 document.get('txtprodutoe').disabled = true;
-                //d.get('chkprode').checked = false;
-                //$('input[id=txtvalore').val('');
-                //document.get('txtvalore').disabled = true;
                 d.get('chkprodf').checked = false;
                 $('input[id=txtprodutof').val('');
                 document.get('txtprodutof').disabled = true;
-                //d.get('chkprodf').checked = false;
-                //$('input[id=txtvalorf').val('');
-                //document.get('txtvalorf').disabled = true;
                 d.get('chkprodg').checked = false;
                 $('input[id=txtprodutog').val('');
                 document.get('txtprodutog').disabled = true;
-                //d.get('chkprodg').checked = false;
-                //$('input[id=txtvalorg').val('');
-                //document.get('txtvalorg').disabled = true;
                 //
                 $('#modalReceitaPassoLabel').text('Incluir Passos');
                 $('input[id=txtdescreceita').val('');
@@ -3816,7 +3985,7 @@
                             $('input[id=txttemperatura').val(data.receita_passo_lavagem.Temperatura);
                             $('input[id=txtsemvapor').val(data.receita_passo_lavagem.SemVapor);
                             //
-                            m.g.setcomboval('sltipolavagem', '2');
+                            m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
                             $('input[id=txtprodutoa').val(data.receita_passo_lavagem.ProdutoA);
                             //$('input[id=txtvalora').val(data.receita_passo_lavagem.ValorA);
                             $('input[id=txtprodutob').val(data.receita_passo_lavagem.ProdutoB);
@@ -3940,7 +4109,7 @@
                         }
                         else {
                             //m.receita.loadingout();
-                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar buscar os Passo. Erro: ' + data.erro);
+                            m.g.alert('Atenção', 'Ocorreu um erro ao tentar buscar os Passos. Erro: ' + data.erro);
                         }
                     });
                 }

@@ -40,13 +40,13 @@
         <AssociationConnector Association="ConnectorModel.ctrain_unidade_filial" />
         <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
         <AssociationConnector Association="ConnectorModel.id_usu_med_login" />
-        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="3" PointY="41" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPasso" Width="1.5" PointX="5.25" PointY="41" />
+        <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="3" PointY="40" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPasso" Width="1.5" PointX="5.25" PointY="40" />
         <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoCentrifugacao" Width="1.5" PointX="7.5" PointY="36.75" />
+        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="7.5" PointY="41.25" />
         <AssociationConnector Association="ConnectorModel.ctrain_rec_empresa" />
         <AssociationConnector Association="ConnectorModel.ctrain_rec_pass" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_centr" />
-        <EntityTypeShape EntityType="ConnectorModel.ReceitaPassoLavagem" Width="1.5" PointX="7.5" PointY="42" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_lava" />
       </Diagram>
     </edmx:Diagrams>

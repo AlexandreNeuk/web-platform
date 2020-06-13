@@ -21,6 +21,13 @@ namespace Connector.Models
         public List<Medidor_MaquinaModels> data = new List<Medidor_MaquinaModels>();
     }
 
+    public partial class MaquinaModels
+    {
+        public int Id { get; set; }
+        public int Id_Empresa { get; set; }
+        public string Descricao { get; set; }
+    }
+
     public class data
     {
         public string Age = "";
@@ -70,6 +77,13 @@ namespace Connector.Models
         public DateTime DataHora { get; set; }
     }
 
+    public class PacoteBrokerModels
+    {
+        public int Id { get; set; }
+        public string Topico { get; set; }
+        public string Mensagem { get; set; }
+    }
+
     public class ReceitaModel
     {
         public int Id { get; set; }
@@ -77,7 +91,8 @@ namespace Connector.Models
         public Nullable<int> Id_Empresa { get; set; }
         public string Descricao { get; set; }
         public string Resumo { get; set; }
-        public int TotalPassos { get; set; }
+        public int TotalLavagem { get; set; }
+        public int TotalCentrifuga { get; set; }
         public Nullable<bool> Ativo { get; set; }
     }
 

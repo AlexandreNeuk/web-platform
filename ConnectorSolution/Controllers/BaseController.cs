@@ -221,6 +221,25 @@ namespace Connector.Controllers
             return lista_empresas_model;
         }
         //
+        public List<MaquinaModels> PegaMaquinas()
+        {
+            List<Maquina> lista_maquinas = db.Maquina.Where(x => x.Id_Empresa == Codigo_Empresa).ToList();
+            List<MaquinaModels> lista_maquinas_model = new List<MaquinaModels>();
+            //
+            if (lista_maquinas != null)
+            {
+                foreach (var item in lista_maquinas)
+                {
+                    MaquinaModels maquina_model = new MaquinaModels();
+                    maquina_model.Id = item.ID;
+                    maquina_model.Descricao = item.Descricao;
+                    lista_maquinas_model.Add(maquina_model);
+                }
+            }
+            //
+            return lista_maquinas_model;
+        }
+        //
         public string FormataDataHoraTela(DateTime? dt)
         {
             string ret = string.Empty;

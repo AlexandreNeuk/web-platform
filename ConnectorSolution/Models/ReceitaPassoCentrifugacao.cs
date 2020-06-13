@@ -16,7 +16,6 @@ namespace Connector.Models
     {
         public int Id { get; set; }
         public int Id_ReceitaPasso { get; set; }
-        public string ModoTrabalho { get; set; }
         public string Saida { get; set; }
         public string Velocidade1 { get; set; }
         public string Tempo1 { get; set; }
@@ -28,7 +27,6 @@ namespace Connector.Models
         public string Tempo4 { get; set; }
         public string Velocidade5 { get; set; }
         public string Tempo5 { get; set; }
-        public Nullable<int> Ativo { get; set; }
     
         public virtual ReceitaPasso ReceitaPasso { get; set; }
     }
