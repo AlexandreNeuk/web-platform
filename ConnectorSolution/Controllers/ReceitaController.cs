@@ -206,15 +206,15 @@ namespace Connector.Controllers
                                         #region Tipos
                                         /*
                                         <option id="1">Desabilitado</option>
-                                            <option id="2">Lavagem</option>
-                                            <option id="3">Centrifugação</option>
-                                            <option id="4">Umectação</option>
-                                            <option id="5">Pré-Lavagem</option>
-                                            <option id="6">Alvejamento</option>
-                                            <option id="7">Enxague</option>
-                                            <option id="8">Neutralização</option>
-                                            <option id="9">Amaciante</option>
-                                            <option id="10">Molho</option>                                            
+                                        <option id="2">Lavagem</option>
+                                        <option id="3">Centrifugação</option>
+                                        <option id="4">Umectação</option>
+                                        <option id="5">Pré-Lavagem</option>
+                                        <option id="6">Alvejamento</option>
+                                        <option id="7">Enxague</option>
+                                        <option id="8">Neutralização</option>
+                                        <option id="9">Amaciante</option>
+                                        <option id="10">Molho</option>
                                          */
                                         #endregion
                                         //

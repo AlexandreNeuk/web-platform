@@ -6844,7 +6844,7 @@ a.close.disabled {
     border: 1px solid rgba(0,0,0,.2);
     border-radius: .3rem;
     outline: 0;
-    min-width: 640px;
+    min-width: 940px;
 }
 
 .modal-header {

@@ -3247,7 +3247,7 @@
     //
     _m.receita = (function () {
         return {
-            l: null, idreceita: null, alertaedit: null, alertainit: null,
+            l: null, idreceita: null, alertaedit: null, alertainit: null, ids_maquinas: [], ids_conta: [], 
             init: function (data) {
                 var $table = $('#dtreceitas')
                 $table.bootstrapTable({ data: data });
@@ -3450,23 +3450,34 @@
             },
             carrega_mqtt_enviar: function () {
                 //
-                var ids = [];
+                m.receita.ids_maquinas = [];
+                m.receita.ids_conta = [];
                 var table = document.getElementById("dtreceitasmaquinas");
                 for (var i = 0, row; row = table.rows[i]; i++) {
                     //
                     if (row.cells[0].children[0] && row.cells[0].children[0].checked) {
                         //
-                        ids.push(row.cells[1].innerText)
+                        m.receita.ids_maquinas.push(row.cells[1].innerText)
+                        m.receita.ids_conta.push({ id: row.cells[1].innerText, total: 0})
                     }
                 }
                 //
-                if (ids.length > 0) {
+                if (m.receita.ids_maquinas.length > 0) {
                     //
                     var tableReceitas = $('#dtreceitas');
                     var selectedReceitas = tableReceitas.bootstrapTable('getSelections');
                     var id_receita = selectedReceitas[0].Id;
                     //
-                    var url = m.g.rsvlurl('receita/montapacotemqtt') + '?idreceita=' + id_receita + '&id_maquinas=' + ids;
+                    var table = document.getElementById("dtreceitasmaquinas");
+                    for (var i = 0, row; row = table.rows[i]; i++) {
+                        //
+                        if (row.cells[0].children[0] && row.cells[0].children[0].checked) {
+                            //
+                            row.cells[3].innerHTML = 'Buscando dados... <img style="width: 14px;" src=' + m.g.rsvlurl("img/loading.gif") + '>';
+                        }
+                    }
+                    //
+                    var url = m.g.rsvlurl('receita/montapacotemqtt') + '?idreceita=' + id_receita + '&id_maquinas=' + m.receita.ids_maquinas;
                     //
                     $.ajax({
                         url: url,
@@ -3479,23 +3490,59 @@
                                     var data = {
                                         topico: resp.list_ret[i].Topico,
                                         mensagem: resp.list_ret[i].Mensagem,
-                                        id: resp.list_ret[i].Id
-                                    };
+                                        id: resp.list_ret[i].Id,
+                                        indice: (i + 1)
+                                    }
                                     var url_mqtt = 'http://localhost:3000/carregar';
                                     //
+                                    var table = document.getElementById("dtreceitasmaquinas");
+                                    for (var k = 0, row; row = table.rows[k]; k++) {
+                                        //
+                                        if (row.cells[0].children[0] && row.cells[0].children[0].checked) {
+                                            //
+                                            row.cells[3].innerHTML = 'Enviado Passo ' + (i + 1) + ' <img style="width: 14px;" src=' + m.g.rsvlurl("img/loading.gif") + '>';
+                                        }
+                                    }
+                                    //
+                                    console.log('IDA - Data: ', new Date().toUTCString(), ' - ', data.indice)
                                     $.ajax({
                                         url: url_mqtt,
                                         type: "post",
                                         data: JSON.stringify(data),
                                         contentType: 'application/json; charset=utf-8',
                                         success: function (resp) {
-                                            if (resp.publish_success) {
+                                            //
+                                            if (resp) {
                                                 //
-                                                //alert(resp.id)
-                                                //m.g.alert('Sucesso', 'Ocorreu um erro ao enviar os dados para o Broker MQTT. Erro: ' + resp.erro);
-                                            }
-                                            else {
-                                                m.g.alert('Atenção', 'Ocorreu um erro ao enviar os dados para o Broker MQTT. Erro: ' + resp.erro);
+                                                var table = document.getElementById("dtreceitasmaquinas");
+                                                for (var i = 0, row; row = table.rows[i]; i++) {
+                                                    //
+                                                    if (row.cells[0].children[0] && row.cells[0].children[0].checked) {
+                                                        //
+                                                        if (row.cells[0].children[0].id == resp.id.toString()) {
+                                                            //
+                                                            console.log('VOLTA - Data: ', new Date().toUTCString(), ' - ', resp.indice)
+
+                                                            var receita = m.receita.ids_conta.filter(function (item) {
+                                                                if (item.id == resp.id.toString()) {
+                                                                    item.total = item.total + 1;
+                                                                }
+                                                                return item
+                                                            });
+
+                                                            if (resp.publish_success && receita[0].total == 20) {
+                                                                //
+                                                                row.cells[3].innerHTML = 'Recebido Passo ' + receita[0].total + '/20 <img style="width: 14px;" src=">';
+                                                            }
+                                                            else if (resp.publish_success) {
+                                                                row.cells[3].innerHTML = 'Recebido Passo ' + receita[0].total + '/20 <img style="width: 14px;" src="' + m.g.rsvlurl("img/loading.gif") + '">';
+                                                            }
+                                                            else {
+                                                                row.cells[3].innerHTML = 'Erro broker'
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         },
                                         error: function (xhr, error) {
@@ -3503,7 +3550,7 @@
                                         }
                                     });
                                     //
-                                    m.receita.wait(500);
+                                    //m.receita.wait(500);
                                 }
                             }
                             else {
