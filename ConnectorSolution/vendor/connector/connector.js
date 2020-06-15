@@ -489,7 +489,7 @@
                 var emp_ant = m.maquina.emp_ant ? m.maquina.emp_ant : 0;
                 var url = m.g.rsvlurl('maquina/maquinapost') +
                     '?descricao=' + d.getid('txtdescmaquina').value +
-                    '&id_coletor=' + slcol.options[slcol.selectedIndex].id +
+                    '&topico=' + d.getid('txttopico').value +
                     '&id_maquina=' + m.maquina.id + 
                     '&id_empresa_nova=' + slemp.options[slemp.selectedIndex].id + 
                     '&id_empresa_ant=' + emp_ant;
@@ -628,6 +628,7 @@
             setmaquinaedita: function () {                
                 $('.modal-title').text('Editar Máquina');
                 d.getid('txtdescmaquina').value = '';
+                d.getid('txttopico').value = '';
                 $('#btnexcluirmaquina').css('display', 'none');
                 //
                 var table = $('#dataTableMaquinas');
@@ -635,6 +636,7 @@
                 //
                 if (select && select[0]) {
                     d.getid('txtdescmaquina').value = select[0].Descricao;
+                    d.getid('txttopico').value = select[0].Topico;
                     //
                     m.maquina.id = select[0].ID;
                     m.maquina.emp_ant = select[0].Id_Empresa;
@@ -650,7 +652,7 @@
                         m.g.setcomboval('slcoletor', select[0].Id_Coletor);
                     }
                     m.g.setcomboval('slempresamaquina', m.maquina.emp_ant);
-                    m.maquina.loadselectcoletores(select[0].Id_Empresa);
+                    //m.maquina.loadselectcoletores(select[0].Id_Empresa);
                     $('#maquinaModal').modal('show');
                 }
                 else {
@@ -672,6 +674,7 @@
                 m.maquina.id = 0;
                 $('.modal-title').text('Incluir Máquina');
                 d.getid('txtdescmaquina').value = '';
+                d.getid('txttopico').value = '';
                 $('#btnexcluirmaquina').css('display', 'none');
             },
             chgcmbempresamaquina: function () {
@@ -3435,15 +3438,31 @@
                 //
                 var tableReceitas = $('#dtreceitas');
                 var selectedReceitas = tableReceitas.bootstrapTable('getSelections');
-                if (selectedReceitas && selectedReceitas.length > 0) {
+                if (selectedReceitas && selectedReceitas.length == 1 ) {
                     //
+                    var table = document.getElementById("dtreceitasmaquinas");
+                    for (var i = 0, row; row = table.rows[i]; i++) {
+                        //
+                        if (i > 0) {
+                            row.cells[3].innerHTML = '';
+                            row.cells[0].children[0].checked = false;
+                        }
+                    }
                     $('#idenvioreceita').modal('show');
                 }
-                else {
+                else if (selectedReceitas && selectedReceitas.length == 0) {
                     bootbox.alert({
                         size: "small",
                         title: "Restrição",
                         message: "Selecione uma Receita para enviar!",
+                        centerVertical: true
+                    });
+                }
+                else if (selectedReceitas && selectedReceitas.length > 1) {
+                    bootbox.alert({
+                        size: "small",
+                        title: "Restrição",
+                        message: "Selecione apenas uma Receita para enviar!",
                         centerVertical: true
                     });
                 }
@@ -3604,7 +3623,8 @@
                 var $table = $('#dtreceitas')
                 $table.bootstrapTable({ data: data });
                 if (m.sessao.tipo_empresa_logado != 1) {
-                    $table.bootstrapTable('hideColumn', 'Empresa');
+                    //$table.bootstrapTable('hideColumn', 'Empresa');
+                    $table.bootstrapTable('hideColumn', 'TipoId');
                 }
             },
             salva: function () {
@@ -3626,6 +3646,10 @@
                 if (m.receita_passo.id_passo_edit) {
                     id_receita_passo = m.receita_passo.id_passo_edit.id_receita_passo;
                     id_receita_passo_centrifuga = m.receita_passo.id_passo_edit.id_passo;
+                }
+                else {
+                    id_receita_passo = 0;
+                    id_receita_passo_centrifuga = 0;
                 }
                 //
                 if (!$('input[id=txtpassodesc').val()) {
@@ -3731,6 +3755,10 @@
                 if (m.receita_passo.id_passo_edit) {
                     id_receita_passo = m.receita_passo.id_passo_edit.id_receita_passo;
                     id_receita_passo_lavagem = m.receita_passo.id_passo_edit.id_passo;
+                }
+                else {
+                    id_receita_passo = 0;
+                    id_receita_passo_lavagem = 0;
                 }
                 //
                 if (!$('input[id=txtpassodesc').val()) {
@@ -3997,91 +4025,80 @@
                     $.get(m.g.rsvlurl('receitapasso/carregadadosedit') + '?id_receita=' + id_receita + '&id_passo=' + select[0].Id + '&tipo=' + select[0].Tipo, function (data) {
                         //
                         if (data && data.data == 'ok') {
-                            //                            
+                            //
+                            m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
+                            //
                             if (data.receita_passo.Tipo == '3') {  // centrifugação
                                 //                                
                                 d.getid('divlavagem').style.display = 'none';
                                 d.getid('divcentrifugacao').style.display = 'inline';
+                                //
+                                m.g.setcomboval('slsaidacentrifuga', data.receita_passo_centrifugacao.Saida);
+                                $('input[id=txtpassodesc').val(data.receita_passo.Decricao);
+                                $('input[id=txtvelocidade1').val(data.receita_passo_centrifugacao.Velocidade1);
+                                $('input[id=txtvelocidade2').val(data.receita_passo_centrifugacao.Velocidade2);
+                                $('input[id=txtvelocidade3').val(data.receita_passo_centrifugacao.Velocidade3);
+                                $('input[id=txtvelocidade4').val(data.receita_passo_centrifugacao.Velocidade4);
+                                $('input[id=txtvelocidade5').val(data.receita_passo_centrifugacao.Velocidade5);
+                                $('input[id=txttempo1').val(data.receita_passo_centrifugacao.Tempo1);
+                                $('input[id=txttempo2').val(data.receita_passo_centrifugacao.Tempo1);
+                                $('input[id=txttempo3').val(data.receita_passo_centrifugacao.Tempo1);
+                                $('input[id=txttempo4').val(data.receita_passo_centrifugacao.Tempo1);
+                                $('input[id=txttempo5').val(data.receita_passo_centrifugacao.Tempo1);
                             }
                             else {
                                 d.getid('divlavagem').style.display = 'inline';
                                 d.getid('divcentrifugacao').style.display = 'none';
+                                //
+                                m.g.setcomboval('slentrada', data.receita_passo_lavagem.Entrada);
+                                m.g.setcomboval('slsaida', data.receita_passo_lavagem.Saida);
+                                m.g.setcomboval('slnivel', data.receita_passo_lavagem.Nivel);
+                                m.g.setcomboval('slvapor', data.receita_passo_lavagem.SemVapor);
+                                //
+                                $('#1').attr('disabled', 'disabled');
+                                $('#2').attr('disabled', 'disabled');
+                                $('input[id=txtpassodesc').val(data.receita_passo.Decricao);
+                                //
+                                $('input[id=txtrpm').val(data.receita_passo_lavagem.RPM);
+                                $('input[id=txttemporeversao').val(data.receita_passo_lavagem.TempoReversao);
+                                $('input[id=txttempooperacao').val(data.receita_passo_lavagem.TempoOperacao);
+                                $('input[id=txtentrada').val(data.receita_passo_lavagem.Entrada);
+                                $('input[id=txtsaida').val(data.receita_passo_lavagem.Saida);
+                                $('input[id=txtnivel').val(data.receita_passo_lavagem.Nivel);
+                                $('input[id=txttemperatura').val(data.receita_passo_lavagem.Temperatura);
+                                $('input[id=txtsemvapor').val(data.receita_passo_lavagem.SemVapor);
+                                //
+                                m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
+                                $('input[id=txtprodutoa').val(data.receita_passo_lavagem.ProdutoA);
+                                $('input[id=txtprodutob').val(data.receita_passo_lavagem.ProdutoB);
+                                $('input[id=txtprodutoc').val(data.receita_passo_lavagem.ProdutoC);
+                                $('input[id=txtprodutod').val(data.receita_passo_lavagem.ProdutoD);
+                                $('input[id=txtprodutoe').val(data.receita_passo_lavagem.ProdutoE);
+                                $('input[id=txtprodutof').val(data.receita_passo_lavagem.ProdutoF);
+                                $('input[id=txtprodutog').val(data.receita_passo_lavagem.ProdutoG);
+                                //
+                                d.getid('txtrpm').disabled = data.receita_passo_lavagem.RPM != '' ? false : true;
+                                d.getid('txttemporeversao').disabled = data.receita_passo_lavagem.TempoReversao != '' ? false : true;
+                                d.getid('txttempooperacao').disabled = data.receita_passo_lavagem.TempoOperacao != '' ? false : true;
+                                d.getid('txttemperatura').disabled = data.receita_passo_lavagem.Temperatura != '' ? false : true;
+                                //
+                                d.getid('chkproda').checked = data.receita_passo_lavagem.ProdutoA == '' ? false : true;
+                                d.getid('txtprodutoa').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
+                                d.getid('chkprodb').checked = data.receita_passo_lavagem.ProdutoB == '' ? false : true;
+                                d.getid('txtprodutob').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
+                                d.getid('chkprodc').checked = data.receita_passo_lavagem.ProdutoC == '' ? false : true;
+                                d.getid('txtprodutoc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
+                                d.getid('chkprodd').checked = data.receita_passo_lavagem.ProdutoD == '' ? false : true;
+                                d.getid('txtprodutod').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
+                                d.getid('chkprode').checked = data.receita_passo_lavagem.ProdutoE == '' ? false : true;
+                                d.getid('txtprodutoe').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
+                                d.getid('chkprodf').checked = data.receita_passo_lavagem.ProdutoF == '' ? false : true;
+                                d.getid('txtprodutof').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
+                                d.getid('chkprodg').checked = data.receita_passo_lavagem.ProdutoG == '' ? false : true;
+                                d.getid('txtprodutog').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
                             }
                             //
-                            m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
-                            m.g.setcomboval('slentrada', data.receita_passo_lavagem.Entrada);
-                            m.g.setcomboval('slsaida', data.receita_passo_lavagem.Saida);
-                            m.g.setcomboval('slnivel', data.receita_passo_lavagem.Nivel);
-                            m.g.setcomboval('slvapor', data.receita_passo_lavagem.SemVapor);
-
-                            
-                            $('#1').attr('disabled', 'disabled');
-                            $('#2').attr('disabled', 'disabled');
-                            //var id_receita = $(d.getid('slopcaoesreceitas')).children(":selected").attr("id");
-                            $('input[id=txtpassodesc').val(data.receita_passo.Decricao);
-                            //
                             $('#idreceitappassomodal').modal('show');
-
-                            //$('input[id=txtmodotrabalho').val(data.receita_passo_lavagem.ModoTrabalho);
-                            $('input[id=txtrpm').val(data.receita_passo_lavagem.RPM);
-                            $('input[id=txttemporeversao').val(data.receita_passo_lavagem.TempoReversao);
-                            $('input[id=txttempooperacao').val(data.receita_passo_lavagem.TempoOperacao);
-                            $('input[id=txtentrada').val(data.receita_passo_lavagem.Entrada);
-                            $('input[id=txtsaida').val(data.receita_passo_lavagem.Saida);
-                            $('input[id=txtnivel').val(data.receita_passo_lavagem.Nivel);
-                            $('input[id=txttemperatura').val(data.receita_passo_lavagem.Temperatura);
-                            $('input[id=txtsemvapor').val(data.receita_passo_lavagem.SemVapor);
-                            //
-                            m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
-                            $('input[id=txtprodutoa').val(data.receita_passo_lavagem.ProdutoA);
-                            //$('input[id=txtvalora').val(data.receita_passo_lavagem.ValorA);
-                            $('input[id=txtprodutob').val(data.receita_passo_lavagem.ProdutoB);
-                            //$('input[id=txtvalorb').val(data.receita_passo_lavagem.ValorB);
-                            $('input[id=txtprodutoc').val(data.receita_passo_lavagem.ProdutoC);
-                            //$('input[id=txtvalorc').val(data.receita_passo_lavagem.ValorC);
-                            $('input[id=txtprodutod').val(data.receita_passo_lavagem.ProdutoD);
-                            //$('input[id=txtvalord').val(data.receita_passo_lavagem.ValorD);
-                            $('input[id=txtprodutoe').val(data.receita_passo_lavagem.ProdutoE);
-                            //$('input[id=txtvalore').val(data.receita_passo_lavagem.ValorE);
-                            $('input[id=txtprodutof').val(data.receita_passo_lavagem.ProdutoF);
-                            //$('input[id=txtvalorf').val(data.receita_passo_lavagem.ValorF);
-                            $('input[id=txtprodutog').val(data.receita_passo_lavagem.ProdutoG);
-                            //$('input[id=txtvalorg').val(data.receita_passo_lavagem.ValorG);
-                            //
-                            //d.getid('chkmodotravalholava').checked = data.receita_passo_lavagem.ModoTrabalho == '' ? false : true;
-                            //d.getid('txtmodotrabalho').disabled = data.receita_passo_lavagem.ModoTrabalho != '' ? false : true;
-                            //d.getid('chkrpm').checked = data.receita_passo_lavagem.RPM == '' ? false : true;
-                            d.getid('txtrpm').disabled = data.receita_passo_lavagem.RPM != '' ? false : true;
-                            //d.getid('chktemporeversao').checked = data.receita_passo_lavagem.TempoReversao == '' ? false : true;
-                            d.getid('txttemporeversao').disabled = data.receita_passo_lavagem.TempoReversao != '' ? false : true;
-                            //d.getid('chktempooperacao').checked = data.receita_passo_lavagem.TempoOperacao == '' ? false : true;
-                            d.getid('txttempooperacao').disabled = data.receita_passo_lavagem.TempoOperacao != '' ? false : true;
-
-                            d.getid('txttemperatura').disabled = data.receita_passo_lavagem.Temperatura != '' ? false : true;
-                            //d.getid('chksemvapor').checked = data.receita_passo_lavagem.SemVapor == '' ? false : true;
-                            //d.getid('txtsemvapor').disabled = data.receita_passo_lavagem.SemVapor != '' ? false : true;
-                            //
-                            d.getid('chkproda').checked = data.receita_passo_lavagem.ProdutoA == '' ? false : true;
-                            d.getid('txtprodutoa').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
-                            //d.getid('txtvalora').disabled = data.receita_passo_lavagem.ProdutoA != '' ? false : true;
-                            d.getid('chkprodb').checked = data.receita_passo_lavagem.ProdutoB == '' ? false : true;
-                            d.getid('txtprodutob').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
-                            //d.getid('txtvalorb').disabled = data.receita_passo_lavagem.ProdutoB != '' ? false : true;
-                            d.getid('chkprodc').checked = data.receita_passo_lavagem.ProdutoC == '' ? false : true;
-                            d.getid('txtprodutoc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
-                            //d.getid('txtvalorc').disabled = data.receita_passo_lavagem.ProdutoC != '' ? false : true;
-                            d.getid('chkprodd').checked = data.receita_passo_lavagem.ProdutoD == '' ? false : true;
-                            d.getid('txtprodutod').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
-                            //d.getid('txtvalord').disabled = data.receita_passo_lavagem.ProdutoD != '' ? false : true;
-                            d.getid('chkprode').checked = data.receita_passo_lavagem.ProdutoE == '' ? false : true;
-                            d.getid('txtprodutoe').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
-                            //d.getid('txtvalore').disabled = data.receita_passo_lavagem.ProdutoE != '' ? false : true;
-                            d.getid('chkprodf').checked = data.receita_passo_lavagem.ProdutoF == '' ? false : true;
-                            d.getid('txtprodutof').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
-                            //d.getid('txtvalorf').disabled = data.receita_passo_lavagem.ProdutoF != '' ? false : true;
-                            d.getid('chkprodg').checked = data.receita_passo_lavagem.ProdutoG == '' ? false : true;
-                            d.getid('txtprodutog').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
-                            //d.getid('txtvalorg').disabled = data.receita_passo_lavagem.ProdutoG != '' ? false : true;
                         }
                         //
                         m.receita_passo.loadingout();

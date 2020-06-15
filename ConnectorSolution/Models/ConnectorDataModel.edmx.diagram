@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="ConnectorModel.ColetorTipoAlerta" Width="1.5" PointX="3" PointY="30.375" />
         <EntityTypeShape EntityType="ConnectorModel.Empresa" Width="1.5" PointX="0.75" PointY="15.25" />
         <EntityTypeShape EntityType="ConnectorModel.Filial" Width="1.5" PointX="3" PointY="33.75" />
-        <EntityTypeShape EntityType="ConnectorModel.Maquina" Width="1.5" PointX="3" PointY="11.75" />
         <EntityTypeShape EntityType="ConnectorModel.Unidade" Width="1.5" PointX="5.25" PointY="33.875" />
         <EntityTypeShape EntityType="ConnectorModel.Usuario" Width="1.5" PointX="3" PointY="14.625" />
         <EntityTypeShape EntityType="ConnectorModel.UsuarioLogin" Width="1.5" PointX="5.25" PointY="15.5" />
@@ -25,7 +24,6 @@
         <EntityTypeShape EntityType="ConnectorModel.Setor" Width="1.5" PointX="6.75" PointY="0.75" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_alerta" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_empresa" />
-        <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_pressao_hist" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_producao_hist" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_temperatura_hist" />
@@ -36,9 +34,7 @@
         <AssociationConnector Association="ConnectorModel.ctrain_filial_empresa" />
         <AssociationConnector Association="ConnectorModel.ctrain_gateway_empresa" />
         <AssociationConnector Association="ConnectorModel.id_empresa_constrain" />
-        <AssociationConnector Association="ConnectorModel.id_empresa_maquina_constrain" />
         <AssociationConnector Association="ConnectorModel.ctrain_unidade_filial" />
-        <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
         <AssociationConnector Association="ConnectorModel.id_usu_med_login" />
         <EntityTypeShape EntityType="ConnectorModel.Receita" Width="1.5" PointX="3" PointY="40" />
         <EntityTypeShape EntityType="ConnectorModel.ReceitaPasso" Width="1.5" PointX="5.25" PointY="40" />
@@ -48,6 +44,10 @@
         <AssociationConnector Association="ConnectorModel.ctrain_rec_pass" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_centr" />
         <AssociationConnector Association="ConnectorModel.ctrain_pass_lava" />
+        <EntityTypeShape EntityType="ConnectorModel.Maquina" Width="1.5" PointX="3" PointY="19.125" />
+        <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
+        <AssociationConnector Association="ConnectorModel.id_empresa_maquina_constrain" />
+        <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

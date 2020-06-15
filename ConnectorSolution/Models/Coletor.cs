@@ -33,9 +33,9 @@ namespace Connector.Models
     
         public virtual ICollection<ColetorAlerta> ColetorAlerta { get; set; }
         public virtual Empresa Empresa { get; set; }
-        public virtual Maquina Maquina { get; set; }
         public virtual ICollection<ColetorPressaoHistorico> ColetorPressaoHistorico { get; set; }
         public virtual ICollection<ColetorProducaoHistorico> ColetorProducaoHistorico { get; set; }
         public virtual ICollection<ColetorTemperaturaHistorico> ColetorTemperaturaHistorico { get; set; }
+        public virtual Maquina Maquina { get; set; }
     }
 }

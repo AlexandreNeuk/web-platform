@@ -23,7 +23,7 @@ namespace Connector.Controllers
         }
         //
         public List<ReceitaModel> CarregaDadosReceitas()
-        {
+        {            
             List<Receita> lista_receita = new List<Receita>();
             List<EmpresaModel> lista_empresas = new List<EmpresaModel>();
             List<ReceitaModel> lista_receita_models = new List<ReceitaModel>();
@@ -71,8 +71,9 @@ namespace Connector.Controllers
                         ReceitaPassoGridModel tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.TipoId = Convert.ToInt32(item.Tipo);
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo Operação";
                         tmp.Valor = item_filho.TempoOperacao;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -80,8 +81,9 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.TipoId = Convert.ToInt32(item.Tipo);
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo Reversão";
                         tmp.Valor = item_filho.TempoReversao;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -89,8 +91,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Temperatura";
                         tmp.Valor = item_filho.Temperatura;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -98,8 +100,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "RPM";
                         tmp.Valor = item_filho.RPM;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -107,8 +109,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Sem Vapor";
                         tmp.Valor = item_filho.SemVapor;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -116,8 +118,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Entrada";
                         tmp.Valor = item_filho.Entrada;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -125,8 +127,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Saída";
                         tmp.Valor = item_filho.Saida;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -134,8 +136,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Nível";
                         tmp.Valor = item_filho.Nivel;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -143,8 +145,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoA";
                         tmp.Valor = item_filho.ProdutoA;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -152,8 +154,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoB";
                         tmp.Valor = item_filho.ProdutoB;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -161,8 +163,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoC";
                         tmp.Valor = item_filho.ProdutoC;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -170,8 +172,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoD";
                         tmp.Valor = item_filho.ProdutoD;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -179,8 +181,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoE";
                         tmp.Valor = item_filho.ProdutoE;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -188,8 +190,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoF";
                         tmp.Valor = item_filho.ProdutoF;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -197,8 +199,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_filho.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Lavagem";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "ProdutoG";
                         tmp.Valor = item_filho.ProdutoG;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -209,8 +211,8 @@ namespace Connector.Controllers
                         ReceitaPassoGridModel tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Saída";
                         tmp.Valor = item_centri.Saida;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -218,8 +220,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 1";
                         tmp.Valor = item_centri.Velocidade1;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -227,8 +229,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 2";
                         tmp.Valor = item_centri.Velocidade2;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -236,8 +238,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 3";
                         tmp.Valor = item_centri.Velocidade3;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -245,8 +247,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 4";
                         tmp.Valor = item_centri.Velocidade4;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -254,8 +256,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 4";
                         tmp.Valor = item_centri.Velocidade4;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -263,8 +265,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Velociade 5";
                         tmp.Valor = item_centri.Velocidade5;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -272,8 +274,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo 1";
                         tmp.Valor = item_centri.Tempo1;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -281,8 +283,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo 2";
                         tmp.Valor = item_centri.Tempo2;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -290,8 +292,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo 3";
                         tmp.Valor = item_centri.Tempo3;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -299,8 +301,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo 4";
                         tmp.Valor = item_centri.Tempo4;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -308,8 +310,8 @@ namespace Connector.Controllers
                         tmp = new ReceitaPassoGridModel();
                         tmp.Id = item_centri.Id;
                         tmp.IdReceitaPasso = item.Id;
-                        tmp.Tipo = "Centrifugação";
-                        tmp.Descricao = item.Decricao;
+                        tmp.Tipo = item.Tipo;
+                        tmp.Descricao = PegaDescPasso(item.Tipo);
                         tmp.Variavel = "Tempo 5";
                         tmp.Valor = item_centri.Tempo5;
                         lista_receita_passo_grid_models.Add(tmp);
@@ -318,6 +320,50 @@ namespace Connector.Controllers
             }
             //
             return lista_receita_passo_grid_models;
+        }
+        //
+        private string PegaDescPasso(string tipo)
+        {
+            string sret = string.Empty;
+            //
+            switch (Convert.ToInt32(tipo))
+            {
+                case 1:
+                    sret = "Desabilitado";
+                    break;
+                case 2:
+                    sret = "Lavagem";
+                    break;
+                case 3:
+                    sret = "Centrifugação";
+                    break;
+                case 4:
+                    sret = "Umectação";
+                    break;
+                case 5:
+                    sret = "Pré-Lavagem";
+                    break;
+                case 6:
+                    sret = "Alvejamento";
+                    break;
+                case 7:
+                    sret = "Enxague";
+                    break;
+                case 8:
+                    sret = "Neutralização";
+                    break;
+                case 9:
+                    sret = "Amaciante";
+                    break;
+                case 10:
+                    sret = "Molho";
+                    break;
+                default:
+                    sret = "Desabilitado";
+                    break;
+            }
+            //
+            return sret;
         }
         //
         public JsonResult Passo(int id_receita, int id_receita_passo, int id_receita_passo_lavagem, 
@@ -421,7 +467,7 @@ namespace Connector.Controllers
                 //
                 oReceitaPasso.Id_Receita = id_receita;
                 oReceitaPasso.Decricao = descricao;
-                oReceitaPasso.Tipo = "2";
+                oReceitaPasso.Tipo = "3";
                 oReceitaPasso.Ativo = 1;
                 //
                 if (id_receita_passo > 0)
@@ -499,6 +545,7 @@ namespace Connector.Controllers
         {
             string sret = string.Empty;
             ReceitaPassoLavagem oReceitaPassoLavagem = new ReceitaPassoLavagem();
+            ReceitaPassoCentrifugacao oReceitaPassoCentrifugacao = new ReceitaPassoCentrifugacao();
             ReceitaPassoModel oReceitaPassoModel = new ReceitaPassoModel();
             //
             try
@@ -510,17 +557,29 @@ namespace Connector.Controllers
                 {
                     foreach (ReceitaPasso item in oReceita.ReceitaPasso)
                     {
-                        if (!tipo.ToLower().Equals("centrifugacao"))
+                        if (tipo.Equals("3"))
                         {
-                            foreach (var item_lavagem in item.ReceitaPassoLavagem)
+                            foreach (var item_centrifuga in item.ReceitaPassoCentrifugacao)
                             {
-                                if (item_lavagem.Id == id_passo)
+                                if (item_centrifuga.Id == id_passo)
                                 {
                                     oReceitaPassoModel.Id = item.Id;
                                     oReceitaPassoModel.Decricao = item.Decricao;
-                                    oReceitaPassoModel.Id = item.Id;
                                     oReceitaPassoModel.Tipo = item.Tipo;
-                                    oReceitaPassoLavagem = item_lavagem;
+                                    oReceitaPassoCentrifugacao.Id = item_centrifuga.Id;
+                                    oReceitaPassoCentrifugacao.Id_ReceitaPasso = item_centrifuga.Id_ReceitaPasso;
+                                    oReceitaPassoCentrifugacao.Saida = item_centrifuga.Saida;
+                                    oReceitaPassoCentrifugacao.Tempo1 = item_centrifuga.Tempo1;
+                                    oReceitaPassoCentrifugacao.Tempo2 = item_centrifuga.Tempo2;
+                                    oReceitaPassoCentrifugacao.Tempo3 = item_centrifuga.Tempo3;
+                                    oReceitaPassoCentrifugacao.Tempo4 = item_centrifuga.Tempo4;
+                                    oReceitaPassoCentrifugacao.Tempo5 = item_centrifuga.Tempo5;
+                                    oReceitaPassoCentrifugacao.Velocidade1 = item_centrifuga.Velocidade1;
+                                    oReceitaPassoCentrifugacao.Velocidade2 = item_centrifuga.Velocidade2;
+                                    oReceitaPassoCentrifugacao.Velocidade3 = item_centrifuga.Velocidade3;
+                                    oReceitaPassoCentrifugacao.Velocidade4 = item_centrifuga.Velocidade4;
+                                    oReceitaPassoCentrifugacao.Velocidade5 = item_centrifuga.Velocidade5;
+                                    //oReceitaPassoCentrifugacao = item_centrifuga;
                                     oReceitaPassoLavagem.ReceitaPasso = null;
                                     bacho = true;
                                     break;
@@ -529,14 +588,22 @@ namespace Connector.Controllers
                         }
                         else
                         {
-                            foreach (var item_centrifuga in item.ReceitaPassoCentrifugacao)
+                            foreach (var item_lavagem in item.ReceitaPassoLavagem)
                             {
-                                bacho = true;
+                                if (item_lavagem.Id == id_passo)
+                                {
+                                    oReceitaPassoModel.Id = item.Id;
+                                    oReceitaPassoModel.Decricao = item.Decricao;
+                                    oReceitaPassoModel.Tipo = item.Tipo;
+                                    oReceitaPassoLavagem = item_lavagem;
+                                    oReceitaPassoLavagem.ReceitaPasso = null;
+                                    bacho = true;
+                                    break;
+                                }
                             }
                         }
                         //
-                        if (bacho)
-                            break;
+                        if (bacho) break;
                     }
                     //
                     sret = "ok";
@@ -551,7 +618,15 @@ namespace Connector.Controllers
                 sret = exc.Message;
             }
             //
-            return Json(new { data = sret, receita_passo = oReceitaPassoModel, receita_passo_lavagem = oReceitaPassoLavagem, results = 0, success = true }, JsonRequestBehavior.AllowGet);
+            return Json(
+                new {
+                    data = sret,
+                    receita_passo = oReceitaPassoModel,
+                    receita_passo_lavagem = oReceitaPassoLavagem,
+                    receita_passo_centrifugacao = oReceitaPassoCentrifugacao,
+                    results = 0,
+                    success = true }, 
+                JsonRequestBehavior.AllowGet);
         }
         //
         public JsonResult CarregaDados()
@@ -586,7 +661,7 @@ namespace Connector.Controllers
                     //
                     if (oReceitaPasso != null)
                     {
-                        if (tipo.ToLower().Equals("lavagem"))
+                        if (!tipo.Equals("3"))
                         {
                             ReceitaPassoLavagem rpl = db.ReceitaPassoLavagem.Where(a => a.Id == id_passo).FirstOrDefault();
                             //

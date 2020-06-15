@@ -73,6 +73,7 @@ namespace Connector.Controllers
                     novo.ID = item.ID;
                     novo.Id_Empresa = item.Id_Empresa;
                     novo.Descricao = item.Descricao;
+                    novo.Topico = item.Topico;
                     novo.DescricaoEmpresa = item.Empresa.Nome;
                     //
                     Coletor oColetor = db.Coletor.Where(a => a.Maquina.Id_Empresa == item.Empresa.Id && a.Id_Maquina == item.ID).FirstOrDefault();
@@ -150,6 +151,7 @@ namespace Connector.Controllers
                     novo.ID = item.ID;
                     novo.Id_Empresa = item.Id_Empresa;
                     novo.Descricao = item.Descricao;
+                    novo.Topico = item.Topico;
                     novo.DescricaoEmpresa = item.Empresa.Nome;
                     //
                     Coletor oColetor = db.Coletor.Where(a => a.Maquina.Id_Empresa == item.Empresa.Id && a.Id_Maquina == item.ID).FirstOrDefault();
@@ -230,7 +232,7 @@ namespace Connector.Controllers
             return Json(new { ret, results = 0, success = true }, JsonRequestBehavior.AllowGet);
         }
         //
-        public JsonResult MaquinaPost(string descricao, int id_coletor, int id_maquina, int id_empresa_nova, int id_empresa_ant)
+        public JsonResult MaquinaPost(string descricao, string topico, int id_maquina, int id_empresa_nova, int id_empresa_ant)
         {
             string ret = string.Empty;
             string erro = string.Empty;
@@ -247,6 +249,7 @@ namespace Connector.Controllers
                     {
                         mm.Id_Empresa = id_empresa_nova;
                         mm.Descricao = descricao;
+                        mm.Topico = topico;
                         db.Entry(mm).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -258,6 +261,7 @@ namespace Connector.Controllers
                 else
                 {
                     mm.Descricao = descricao;
+                    mm.Topico = topico;
                     mm.Id_Empresa = id_empresa_nova;
                     db.Maquina.Add(mm);
                     db.SaveChanges();
@@ -275,26 +279,26 @@ namespace Connector.Controllers
                         db.SaveChanges();
                     }
                     //
-                    if (id_coletor > 0) // 0 = N/A não se aplica
-                    {
-                        Coletor oColetor = null;
+                    //if (id_coletor > 0) // 0 = N/A não se aplica
+                    //{
+                    //    Coletor oColetor = null;
 
-                        if (id_empresa_nova == id_empresa_ant)
-                        {
-                            oColetor = db.Coletor.Where(a => a.Id == id_coletor && a.Id_Empresa == id_empresa_ant).FirstOrDefault();
-                        }
-                        else
-                        {
-                            oColetor = db.Coletor.Where(a => a.Id == id_coletor && a.Id_Empresa == id_empresa_nova).FirstOrDefault();
-                        }                        
-                        //
-                        if (oColetor != null)
-                        {
-                            oColetor.Id_Maquina = mm.ID;
-                            db.Entry(oColetor).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
+                    //    if (id_empresa_nova == id_empresa_ant)
+                    //    {
+                    //        oColetor = db.Coletor.Where(a => a.Id == id_coletor && a.Id_Empresa == id_empresa_ant).FirstOrDefault();
+                    //    }
+                    //    else
+                    //    {
+                    //        oColetor = db.Coletor.Where(a => a.Id == id_coletor && a.Id_Empresa == id_empresa_nova).FirstOrDefault();
+                    //    }                        
+                    //    //
+                    //    if (oColetor != null)
+                    //    {
+                    //        oColetor.Id_Maquina = mm.ID;
+                    //        db.Entry(oColetor).State = EntityState.Modified;
+                    //        db.SaveChanges();
+                    //    }
+                    //}
                     //
                     ret = "ok";
                 }

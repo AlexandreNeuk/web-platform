@@ -169,6 +169,7 @@ namespace Connector.Controllers
             string ret = string.Empty;
             string erro = string.Empty;
             List<PacoteBrokerModels> list_ret = new List<PacoteBrokerModels>();
+            List<PacoteBrokerModels> list_ret_tmp = new List<PacoteBrokerModels>();
             try
             {
                 Receita oReceita = db.Receita.Where(a => a.Id == idreceita && a.Id_Empresa == Codigo_Empresa).FirstOrDefault();
@@ -193,30 +194,55 @@ namespace Connector.Controllers
                             //
                             foreach (ReceitaPasso item_ReceitaPasso in oReceita.ReceitaPasso)
                             {
+                                #region Descrição Passos - Tipos de lavagens
+                                /*
+                                <option id="1">Desabilitado</option>
+                                <option id="2">Lavagem</option>
+                                <option id="3">Centrifugação</option>
+                                <option id="4">Umectação</option>
+                                <option id="5">Pré-Lavagem</option>
+                                <option id="6">Alvejamento</option>
+                                <option id="7">Enxague</option>
+                                <option id="8">Neutralização</option>
+                                <option id="9">Amaciante</option>
+                                <option id="10">Molho</option>
+                                 */
+                                #endregion
+
                                 if (item_ReceitaPasso.ReceitaPassoCentrifugacao.Count > 0)
                                 {
-
+                                    foreach (var item_ReceitaPassoCentrifugacao in item_ReceitaPasso.ReceitaPassoCentrifugacao)
+                                    {
+                                        ReceitaPassoCentrifugacao rpc = item_ReceitaPassoCentrifugacao;
+                                        //
+                                        mensagem = MontaPalavra(item_ReceitaPasso.Tipo);
+                                        mensagem += MontaPalavra(rpc.Saida);
+                                        mensagem += MontaPalavra(rpc.Velocidade1);
+                                        mensagem += MontaPalavra(rpc.Tempo1);
+                                        mensagem += MontaPalavra(rpc.Velocidade2);
+                                        mensagem += MontaPalavra(rpc.Tempo2);
+                                        mensagem += MontaPalavra(rpc.Velocidade3);
+                                        mensagem += MontaPalavra(rpc.Tempo3);
+                                        mensagem += MontaPalavra(rpc.Velocidade4);
+                                        mensagem += MontaPalavra(rpc.Tempo4);
+                                        mensagem += MontaPalavra(rpc.Velocidade5);
+                                        mensagem += MontaPalavra(rpc.Tempo5);
+                                        mensagem += "0000000000000000";
+                                        //
+                                        PacoteBrokerModels pbm = new PacoteBrokerModels();
+                                        pbm.Id = maquina.ID;
+                                        pbm.Topico = maquina.Topico + "_passo" + j; ;
+                                        pbm.Mensagem = mensagem;
+                                        //
+                                        list_ret_tmp.Add(pbm);
+                                        j++;
+                                    }
                                 }
                                 if (item_ReceitaPasso.ReceitaPassoLavagem.Count > 0)
-                                {                                    
+                                {
                                     foreach (var item_ReceitaPassoLavagem in item_ReceitaPasso.ReceitaPassoLavagem)
                                     {
                                         ReceitaPassoLavagem rpl = item_ReceitaPassoLavagem;
-                                        //
-                                        #region Tipos
-                                        /*
-                                        <option id="1">Desabilitado</option>
-                                        <option id="2">Lavagem</option>
-                                        <option id="3">Centrifugação</option>
-                                        <option id="4">Umectação</option>
-                                        <option id="5">Pré-Lavagem</option>
-                                        <option id="6">Alvejamento</option>
-                                        <option id="7">Enxague</option>
-                                        <option id="8">Neutralização</option>
-                                        <option id="9">Amaciante</option>
-                                        <option id="10">Molho</option>
-                                         */
-                                        #endregion
                                         //
                                         mensagem = MontaPalavra(item_ReceitaPasso.Tipo);
                                         mensagem += MontaPalavra(rpl.TempoOperacao);
@@ -235,41 +261,39 @@ namespace Connector.Controllers
                                         mensagem += MontaPalavra(rpl.ProdutoF);
                                         mensagem += MontaPalavra(rpl.ProdutoG);
                                         //
-                                        // maq1_mensagem0
-                                        // maq1_mensagem1
-                                        // maq1_mensagem2
-                                        topico = "maq1_passo" + j;
                                         PacoteBrokerModels pbm = new PacoteBrokerModels();
                                         pbm.Id = maquina.ID;
-                                        pbm.Topico = topico;
+                                        pbm.Topico = maquina.Topico + "_passo" + j;
                                         pbm.Mensagem = mensagem;
                                         //
-                                        list_ret.Add(pbm);
+                                        list_ret_tmp.Add(pbm);
                                         j++;
-                                    }                                    
-                                    //mensagem = itemReceitaPasso.ReceitaPassoLavagem[0]
+                                    }
                                 }
                             }
                             //
-                            int tot = 20 - list_ret.Count;
-                            int idiceTopico = list_ret.Count;
+                            int tot = 20 - list_ret_tmp.Count;
+                            int idiceTopico = list_ret_tmp.Count;
                             idiceTopico++;
                             for (int i = 0; i < tot; i++)
                             {
                                 PacoteBrokerModels pbm = new PacoteBrokerModels();
                                 pbm.Id = maquina.ID;
-                                pbm.Topico = "maq1_passo" + idiceTopico;
+                                pbm.Topico = maquina.Topico + "_passo" + idiceTopico;
                                 pbm.Mensagem = "0000000000000000000000000000000000000000000000000000000000000000";
-                                list_ret.Add(pbm);
+                                list_ret_tmp.Add(pbm);
                                 idiceTopico++;
                             }
+                            //
+                            foreach (var item_tmp in list_ret_tmp)
+                            {
+                                list_ret.Add(item_tmp);
+                            }
+                            //
+                            list_ret_tmp = new List<PacoteBrokerModels>();
                         }
                     }
                     //
-                    
-                    //db.Entry(oReceita).State = System.Data.EntityState.Deleted;
-                    //tet();
-                    //db.SaveChanges();
                     ret = "ok";
                 }
                 else

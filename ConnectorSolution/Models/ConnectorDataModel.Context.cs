@@ -30,7 +30,6 @@ namespace Connector.Models
         public DbSet<ColetorTipoAlerta> ColetorTipoAlerta { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Filial> Filial { get; set; }
-        public DbSet<Maquina> Maquina { get; set; }
         public DbSet<Unidade> Unidade { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioLogin> UsuarioLogin { get; set; }
@@ -47,5 +46,6 @@ namespace Connector.Models
         public DbSet<ReceitaPasso> ReceitaPasso { get; set; }
         public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
         public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
+        public DbSet<Maquina> Maquina { get; set; }
     }
 }

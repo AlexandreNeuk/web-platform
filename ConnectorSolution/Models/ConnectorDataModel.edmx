@@ -176,6 +176,7 @@ warning 6002: The table/view 'inequil.dbo.LogAtividade' does not have a primary 
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Id_Empresa" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="100" />
+          <Property Name="Topico" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -747,7 +748,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <EntitySet Name="ColetorTipoAlerta" EntityType="ConnectorModel.ColetorTipoAlerta" />
           <EntitySet Name="Empresa" EntityType="ConnectorModel.Empresa" />
           <EntitySet Name="Filial" EntityType="ConnectorModel.Filial" />
-          <EntitySet Name="Maquina" EntityType="ConnectorModel.Maquina" />
           <EntitySet Name="Unidade" EntityType="ConnectorModel.Unidade" />
           <EntitySet Name="Usuario" EntityType="ConnectorModel.Usuario" />
           <EntitySet Name="UsuarioLogin" EntityType="ConnectorModel.UsuarioLogin" />
@@ -766,10 +766,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           </AssociationSet>
           <AssociationSet Name="ctrain_coletor_empresa" Association="ConnectorModel.ctrain_coletor_empresa">
             <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Coletor" EntitySet="Coletor" />
-          </AssociationSet>
-          <AssociationSet Name="ctrain_coletor_maquina" Association="ConnectorModel.ctrain_coletor_maquina">
-            <End Role="Maquina" EntitySet="Maquina" />
             <End Role="Coletor" EntitySet="Coletor" />
           </AssociationSet>
           <AssociationSet Name="ctrain_coletor_pressao_hist" Association="ConnectorModel.ctrain_coletor_pressao_hist">
@@ -812,17 +808,9 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="id_empresa_maquina_constrain" Association="ConnectorModel.id_empresa_maquina_constrain">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Maquina" EntitySet="Maquina" />
-          </AssociationSet>
           <AssociationSet Name="ctrain_unidade_filial" Association="ConnectorModel.ctrain_unidade_filial">
             <End Role="Filial" EntitySet="Filial" />
             <End Role="Unidade" EntitySet="Unidade" />
-          </AssociationSet>
-          <AssociationSet Name="maquina_hora_maquina" Association="ConnectorModel.maquina_hora_maquina">
-            <End Role="Maquina" EntitySet="Maquina" />
-            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
           </AssociationSet>
           <AssociationSet Name="id_usu_med_login" Association="ConnectorModel.id_usu_med_login">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -848,6 +836,19 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="ReceitaPasso" EntitySet="ReceitaPasso" />
             <End Role="ReceitaPassoLavagem" EntitySet="ReceitaPassoLavagem" />
           </AssociationSet>
+          <EntitySet Name="Maquina" EntityType="ConnectorModel.Maquina" />
+          <AssociationSet Name="ctrain_coletor_maquina" Association="ConnectorModel.ctrain_coletor_maquina">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="Coletor" EntitySet="Coletor" />
+          </AssociationSet>
+          <AssociationSet Name="id_empresa_maquina_constrain" Association="ConnectorModel.id_empresa_maquina_constrain">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Maquina" EntitySet="Maquina" />
+          </AssociationSet>
+          <AssociationSet Name="maquina_hora_maquina" Association="ConnectorModel.maquina_hora_maquina">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Coletor">
           <Key>
@@ -863,10 +864,10 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <Property Name="Alerta" Type="Int32" />
           <NavigationProperty Name="ColetorAlerta" Relationship="ConnectorModel.ctrain_coletor_alerta" FromRole="Coletor" ToRole="ColetorAlerta" />
           <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_coletor_empresa" FromRole="Coletor" ToRole="Empresa" />
-          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Coletor" ToRole="Maquina" />
           <NavigationProperty Name="ColetorPressaoHistorico" Relationship="ConnectorModel.ctrain_coletor_pressao_hist" FromRole="Coletor" ToRole="ColetorPressaoHistorico" />
           <NavigationProperty Name="ColetorProducaoHistorico" Relationship="ConnectorModel.ctrain_coletor_producao_hist" FromRole="Coletor" ToRole="ColetorProducaoHistorico" />
           <NavigationProperty Name="ColetorTemperaturaHistorico" Relationship="ConnectorModel.ctrain_coletor_temperatura_hist" FromRole="Coletor" ToRole="ColetorTemperaturaHistorico" />
+          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Coletor" ToRole="Maquina" />
         </EntityType>
         <EntityType Name="ColetorAlerta">
           <Key>
@@ -927,8 +928,8 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <NavigationProperty Name="Filial" Relationship="ConnectorModel.ctrain_filial_empresa" FromRole="Empresa" ToRole="Filial" />
           <NavigationProperty Name="Gateway" Relationship="ConnectorModel.ctrain_gateway_empresa" FromRole="Empresa" ToRole="Gateway" />
           <NavigationProperty Name="Usuario" Relationship="ConnectorModel.id_empresa_constrain" FromRole="Empresa" ToRole="Usuario" />
-          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Empresa" ToRole="Maquina" />
           <NavigationProperty Name="Receita" Relationship="ConnectorModel.ctrain_rec_empresa" FromRole="Empresa" ToRole="Receita" />
+          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Empresa" ToRole="Maquina" />
         </EntityType>
         <EntityType Name="Filial">
           <Key>
@@ -940,17 +941,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <Property Name="Resumo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_filial_empresa" FromRole="Filial" ToRole="Empresa" />
           <NavigationProperty Name="Unidade" Relationship="ConnectorModel.ctrain_unidade_filial" FromRole="Filial" ToRole="Unidade" />
-        </EntityType>
-        <EntityType Name="Maquina">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Maquina" ToRole="Coletor" />
-          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Maquina" ToRole="Empresa" />
-          <NavigationProperty Name="MaquinaHorario" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="Maquina" ToRole="MaquinaHorario" />
         </EntityType>
         <EntityType Name="Unidade">
           <Key>
@@ -1120,18 +1110,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ctrain_coletor_maquina">
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="0..1" />
-          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maquina">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Coletor">
-              <PropertyRef Name="Id_Maquina" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ctrain_coletor_pressao_hist">
           <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="1" />
           <End Type="ConnectorModel.ColetorPressaoHistorico" Role="ColetorPressaoHistorico" Multiplicity="*" />
@@ -1252,18 +1230,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="id_empresa_maquina_constrain">
-          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Maquina">
-              <PropertyRef Name="Id_Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ctrain_unidade_filial">
           <End Type="ConnectorModel.Filial" Role="Filial" Multiplicity="1" />
           <End Type="ConnectorModel.Unidade" Role="Unidade" Multiplicity="*" />
@@ -1273,20 +1239,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Principal>
             <Dependent Role="Unidade">
               <PropertyRef Name="Id_Filial" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="maquina_hora_maquina">
-          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ConnectorModel.MaquinaHorario" Role="MaquinaHorario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maquina">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaquinaHorario">
-              <PropertyRef Name="Id_Maquina" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1426,6 +1378,56 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Maquina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Topico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Maquina" ToRole="Coletor" />
+          <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Maquina" ToRole="Empresa" />
+          <NavigationProperty Name="MaquinaHorario" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="Maquina" ToRole="MaquinaHorario" />
+        </EntityType>
+        <Association Name="ctrain_coletor_maquina">
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="0..1" />
+          <End Type="ConnectorModel.Coletor" Role="Coletor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Coletor">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_empresa_maquina_constrain">
+          <End Type="ConnectorModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Maquina">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="maquina_hora_maquina">
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ConnectorModel.MaquinaHorario" Role="MaquinaHorario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaHorario">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1504,15 +1506,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Maquina">
-            <EntityTypeMapping TypeName="ConnectorModel.Maquina">
-              <MappingFragment StoreEntitySet="Maquina">
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1712,6 +1705,16 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
                 <ScalarProperty Name="TempoOperacao" ColumnName="TempoOperacao" />
                 <ScalarProperty Name="Id_ReceitaPasso" ColumnName="Id_ReceitaPasso" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maquina">
+            <EntityTypeMapping TypeName="ConnectorModel.Maquina">
+              <MappingFragment StoreEntitySet="Maquina">
+                <ScalarProperty Name="Topico" ColumnName="Topico" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

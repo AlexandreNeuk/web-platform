@@ -23,6 +23,7 @@ namespace Connector.Models
         public int ID { get; set; }
         public int Id_Empresa { get; set; }
         public string Descricao { get; set; }
+        public string Topico { get; set; }
     
         public virtual ICollection<Coletor> Coletor { get; set; }
         public virtual Empresa Empresa { get; set; }

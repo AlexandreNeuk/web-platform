@@ -9,6 +9,7 @@ namespace Connector.Models
         public int Id_Empresa { get; set; }
         public int Id_Coletor { get; set; }
         public string Descricao { get; set; }
+        public string Topico { get; set; }
         public string DescricaoMedidor { get; set; }
         public string DescricaoEmpresa { get; set; }
     }
@@ -101,6 +102,7 @@ namespace Connector.Models
         public int Id { get; set; }
         public int IdReceitaPasso { get; set; }
         public string Tipo { get; set; }
+        public int TipoId { get; set; }
         public string Descricao { get; set; }
         public string Variavel { get; set; }
         public string Valor { get; set; }
