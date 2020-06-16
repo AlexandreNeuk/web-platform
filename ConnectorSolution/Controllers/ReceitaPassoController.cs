@@ -328,35 +328,35 @@ namespace Connector.Controllers
             //
             switch (Convert.ToInt32(tipo))
             {
-                case 1:
+                case 0:
                     sret = "Desabilitado";
                     break;
-                case 2:
-                    sret = "Lavagem";
-                    break;
-                case 3:
-                    sret = "Centrifugação";
-                    break;
-                case 4:
+                case 1:
                     sret = "Umectação";
                     break;
-                case 5:
+                case 2:
                     sret = "Pré-Lavagem";
                     break;
-                case 6:
+                case 3:
+                    sret = "Lavagem";
+                    break;
+                case 4:
                     sret = "Alvejamento";
                     break;
-                case 7:
+                case 5:
                     sret = "Enxague";
                     break;
-                case 8:
+                case 6:
                     sret = "Neutralização";
                     break;
-                case 9:
+                case 7:
                     sret = "Amaciante";
                     break;
-                case 10:
+                case 8:
                     sret = "Molho";
+                    break;
+                case 9:
+                    sret = "Centrifugação";
                     break;
                 default:
                     sret = "Desabilitado";
@@ -467,7 +467,7 @@ namespace Connector.Controllers
                 //
                 oReceitaPasso.Id_Receita = id_receita;
                 oReceitaPasso.Decricao = descricao;
-                oReceitaPasso.Tipo = "3";
+                oReceitaPasso.Tipo = "9";
                 oReceitaPasso.Ativo = 1;
                 //
                 if (id_receita_passo > 0)

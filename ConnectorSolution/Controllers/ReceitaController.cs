@@ -216,7 +216,6 @@ namespace Connector.Controllers
                                         ReceitaPassoCentrifugacao rpc = item_ReceitaPassoCentrifugacao;
                                         //
                                         mensagem = MontaPalavra(item_ReceitaPasso.Tipo);
-                                        mensagem += MontaPalavra(rpc.Saida);
                                         mensagem += MontaPalavra(rpc.Velocidade1);
                                         mensagem += MontaPalavra(rpc.Tempo1);
                                         mensagem += MontaPalavra(rpc.Velocidade2);
@@ -227,7 +226,8 @@ namespace Connector.Controllers
                                         mensagem += MontaPalavra(rpc.Tempo4);
                                         mensagem += MontaPalavra(rpc.Velocidade5);
                                         mensagem += MontaPalavra(rpc.Tempo5);
-                                        mensagem += "0000000000000000";
+                                        mensagem += MontaPalavra(rpc.Saida);
+                                        mensagem += "00000000000000000000000000000000000000000000";
                                         //
                                         PacoteBrokerModels pbm = new PacoteBrokerModels();
                                         pbm.Id = maquina.ID;
@@ -253,12 +253,68 @@ namespace Connector.Controllers
                                         mensagem += MontaPalavra(rpl.Entrada);
                                         mensagem += MontaPalavra(rpl.Nivel);
                                         mensagem += MontaPalavra(rpl.Saida);
+                                        if (rpl.ProdutoA.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoA);
+                                        if (rpl.ProdutoB.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoB);
+                                        if (rpl.ProdutoC.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoC);
+                                        if (rpl.ProdutoD.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoD);
+                                        if (rpl.ProdutoE.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoE);
+                                        if (rpl.ProdutoF.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoF);
+                                        if (rpl.ProdutoG.Equals(""))
+                                        {
+                                            mensagem += "0000";
+                                        }
+                                        else
+                                        {
+                                            mensagem += "0001";
+                                        }
                                         mensagem += MontaPalavra(rpl.ProdutoG);
                                         //
                                         PacoteBrokerModels pbm = new PacoteBrokerModels();
@@ -280,7 +336,7 @@ namespace Connector.Controllers
                                 PacoteBrokerModels pbm = new PacoteBrokerModels();
                                 pbm.Id = maquina.ID;
                                 pbm.Topico = maquina.Topico + "_passo" + idiceTopico;
-                                pbm.Mensagem = "0000000000000000000000000000000000000000000000000000000000000000";
+                                pbm.Mensagem = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
                                 list_ret_tmp.Add(pbm);
                                 idiceTopico++;
                             }

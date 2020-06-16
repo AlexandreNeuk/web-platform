@@ -3992,7 +3992,7 @@
                 //
                 let id = item.options[item.selectedIndex].id
                 if (id) {
-                    if (id == '3') {
+                    if (id == '9') {
                         //
                         d.getid('divlavagem').style.display = 'none';
                         d.getid('divcentrifugacao').style.display = 'inline';
