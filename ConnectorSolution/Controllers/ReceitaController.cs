@@ -233,6 +233,8 @@ namespace Connector.Controllers
                                         pbm.Id = maquina.ID;
                                         pbm.Topico = maquina.Topico + "_passo" + j; ;
                                         pbm.Mensagem = mensagem;
+                                        pbm.MaquinaTopico = maquina.Topico;
+                                        pbm.NomeReceita = oReceita.Descricao;
                                         //
                                         list_ret_tmp.Add(pbm);
                                         j++;
@@ -321,6 +323,8 @@ namespace Connector.Controllers
                                         pbm.Id = maquina.ID;
                                         pbm.Topico = maquina.Topico + "_passo" + j;
                                         pbm.Mensagem = mensagem;
+                                        pbm.MaquinaTopico = maquina.Topico;
+                                        pbm.NomeReceita = oReceita.Descricao;
                                         //
                                         list_ret_tmp.Add(pbm);
                                         j++;
@@ -336,6 +340,8 @@ namespace Connector.Controllers
                                 PacoteBrokerModels pbm = new PacoteBrokerModels();
                                 pbm.Id = maquina.ID;
                                 pbm.Topico = maquina.Topico + "_passo" + idiceTopico;
+                                pbm.MaquinaTopico = maquina.Topico;
+                                pbm.NomeReceita = oReceita.Descricao;
                                 pbm.Mensagem = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
                                 list_ret_tmp.Add(pbm);
                                 idiceTopico++;

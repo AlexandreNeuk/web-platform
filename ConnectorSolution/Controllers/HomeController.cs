@@ -10,13 +10,56 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using System.Threading.Tasks;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using System.Threading.Tasks;
 
 namespace Connector.Controllers
 {
     public class HomeController : BaseController
     {
+        public JsonResult teste()
+        {
+            string sret = string.Empty;
+            sret = "ok";
+            try
+            {
+                //teste_envia().Wait();
+            }
+            catch (Exception exc)
+            {
+                sret = exc.Message;
+            }
+            //
+            return Json(new { data = sret, results = 1, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        static async Task teste_envia()
+        {
+            string sret = string.Empty;
+            sret = "ok";
+            try
+            {
+                //var apiKey = Environment.GetEnvironmentVariable("XarsTgaBQQ6iAFGVA2w3KQ");
+                var client = new SendGridClient("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");
+                var from = new EmailAddress("aneukirchen@hotmail.com", "Example User");
+                var subject = "Sending with SendGrid is Fun";
+                var to = new EmailAddress("aneuk3@gmail.com", "Example User");
+                var plainTextContent = "and easy to do anywhere, even with C#";
+                var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                var response = await client.SendEmailAsync(msg);
+
+            }
+            catch (Exception exc)
+            {
+                sret = exc.Message;
+            }
+        }
+
         public ActionResult Index()
         {
+            //teste_envia().Wait();
             Session["logado"] = "0";
             return View();
         }

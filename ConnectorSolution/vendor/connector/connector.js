@@ -2990,7 +2990,7 @@
             grafico: null,
             load: null,
             list_ids: [],
-            carrega_maquina: function () {
+            relatorio_maquina: function () {
                 //
                 if ($('#slmaquinasrelatorio').select2('val') && $('#slmaquinasrelatorio').select2('val').length > 0) {
                     //
@@ -3002,16 +3002,19 @@
                     m.relatorio.load = m.g.load('Carregando relatório de máquinas...');
                     //
                     $.ajax({
-                        url: m.g.rsvlurl('relatorio/RelatorioTemperatura') + '?idempresa=' + m.sessao.cd_empresa_logado + '&lista_ids=' + m.relatorio.list_ids +
-                            '&periodo=' + d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id,
+                        url: m.g.rsvlurl('relatorio/RelatorioMaquinaInequil') +
+                            '?idempresa=' + m.sessao.cd_empresa_logado +
+                            '&idmaquina=' + m.relatorio.list_ids +
+                            '&periodo=' + $('input[name=daterange]')[0].value,
                         type: "post",
                         success: function (resp) {
                             //
 
                             //
-                            if (resp && resp.sreult == 'ok') {
+                            if (resp && resp.data == 'OK') {
                                 //
-                                document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/Relat%C3%B3rio_M%C3%A1quinas31-07-2019_01-59-24_.pdf'
+                                m.relatorio.load.out();
+                                document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/' + resp.relatorio
                                 //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
                                 //alert('ok');
 
@@ -3467,7 +3470,7 @@
                     });
                 }
             },
-            carrega_mqtt_enviar: function () {
+            carrega_mqtt_enviar_receita: function () {
                 //
                 m.receita.ids_maquinas = [];
                 m.receita.ids_conta = [];
@@ -3508,11 +3511,13 @@
                                     //
                                     var data = {
                                         topico: resp.list_ret[i].Topico,
+                                        maquina_topico: resp.list_ret[i].MaquinaTopico,
                                         mensagem: resp.list_ret[i].Mensagem,
                                         id: resp.list_ret[i].Id,
+                                        receita: resp.list_ret[i].NomeReceita,
                                         indice: (i + 1)
                                     }
-                                    var url_mqtt = 'http://localhost:3000/carregar';
+                                    var url_mqtt = 'http://localhost:3000/carregar'; // 
                                     //
                                     var table = document.getElementById("dtreceitasmaquinas");
                                     for (var k = 0, row; row = table.rows[k]; k++) {
@@ -3552,6 +3557,11 @@
                                                             if (resp.publish_success && receita[0].total == 20) {
                                                                 //
                                                                 row.cells[3].innerHTML = 'Recebido Passo ' + receita[0].total + '/20 <img style="width: 14px;" src=">';
+                                                                //
+                                                                //chama tópico maq1_comando
+                                                                //chama tópico maq1_nome_Receita(até 12 caractéres)
+                                                                //
+                                                                m.receita.enviar_mqtt_receita(url_mqtt, resp.maquina_topico, resp.receita, '1');
                                                             }
                                                             else if (resp.publish_success) {
                                                                 row.cells[3].innerHTML = 'Recebido Passo ' + receita[0].total + '/20 <img style="width: 14px;" src="' + m.g.rsvlurl("img/loading.gif") + '">';
@@ -3565,7 +3575,7 @@
                                             }
                                         },
                                         error: function (xhr, error) {
-                                            console.log('Xhr: ', xhr, ' - Error: ', error);
+                                            console.log('Xhr: ', xhr, ' - Error (carrega_mqtt_enviar_receita): ', error);
                                         }
                                     });
                                     //
@@ -3592,6 +3602,81 @@
                         message: "Selecione uma Máquina para enviar!",
                         centerVertical: true
                     });
+                }
+            },
+            enviar_mqtt_receita: function (url, topico, receita, mensagem) {
+                //
+                if (mensagem === '0') {
+                    //
+                    var data = {
+                        topico: topico + '_comando',
+                        mensagem: mensagem
+                    }
+                    //
+                    $.ajax({
+                        url: url.replace('carregar', 'passocomando'),
+                        type: "post",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (resp) {
+                            //
+                            if (resp) {
+                                //
+                                alert('FIM')
+                            }
+                        },
+                        error: function (xhr, error) {
+                            console.log('Xhr: ', xhr, ' - Error (enviar_mqtt_receita): ', error);
+                        }
+                    })
+                }
+                else if (mensagem === '1') {
+                    //
+                    var data = {
+                        topico: topico + '_comando',
+                        mensagem: mensagem,
+                        receita: receita
+                    }
+                    //
+                    $.ajax({
+                        url: url.replace('carregar', 'passocomando'),
+                        type: "post",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (resp) {
+                            //
+                            if (resp) {
+                                //
+                                m.receita.enviar_mqtt_receita(url, topico, receita)
+                            }
+                        },
+                        error: function (xhr, error) {
+                            console.log('Xhr: ', xhr, ' - Error (enviar_mqtt_receita): ', error);
+                        }
+                    })
+                }
+                else {
+                    var data = {
+                        topico: topico + '_nome_Receita',
+                        mensagem: receita
+                    }
+                    //
+                    $.ajax({
+                        url: url.replace('carregar', 'passocomando'),
+                        type: "post",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (resp) {
+                            //
+                            if (resp) {
+                                //
+                                m.receita.enviar_mqtt_receita(url, topico, '', '0')
+                            }
+                        },
+                        error: function (xhr, error) {
+                            console.log('Xhr: ', xhr, ' - Error (enviar_mqtt_receita): ', error);
+                        }
+                    })
                 }
             },
             wait: function (ms) {
@@ -4028,7 +4113,7 @@
                             //
                             m.g.setcomboval('sltipolavagem', data.receita_passo.Tipo);
                             //
-                            if (data.receita_passo.Tipo == '3') {  // centrifugação
+                            if (data.receita_passo.Tipo == '9') {  // centrifugação
                                 //                                
                                 d.getid('divlavagem').style.display = 'none';
                                 d.getid('divcentrifugacao').style.display = 'inline';

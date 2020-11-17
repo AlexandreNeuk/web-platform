@@ -40,12 +40,13 @@ namespace Connector.Models
         public DbSet<ColetorTemperaturaHistorico> ColetorTemperaturaHistorico { get; set; }
         public DbSet<Gateway> Gateway { get; set; }
         public DbSet<LogAtividade> LogAtividade { get; set; }
-        public DbSet<MaquinaHorario> MaquinaHorario { get; set; }
         public DbSet<Setor> Setor { get; set; }
         public DbSet<Receita> Receita { get; set; }
         public DbSet<ReceitaPasso> ReceitaPasso { get; set; }
         public DbSet<ReceitaPassoCentrifugacao> ReceitaPassoCentrifugacao { get; set; }
         public DbSet<ReceitaPassoLavagem> ReceitaPassoLavagem { get; set; }
         public DbSet<Maquina> Maquina { get; set; }
+        public DbSet<MaquinaLog> MaquinaLog { get; set; }
+        public DbSet<MaquinaLogReport> MaquinaLogReport { get; set; }
     }
 }

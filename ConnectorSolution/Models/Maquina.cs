@@ -17,7 +17,8 @@ namespace Connector.Models
         public Maquina()
         {
             this.Coletor = new HashSet<Coletor>();
-            this.MaquinaHorario = new HashSet<MaquinaHorario>();
+            this.MaquinaLog = new HashSet<MaquinaLog>();
+            this.MaquinaLogReport = new HashSet<MaquinaLogReport>();
         }
     
         public int ID { get; set; }
@@ -27,6 +28,7 @@ namespace Connector.Models
     
         public virtual ICollection<Coletor> Coletor { get; set; }
         public virtual Empresa Empresa { get; set; }
-        public virtual ICollection<MaquinaHorario> MaquinaHorario { get; set; }
+        public virtual ICollection<MaquinaLog> MaquinaLog { get; set; }
+        public virtual ICollection<MaquinaLogReport> MaquinaLogReport { get; set; }
     }
 }

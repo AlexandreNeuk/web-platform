@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="ConnectorModel.ColetorTemperaturaHistorico" Width="1.5" PointX="10.5" PointY="15.375" />
         <EntityTypeShape EntityType="ConnectorModel.Gateway" Width="1.5" PointX="3" PointY="27.125" />
         <EntityTypeShape EntityType="ConnectorModel.LogAtividade" Width="1.5" PointX="3" PointY="8.625" />
-        <EntityTypeShape EntityType="ConnectorModel.MaquinaHorario" Width="1.5" PointX="5.25" PointY="11.75" />
         <EntityTypeShape EntityType="ConnectorModel.Setor" Width="1.5" PointX="6.75" PointY="0.75" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_alerta" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_empresa" />
@@ -47,7 +46,10 @@
         <EntityTypeShape EntityType="ConnectorModel.Maquina" Width="1.5" PointX="3" PointY="19.125" />
         <AssociationConnector Association="ConnectorModel.ctrain_coletor_maquina" />
         <AssociationConnector Association="ConnectorModel.id_empresa_maquina_constrain" />
-        <AssociationConnector Association="ConnectorModel.maquina_hora_maquina" />
+        <EntityTypeShape EntityType="ConnectorModel.MaquinaLog" Width="1.5" PointX="5.25" PointY="18.75" />
+        <AssociationConnector Association="ConnectorModel.ctrain_maulog_maq" />
+        <EntityTypeShape EntityType="ConnectorModel.MaquinaLogReport" Width="1.5" PointX="5.25" PointY="23.25" />
+        <AssociationConnector Association="ConnectorModel.ctrain_maq_log_rpt" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -403,7 +403,6 @@ namespace Connector.Controllers
                 if (rpl == null) rpl = new ReceitaPassoLavagem();
                 //
                 rpl.Id_ReceitaPasso = oReceitaPasso.Id;
-                //rpl.ModoTrabalho = modotrabalho == null ? rpl.ModoTrabalho : modotrabalho;
                 rpl.Entrada = entrada == null ? rpl.Entrada : entrada;
                 rpl.Saida = saida == null ? rpl.Saida : saida;
                 rpl.Nivel = nivel == null ? rpl.Nivel : nivel;
@@ -413,20 +412,12 @@ namespace Connector.Controllers
                 rpl.TempoOperacao = tempooperacao == null ? rpl.TempoOperacao : tempooperacao;
                 rpl.TempoReversao = temporeversao == null ? rpl.TempoReversao : temporeversao;
                 rpl.ProdutoA = produtoa == null ? rpl.ProdutoA : produtoa;
-                //rpl.ValorA = valora == null ? rpl.ValorA : valora;
                 rpl.ProdutoB = produtob == null ? rpl.ProdutoB : produtob;
-                //rpl.ValorB = valorb == null ? rpl.ValorB : valorb;
                 rpl.ProdutoC = produtoc == null ? rpl.ProdutoC : produtoc;
-                //rpl.ValorC = valorc == null ? rpl.ValorC : valorc;
                 rpl.ProdutoD = produtod == null ? rpl.ProdutoD : produtod;
-                //rpl.ValorD = valord == null ? rpl.ValorD : valord;
                 rpl.ProdutoE = produtoe == null ? rpl.ProdutoE : produtoe;
-                //rpl.ValorE = valore == null ? rpl.ValorE : valore;
                 rpl.ProdutoF = produtof == null ? rpl.ProdutoF : produtof;
-                //rpl.ValorF = valorf == null ? rpl.ValorF : valorf;
                 rpl.ProdutoG = produtog == null ? rpl.ProdutoG : produtog;
-                //rpl.ValorG = valorg == null ? rpl.ValorG : valorg;
-                //rpl.Ativo = ativo == null ? rpl.Ativo : ativo;
                 //
                 if (id_receita_passo > 0)
                 {
@@ -557,7 +548,7 @@ namespace Connector.Controllers
                 {
                     foreach (ReceitaPasso item in oReceita.ReceitaPasso)
                     {
-                        if (tipo.Equals("3"))
+                        if (tipo.Equals("9"))
                         {
                             foreach (var item_centrifuga in item.ReceitaPassoCentrifugacao)
                             {

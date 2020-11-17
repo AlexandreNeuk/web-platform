@@ -72,6 +72,12 @@
     <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SendGrid, Version=9.21.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.9.21.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="StarkbankEcdsa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\starkbank-ecdsa.1.2.0\lib\net452\StarkbankEcdsa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -257,7 +263,10 @@
     <Compile Include="Models\Maquina.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MaquinaHorario.cs">
+    <Compile Include="Models\MaquinaLog.cs">
+      <DependentUpon>ConnectorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaquinaLogReport.cs">
       <DependentUpon>ConnectorDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Models.cs" />
@@ -353,6 +362,7 @@
     <Content Include="img\profile.jfif" />
     <Content Include="img\serrapark.jpg" />
     <Content Include="img\summit-icon.svg" />
+    <Content Include="Models\ConnectorDataModel.edmx.sql" />
     <Content Include="vendor\bootbox\bootbox.all.min.js" />
     <Content Include="vendor\chart.js\demo\chart-area-demo.js" />
     <Content Include="vendor\chart.js\demo\chart-bar-demo.js" />

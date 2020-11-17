@@ -179,17 +179,47 @@ warning 6002: The table/view 'inequil.dbo.LogAtividade' does not have a primary 
           <Property Name="Topico" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'inequil.dbo.MaquinaHorario' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="MaquinaHorario">
+warning 6002: The table/view 'inequil.dbo.MaquinaLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MaquinaLog">
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="Id_Maquina" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Maquina" Type="int" Nullable="false" />
-          <Property Name="Descricao" Type="varchar" MaxLength="50" />
-          <Property Name="DataHoraInicio" Type="datetime" />
-          <Property Name="DataHoraFim" Type="datetime" />
+          <Property Name="DataHora" Type="datetime" />
+          <Property Name="DataHoraCLP" Type="nchar" MaxLength="50" />
+          <Property Name="Consumo" Type="nchar" MaxLength="5" />
+          <Property Name="NumeroCiclo" Type="nchar" MaxLength="5" />
+          <Property Name="TempoTrabalhando" Type="nchar" MaxLength="30" />
+          <Property Name="TempoParada" Type="nchar" MaxLength="30" />
+          <Property Name="TempoFalha" Type="nchar" MaxLength="30" />
+          <Property Name="Reserva1" Type="nchar" MaxLength="30" />
+          <Property Name="Reserva2" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'inequil.dbo.MaquinaLogReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MaquinaLogReport">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Maquina" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Maquina" Type="int" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" />
+          <Property Name="Tempo" Type="nchar" MaxLength="5" />
+          <Property Name="Kilos" Type="nchar" MaxLength="5" />
+          <Property Name="Passo" Type="nchar" MaxLength="30" />
+          <Property Name="Temperatura" Type="nchar" MaxLength="5" />
+          <Property Name="ProgramaExec" Type="nchar" MaxLength="50" />
+          <Property Name="RPM" Type="nchar" MaxLength="5" />
+          <Property Name="ProdutoA" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoB" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoC" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoD" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoE" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoF" Type="nchar" MaxLength="10" />
+          <Property Name="ProdutoG" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Receita">
           <Key>
@@ -441,6 +471,34 @@ warning 6002: The table/view 'inequil.dbo.Setor' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ctrain_maq_log_rpt">
+          <End Role="Maquina" Type="Self.Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MaquinaLogReport" Type="Self.MaquinaLogReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaLogReport">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ctrain_maulog_maq">
+          <End Role="Maquina" Type="Self.Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MaquinaLog" Type="Self.MaquinaLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaLog">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ctrain_pass_centr">
           <End Role="ReceitaPasso" Type="Self.ReceitaPasso" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -545,20 +603,6 @@ warning 6002: The table/view 'inequil.dbo.Setor' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="maquina_hora_maquina">
-          <End Role="Maquina" Type="Self.Maquina" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MaquinaHorario" Type="Self.MaquinaHorario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maquina">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaquinaHorario">
-              <PropertyRef Name="Id_Maquina" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ConnectorModelStoreContainer">
           <EntitySet Name="Coletor" EntityType="Self.Coletor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ColetorAlerta" EntityType="Self.ColetorAlerta" Schema="dbo" store:Type="Tables" />
@@ -636,14 +680,40 @@ FROM [dbo].[Gateway] AS [Gateway]</DefiningQuery>
 [LogAtividade].[DataHora] AS [DataHora]
 FROM [dbo].[LogAtividade] AS [LogAtividade]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="MaquinaHorario" EntityType="Self.MaquinaHorario" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="MaquinaLog" EntityType="Self.MaquinaLog" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[MaquinaHorario].[Id] AS [Id], 
-[MaquinaHorario].[Id_Maquina] AS [Id_Maquina], 
-[MaquinaHorario].[Descricao] AS [Descricao], 
-[MaquinaHorario].[DataHoraInicio] AS [DataHoraInicio], 
-[MaquinaHorario].[DataHoraFim] AS [DataHoraFim]
-FROM [dbo].[MaquinaHorario] AS [MaquinaHorario]</DefiningQuery>
+[MaquinaLog].[Id] AS [Id], 
+[MaquinaLog].[Id_Maquina] AS [Id_Maquina], 
+[MaquinaLog].[DataHora] AS [DataHora], 
+[MaquinaLog].[DataHoraCLP] AS [DataHoraCLP], 
+[MaquinaLog].[Consumo] AS [Consumo], 
+[MaquinaLog].[NumeroCiclo] AS [NumeroCiclo], 
+[MaquinaLog].[TempoTrabalhando] AS [TempoTrabalhando], 
+[MaquinaLog].[TempoParada] AS [TempoParada], 
+[MaquinaLog].[TempoFalha] AS [TempoFalha], 
+[MaquinaLog].[Reserva1] AS [Reserva1], 
+[MaquinaLog].[Reserva2] AS [Reserva2]
+FROM [dbo].[MaquinaLog] AS [MaquinaLog]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MaquinaLogReport" EntityType="Self.MaquinaLogReport" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[MaquinaLogReport].[Id] AS [Id], 
+[MaquinaLogReport].[Id_Maquina] AS [Id_Maquina], 
+[MaquinaLogReport].[DataHora] AS [DataHora], 
+[MaquinaLogReport].[Tempo] AS [Tempo], 
+[MaquinaLogReport].[Kilos] AS [Kilos], 
+[MaquinaLogReport].[Passo] AS [Passo], 
+[MaquinaLogReport].[Temperatura] AS [Temperatura], 
+[MaquinaLogReport].[ProgramaExec] AS [ProgramaExec], 
+[MaquinaLogReport].[RPM] AS [RPM], 
+[MaquinaLogReport].[ProdutoA] AS [ProdutoA], 
+[MaquinaLogReport].[ProdutoB] AS [ProdutoB], 
+[MaquinaLogReport].[ProdutoC] AS [ProdutoC], 
+[MaquinaLogReport].[ProdutoD] AS [ProdutoD], 
+[MaquinaLogReport].[ProdutoE] AS [ProdutoE], 
+[MaquinaLogReport].[ProdutoF] AS [ProdutoF], 
+[MaquinaLogReport].[ProdutoG] AS [ProdutoG]
+FROM [dbo].[MaquinaLogReport] AS [MaquinaLogReport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Setor" EntityType="Self.Setor" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -701,6 +771,14 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Gateway" EntitySet="Gateway" />
           </AssociationSet>
+          <AssociationSet Name="ctrain_maq_log_rpt" Association="Self.ctrain_maq_log_rpt">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaLogReport" EntitySet="MaquinaLogReport" />
+          </AssociationSet>
+          <AssociationSet Name="ctrain_maulog_maq" Association="Self.ctrain_maulog_maq">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaLog" EntitySet="MaquinaLog" />
+          </AssociationSet>
           <AssociationSet Name="ctrain_pass_centr" Association="Self.ctrain_pass_centr">
             <End Role="ReceitaPasso" EntitySet="ReceitaPasso" />
             <End Role="ReceitaPassoCentrifugacao" EntitySet="ReceitaPassoCentrifugacao" />
@@ -733,10 +811,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioLogin" EntitySet="UsuarioLogin" />
           </AssociationSet>
-          <AssociationSet Name="maquina_hora_maquina" Association="Self.maquina_hora_maquina">
-            <End Role="Maquina" EntitySet="Maquina" />
-            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -758,7 +832,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <EntitySet Name="ColetorTemperaturaHistorico" EntityType="ConnectorModel.ColetorTemperaturaHistorico" />
           <EntitySet Name="Gateway" EntityType="ConnectorModel.Gateway" />
           <EntitySet Name="LogAtividade" EntityType="ConnectorModel.LogAtividade" />
-          <EntitySet Name="MaquinaHorario" EntityType="ConnectorModel.MaquinaHorario" />
           <EntitySet Name="Setor" EntityType="ConnectorModel.Setor" />
           <AssociationSet Name="ctrain_coletor_alerta" Association="ConnectorModel.ctrain_coletor_alerta">
             <End Role="Coletor" EntitySet="Coletor" />
@@ -845,9 +918,15 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Maquina" EntitySet="Maquina" />
           </AssociationSet>
-          <AssociationSet Name="maquina_hora_maquina" Association="ConnectorModel.maquina_hora_maquina">
+          <EntitySet Name="MaquinaLog" EntityType="ConnectorModel.MaquinaLog" />
+          <AssociationSet Name="ctrain_maulog_maq" Association="ConnectorModel.ctrain_maulog_maq">
             <End Role="Maquina" EntitySet="Maquina" />
-            <End Role="MaquinaHorario" EntitySet="MaquinaHorario" />
+            <End Role="MaquinaLog" EntitySet="MaquinaLog" />
+          </AssociationSet>
+          <EntitySet Name="MaquinaLogReport" EntityType="ConnectorModel.MaquinaLogReport" />
+          <AssociationSet Name="ctrain_maq_log_rpt" Association="ConnectorModel.ctrain_maq_log_rpt">
+            <End Role="Maquina" EntitySet="Maquina" />
+            <End Role="MaquinaLogReport" EntitySet="MaquinaLogReport" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Coletor">
@@ -1063,18 +1142,6 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <Property Name="Tipo" Type="Int32" Nullable="false" />
           <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Empresa" Relationship="ConnectorModel.ctrain_atividade_empresa" FromRole="LogAtividade" ToRole="Empresa" />
-        </EntityType>
-        <EntityType Name="MaquinaHorario">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Id_Maquina" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Id_Maquina" Type="Int32" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DataHoraInicio" Type="DateTime" Precision="3" />
-          <Property Name="DataHoraFim" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="MaquinaHorario" ToRole="Maquina" />
         </EntityType>
         <EntityType Name="Setor">
           <Key>
@@ -1388,7 +1455,8 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
           <Property Name="Topico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Coletor" Relationship="ConnectorModel.ctrain_coletor_maquina" FromRole="Maquina" ToRole="Coletor" />
           <NavigationProperty Name="Empresa" Relationship="ConnectorModel.id_empresa_maquina_constrain" FromRole="Maquina" ToRole="Empresa" />
-          <NavigationProperty Name="MaquinaHorario" Relationship="ConnectorModel.maquina_hora_maquina" FromRole="Maquina" ToRole="MaquinaHorario" />
+          <NavigationProperty Name="MaquinaLog" Relationship="ConnectorModel.ctrain_maulog_maq" FromRole="Maquina" ToRole="MaquinaLog" />
+          <NavigationProperty Name="MaquinaLogReport" Relationship="ConnectorModel.ctrain_maq_log_rpt" FromRole="Maquina" ToRole="MaquinaLogReport" />
         </EntityType>
         <Association Name="ctrain_coletor_maquina">
           <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="0..1" />
@@ -1414,16 +1482,71 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="maquina_hora_maquina">
+        <EntityType Name="MaquinaLog">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Maquina" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Maquina" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Precision="3" />
+          <Property Name="DataHoraCLP" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Consumo" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="NumeroCiclo" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="TempoTrabalhando" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="TempoParada" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="TempoFalha" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Reserva1" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Reserva2" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.ctrain_maulog_maq" FromRole="MaquinaLog" ToRole="Maquina" />
+        </EntityType>
+        <Association Name="ctrain_maulog_maq">
           <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="ConnectorModel.MaquinaHorario" Role="MaquinaHorario" Multiplicity="*" />
+          <End Type="ConnectorModel.MaquinaLog" Role="MaquinaLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Maquina">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="MaquinaHorario">
+            <Dependent Role="MaquinaLog">
+              <PropertyRef Name="Id_Maquina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MaquinaLogReport">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Maquina" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Maquina" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Precision="3" />
+          <Property Name="Tempo" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Kilos" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Passo" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Temperatura" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="ProgramaExec" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="RPM" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoA" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoB" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoC" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoD" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoE" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoF" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProdutoG" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Maquina" Relationship="ConnectorModel.ctrain_maq_log_rpt" FromRole="MaquinaLogReport" ToRole="Maquina" />
+        </EntityType>
+        <Association Name="ctrain_maq_log_rpt">
+          <End Type="ConnectorModel.Maquina" Role="Maquina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ConnectorModel.MaquinaLogReport" Role="MaquinaLogReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maquina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaquinaLogReport">
               <PropertyRef Name="Id_Maquina" />
             </Dependent>
           </ReferentialConstraint>
@@ -1432,262 +1555,301 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ConnectorModelStoreContainer" CdmEntityContainer="dbConnectorEntities">
-          <EntitySetMapping Name="Coletor">
-            <EntityTypeMapping TypeName="ConnectorModel.Coletor">
-              <MappingFragment StoreEntitySet="Coletor">
-                <ScalarProperty Name="Alerta" ColumnName="Alerta" />
-                <ScalarProperty Name="MAC" ColumnName="MAC" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ConnectorModelStoreContainer" CdmEntityContainer="dbConnectorEntities">
+    <EntitySetMapping Name="Coletor">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Coletor)">
+        <MappingFragment StoreEntitySet="Coletor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="Alerta" ColumnName="Alerta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorAlerta">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorAlerta)">
+        <MappingFragment StoreEntitySet="ColetorAlerta">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+          <ScalarProperty Name="Id_TipoAlerta" ColumnName="Id_TipoAlerta" />
+          <ScalarProperty Name="Prioridade" ColumnName="Prioridade" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Regra" ColumnName="Regra" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorTipoAlerta">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorTipoAlerta)">
+        <MappingFragment StoreEntitySet="ColetorTipoAlerta">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="UnidadeMedida" ColumnName="UnidadeMedida" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresa">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Empresa)">
+        <MappingFragment StoreEntitySet="Empresa">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Empresas" ColumnName="Empresas" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="AnalitycCode" ColumnName="AnalitycCode" />
+          <ScalarProperty Name="Site" ColumnName="Site" />
+          <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+          <ScalarProperty Name="CEP" ColumnName="CEP" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+          <ScalarProperty Name="NomeFantasia" ColumnName="NomeFantasia" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Filial">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Filial)">
+        <MappingFragment StoreEntitySet="Filial">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Unidade">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Unidade)">
+        <MappingFragment StoreEntitySet="Unidade">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Filial" ColumnName="Id_Filial" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Usuario)">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Last" ColumnName="Last" />
+          <ScalarProperty Name="Create" ColumnName="Create" />
+          <ScalarProperty Name="Ative" ColumnName="Ative" />
+          <ScalarProperty Name="Hash" ColumnName="Hash" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsuarioLogin">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.UsuarioLogin)">
+        <MappingFragment StoreEntitySet="UsuarioLogin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Id_MedidorUsuario" ColumnName="Id_MedidorUsuario" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorAlertaLog">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorAlertaLog)">
+        <MappingFragment StoreEntitySet="ColetorAlertaLog">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+          <ScalarProperty Name="Id_ColetorAlerta" ColumnName="Id_ColetorAlerta" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="ValorRegra" ColumnName="ValorRegra" />
+          <ScalarProperty Name="ValorEnviado" ColumnName="ValorEnviado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorPressaoHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorPressaoHistorico)">
+        <MappingFragment StoreEntitySet="ColetorPressaoHistorico">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="Pressao" ColumnName="Pressao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorProducaoHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorProducaoHistorico)">
+        <MappingFragment StoreEntitySet="ColetorProducaoHistorico">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorSensorMovHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorSensorMovHistorico)">
+        <MappingFragment StoreEntitySet="ColetorSensorMovHistorico">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Coletor" ColumnName="Coletor" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColetorTemperaturaHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ColetorTemperaturaHistorico)">
+        <MappingFragment StoreEntitySet="ColetorTemperaturaHistorico">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gateway">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Gateway)">
+        <MappingFragment StoreEntitySet="Gateway">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogAtividade">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.LogAtividade)">
+        <MappingFragment StoreEntitySet="LogAtividade">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Dispositivo" ColumnName="Id_Dispositivo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Setor">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Setor)">
+        <MappingFragment StoreEntitySet="Setor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receita">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Receita)">
+        <MappingFragment StoreEntitySet="Receita">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Resumo" ColumnName="Resumo" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceitaPasso">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ReceitaPasso)">
+        <MappingFragment StoreEntitySet="ReceitaPasso">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Receita" ColumnName="Id_Receita" />
+          <ScalarProperty Name="Decricao" ColumnName="Decricao" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceitaPassoCentrifugacao">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ReceitaPassoCentrifugacao)">
+        <MappingFragment StoreEntitySet="ReceitaPassoCentrifugacao">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_ReceitaPasso" ColumnName="Id_ReceitaPasso" />
+          <ScalarProperty Name="Saida" ColumnName="Saida" />
+          <ScalarProperty Name="Velocidade1" ColumnName="Velocidade1" />
+          <ScalarProperty Name="Tempo1" ColumnName="Tempo1" />
+          <ScalarProperty Name="Velocidade2" ColumnName="Velocidade2" />
+          <ScalarProperty Name="Tempo2" ColumnName="Tempo2" />
+          <ScalarProperty Name="Velocidade3" ColumnName="Velocidade3" />
+          <ScalarProperty Name="Tempo3" ColumnName="Tempo3" />
+          <ScalarProperty Name="Velocidade4" ColumnName="Velocidade4" />
+          <ScalarProperty Name="Tempo4" ColumnName="Tempo4" />
+          <ScalarProperty Name="Velocidade5" ColumnName="Velocidade5" />
+          <ScalarProperty Name="Tempo5" ColumnName="Tempo5" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceitaPassoLavagem">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.ReceitaPassoLavagem)">
+        <MappingFragment StoreEntitySet="ReceitaPassoLavagem">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_ReceitaPasso" ColumnName="Id_ReceitaPasso" />
+          <ScalarProperty Name="TempoOperacao" ColumnName="TempoOperacao" />
+          <ScalarProperty Name="TempoReversao" ColumnName="TempoReversao" />
+          <ScalarProperty Name="RPM" ColumnName="RPM" />
+          <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
+          <ScalarProperty Name="SemVapor" ColumnName="SemVapor" />
+          <ScalarProperty Name="Entrada" ColumnName="Entrada" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+          <ScalarProperty Name="Saida" ColumnName="Saida" />
+          <ScalarProperty Name="ProdutoA" ColumnName="ProdutoA" />
+          <ScalarProperty Name="ProdutoB" ColumnName="ProdutoB" />
+          <ScalarProperty Name="ProdutoC" ColumnName="ProdutoC" />
+          <ScalarProperty Name="ProdutoD" ColumnName="ProdutoD" />
+          <ScalarProperty Name="ProdutoE" ColumnName="ProdutoE" />
+          <ScalarProperty Name="ProdutoF" ColumnName="ProdutoF" />
+          <ScalarProperty Name="ProdutoG" ColumnName="ProdutoG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maquina">
+      <EntityTypeMapping TypeName="IsTypeOf(ConnectorModel.Maquina)">
+        <MappingFragment StoreEntitySet="Maquina">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Topico" ColumnName="Topico" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="MaquinaLog">
+            <EntityTypeMapping TypeName="ConnectorModel.MaquinaLog">
+              <MappingFragment StoreEntitySet="MaquinaLog">
+                <ScalarProperty Name="Reserva2" ColumnName="Reserva2" />
+                <ScalarProperty Name="Reserva1" ColumnName="Reserva1" />
+                <ScalarProperty Name="TempoFalha" ColumnName="TempoFalha" />
+                <ScalarProperty Name="TempoParada" ColumnName="TempoParada" />
+                <ScalarProperty Name="TempoTrabalhando" ColumnName="TempoTrabalhando" />
+                <ScalarProperty Name="NumeroCiclo" ColumnName="NumeroCiclo" />
+                <ScalarProperty Name="Consumo" ColumnName="Consumo" />
+                <ScalarProperty Name="DataHoraCLP" ColumnName="DataHoraCLP" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
                 <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ColetorAlerta">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlerta">
-              <MappingFragment StoreEntitySet="ColetorAlerta">
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Regra" ColumnName="Regra" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Prioridade" ColumnName="Prioridade" />
-                <ScalarProperty Name="Id_TipoAlerta" ColumnName="Id_TipoAlerta" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorTipoAlerta">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorTipoAlerta">
-              <MappingFragment StoreEntitySet="ColetorTipoAlerta">
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="UnidadeMedida" ColumnName="UnidadeMedida" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empresa">
-            <EntityTypeMapping TypeName="ConnectorModel.Empresa">
-              <MappingFragment StoreEntitySet="Empresa">
-                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="NomeFantasia" ColumnName="NomeFantasia" />
-                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="CEP" ColumnName="CEP" />
-                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
-                <ScalarProperty Name="Site" ColumnName="Site" />
-                <ScalarProperty Name="AnalitycCode" ColumnName="AnalitycCode" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Empresas" ColumnName="Empresas" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Filial">
-            <EntityTypeMapping TypeName="ConnectorModel.Filial">
-              <MappingFragment StoreEntitySet="Filial">
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Unidade">
-            <EntityTypeMapping TypeName="ConnectorModel.Unidade">
-              <MappingFragment StoreEntitySet="Unidade">
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Filial" ColumnName="Id_Filial" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="ConnectorModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Hash" ColumnName="Hash" />
-                <ScalarProperty Name="Ative" ColumnName="Ative" />
-                <ScalarProperty Name="Create" ColumnName="Create" />
-                <ScalarProperty Name="Last" ColumnName="Last" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioLogin">
-            <EntityTypeMapping TypeName="ConnectorModel.UsuarioLogin">
-              <MappingFragment StoreEntitySet="UsuarioLogin">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_MedidorUsuario" ColumnName="Id_MedidorUsuario" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorAlertaLog">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorAlertaLog">
-              <MappingFragment StoreEntitySet="ColetorAlertaLog">
-                <ScalarProperty Name="ValorEnviado" ColumnName="ValorEnviado" />
-                <ScalarProperty Name="ValorRegra" ColumnName="ValorRegra" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_ColetorAlerta" ColumnName="Id_ColetorAlerta" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorPressaoHistorico">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorPressaoHistorico">
-              <MappingFragment StoreEntitySet="ColetorPressaoHistorico">
-                <ScalarProperty Name="Pressao" ColumnName="Pressao" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorProducaoHistorico">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorProducaoHistorico">
-              <MappingFragment StoreEntitySet="ColetorProducaoHistorico">
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorSensorMovHistorico">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorSensorMovHistorico">
-              <MappingFragment StoreEntitySet="ColetorSensorMovHistorico">
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Coletor" ColumnName="Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ColetorTemperaturaHistorico">
-            <EntityTypeMapping TypeName="ConnectorModel.ColetorTemperaturaHistorico">
-              <MappingFragment StoreEntitySet="ColetorTemperaturaHistorico">
-                <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Id_Coletor" ColumnName="Id_Coletor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gateway">
-            <EntityTypeMapping TypeName="ConnectorModel.Gateway">
-              <MappingFragment StoreEntitySet="Gateway">
-                <ScalarProperty Name="MAC" ColumnName="MAC" />
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LogAtividade">
-            <EntityTypeMapping TypeName="ConnectorModel.LogAtividade">
-              <MappingFragment StoreEntitySet="LogAtividade">
-                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Dispositivo" ColumnName="Id_Dispositivo" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MaquinaHorario">
-            <EntityTypeMapping TypeName="ConnectorModel.MaquinaHorario">
-              <MappingFragment StoreEntitySet="MaquinaHorario">
-                <ScalarProperty Name="DataHoraFim" ColumnName="DataHoraFim" />
-                <ScalarProperty Name="DataHoraInicio" ColumnName="DataHoraInicio" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Setor">
-            <EntityTypeMapping TypeName="ConnectorModel.Setor">
-              <MappingFragment StoreEntitySet="Setor">
-                <ScalarProperty Name="Id_Unidade" ColumnName="Id_Unidade" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Receita">
-            <EntityTypeMapping TypeName="ConnectorModel.Receita">
-              <MappingFragment StoreEntitySet="Receita">
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Resumo" ColumnName="Resumo" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReceitaPasso">
-            <EntityTypeMapping TypeName="ConnectorModel.ReceitaPasso">
-              <MappingFragment StoreEntitySet="ReceitaPasso">
-                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Decricao" ColumnName="Decricao" />
-                <ScalarProperty Name="Id_Receita" ColumnName="Id_Receita" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReceitaPassoCentrifugacao">
-            <EntityTypeMapping TypeName="ConnectorModel.ReceitaPassoCentrifugacao">
-              <MappingFragment StoreEntitySet="ReceitaPassoCentrifugacao">
-                <ScalarProperty Name="Tempo5" ColumnName="Tempo5" />
-                <ScalarProperty Name="Velocidade5" ColumnName="Velocidade5" />
-                <ScalarProperty Name="Tempo4" ColumnName="Tempo4" />
-                <ScalarProperty Name="Velocidade4" ColumnName="Velocidade4" />
-                <ScalarProperty Name="Tempo3" ColumnName="Tempo3" />
-                <ScalarProperty Name="Velocidade3" ColumnName="Velocidade3" />
-                <ScalarProperty Name="Tempo2" ColumnName="Tempo2" />
-                <ScalarProperty Name="Velocidade2" ColumnName="Velocidade2" />
-                <ScalarProperty Name="Tempo1" ColumnName="Tempo1" />
-                <ScalarProperty Name="Velocidade1" ColumnName="Velocidade1" />
-                <ScalarProperty Name="Saida" ColumnName="Saida" />
-                <ScalarProperty Name="Id_ReceitaPasso" ColumnName="Id_ReceitaPasso" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReceitaPassoLavagem">
-            <EntityTypeMapping TypeName="ConnectorModel.ReceitaPassoLavagem">
-              <MappingFragment StoreEntitySet="ReceitaPassoLavagem">
+          <EntitySetMapping Name="MaquinaLogReport">
+            <EntityTypeMapping TypeName="ConnectorModel.MaquinaLogReport">
+              <MappingFragment StoreEntitySet="MaquinaLogReport">
                 <ScalarProperty Name="ProdutoG" ColumnName="ProdutoG" />
                 <ScalarProperty Name="ProdutoF" ColumnName="ProdutoF" />
                 <ScalarProperty Name="ProdutoE" ColumnName="ProdutoE" />
@@ -1695,32 +1857,20 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
                 <ScalarProperty Name="ProdutoC" ColumnName="ProdutoC" />
                 <ScalarProperty Name="ProdutoB" ColumnName="ProdutoB" />
                 <ScalarProperty Name="ProdutoA" ColumnName="ProdutoA" />
-                <ScalarProperty Name="Saida" ColumnName="Saida" />
-                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
-                <ScalarProperty Name="Entrada" ColumnName="Entrada" />
-                <ScalarProperty Name="SemVapor" ColumnName="SemVapor" />
-                <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
                 <ScalarProperty Name="RPM" ColumnName="RPM" />
-                <ScalarProperty Name="TempoReversao" ColumnName="TempoReversao" />
-                <ScalarProperty Name="TempoOperacao" ColumnName="TempoOperacao" />
-                <ScalarProperty Name="Id_ReceitaPasso" ColumnName="Id_ReceitaPasso" />
+                <ScalarProperty Name="ProgramaExec" ColumnName="ProgramaExec" />
+                <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
+                <ScalarProperty Name="Passo" ColumnName="Passo" />
+                <ScalarProperty Name="Kilos" ColumnName="Kilos" />
+                <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="Id_Maquina" ColumnName="Id_Maquina" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Maquina">
-            <EntityTypeMapping TypeName="ConnectorModel.Maquina">
-              <MappingFragment StoreEntitySet="Maquina">
-                <ScalarProperty Name="Topico" ColumnName="Topico" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -1734,7 +1884,7 @@ FROM [dbo].[Setor] AS [Setor]</DefiningQuery>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

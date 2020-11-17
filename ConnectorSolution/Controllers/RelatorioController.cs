@@ -60,7 +60,7 @@ namespace Connector.Controllers
             //
             return View();
         }
-        
+
         /*
         public JsonResult RelatorioMaquina(int idempresa, string lista_ids, int periodo)
         {
@@ -275,6 +275,160 @@ namespace Connector.Controllers
                 {
                     data_filtro_fim = new DateTime(Convert.ToInt32(data_dois[2]), Convert.ToInt32(data_dois[0]), Convert.ToInt32(data_dois[1]), 23, 59, 59);
                 }
+            }
+            //
+            try
+            {
+                for (int i = 0; i < lista_ids_maquinas.Length; i++)
+                {
+                    int idmaquina = Convert.ToInt32(lista_ids_maquinas[i]);
+                    Coletor coletor = db.Coletor.Where(x => x.Maquina != null && x.Maquina.ID == idmaquina).FirstOrDefault();
+                    //
+                    if (coletor != null)
+                    {
+                        MaquinaItensReportModel mirm = new MaquinaItensReportModel();
+                        //
+                        mirm.DescricaoColetor = coletor.Descricao;
+                        mirm.DescricaoMaquina = coletor.Maquina.Descricao;
+                        if (string.IsNullOrEmpty(maq))
+                        {
+                            maq = coletor.Maquina.Descricao;
+                        }
+                        else
+                        {
+                            maq = maq + " - " + coletor.Maquina.Descricao;
+                        }
+                        //
+                        lista_maquina_itens_report_model.Add(mirm);
+                        //
+                        lista_coletoralerta_model = db.ColetorAlerta.Where(x => x.Id_Coletor == coletor.Id).ToList();
+                        //
+                        string teste = @"
+                                    SELECT Cast(datahora AS DATE)                   AS 'Data',
+                                            DATENAME(weekday, Cast(datahora AS DATE)) AS 'DiaSemana',
+                                            Datepart(month, datahora)                AS Mes, 
+                                            Datepart(day, datahora)                  AS Dia, 
+                                            Temperatura
+                                        FROM   ColetorTemperaturaHistorico 
+                                    WHERE Id_Coletor = 47
+                                        AND DataHora >= '2019-12-15 14:40:01.000'
+                                        AND DataHora <= '2019-12-31 14:40:01.000'
+                                        AND Temperatura IS NOT NULL 
+
+                                        ORDER  BY Datepart(month, datahora), 
+                                                Datepart(day, datahora)
+                                    ";
+                        string sql_temp = @"SELECT Cast(datahora AS DATE)                   AS 'Data',
+                                        DATENAME(weekday, Cast(datahora AS DATE)) AS 'DiaSemana',
+                                        Datepart(month, datahora)                AS Mes, 
+                                        Datepart(day, datahora)                  AS Dia, 
+                                        ROUND((Avg(Cast(temperatura AS FLOAT)) / 10 ), 2) AS 'TemperaturaMedia' 
+                                 FROM   ColetorTemperaturaHistorico 
+                                WHERE Id_Coletor = " + coletor.Id + @"
+                                    AND DataHora >= '" + data_filtro_ini.ToString("yyyy/MM/dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + @"'
+                                    AND DataHora <= '" + data_filtro_fim.ToString("yyyy/MM/dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + @"'
+                                    AND Temperatura IS NOT NULL 
+                                 GROUP  BY Cast(datahora AS DATE), 
+                                           Datepart(day, datahora), 
+                                           Datepart(month, datahora) 
+                                 ORDER  BY Datepart(month, datahora), 
+                                           Datepart(day, datahora)";
+                        //
+                        SQLController sqlcontroller = new SQLController();
+                        DataTable data_temp = sqlcontroller.ExecutaSQL(teste);
+                        //
+                        if (data_temp != null && data_temp.Rows.Count > 0)
+                        {
+                            double[] valoresY = new double[data_temp.Rows.Count];
+                            string[] valoresX = new string[data_temp.Rows.Count];
+                            //
+                            for (int k = 0; k < data_temp.Rows.Count; k++)
+                            {
+                                valoresX[k] = Convert.ToString(data_temp.Rows[k]["Dia"]) + "/" + Convert.ToString(data_temp.Rows[k]["Mes"]);
+                                valoresY[k] = Convert.ToDouble(data_temp.Rows[k]["Temperatura"]);
+                            }
+                            //
+                            List<Object> lista_itens = new List<Object>();
+                            lista_itens.Add(valoresX);
+                            lista_itens.Add(valoresY);
+                            lista_itens.Add(coletor.Maquina.Descricao);
+                            //
+                            lista.Add(lista_itens);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                sFileName = "Erro: " + exc.Message;
+                sreult = "nok";
+            }
+            //
+            return Json(new
+            {
+                data = "OK",
+                results = 1,
+                success = true,
+                errors = 0,
+                dados = lista,
+                maquinas = maq,
+                periodo = data_filtro_ini.ToShortDateString() + " " + data_filtro_ini.ToShortTimeString() + " - " + data_filtro_fim.ToShortDateString() + " " + data_filtro_fim.ToShortTimeString()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RelatorioTemperaturaGetDados2(int idempresa, string lista_ids, string periodo, string horaini, string horafim)
+        {
+            List<Object> lista = new List<Object>();
+            DateTime data_filtro_ini = new DateTime();
+            DateTime data_filtro_fim = new DateTime();
+            string[] lista_ids_maquinas = lista_ids.Split(',');
+            //
+            string maq = string.Empty;
+            string sreult = string.Empty;
+            string sFileName = string.Empty;
+            Empresa empresaLista = null;
+            //
+            List<EmpresaRelatorioModel> lista_empresa_model = new List<EmpresaRelatorioModel>();
+            List<ColetorAlerta> lista_coletoralerta_model = new List<ColetorAlerta>();
+            List<ColetorAlertaLog> lista_coletor_alerta_log = new List<ColetorAlertaLog>();
+            //
+            //List<ColetorAlertaModel> lista_coletor_alerta_item_model = new List<ColetorAlertaModel>();
+            List<ColetorAlertaLogModel> lista_coletor_alerta_log_model = new List<ColetorAlertaLogModel>();
+            List<MaquinaItensReportModel> lista_maquina_itens_report_model = new List<MaquinaItensReportModel>();
+            //
+            empresaLista = db.Empresa.Where(x => x.Id == idempresa).FirstOrDefault();
+            //
+            if (!string.IsNullOrEmpty(periodo))
+            {
+                string[] datas_filro = periodo.Split('-');
+                string[] data_um = datas_filro[0].ToString().Split('/');
+                string[] data_dois = datas_filro[1].ToString().Split('/');
+                //
+                if (!string.IsNullOrEmpty(horaini) && horaini.Contains(":"))
+                {
+                    data_filtro_ini = new DateTime(Convert.ToInt32(data_um[2]),
+                        Convert.ToInt32(data_um[0]),
+                        Convert.ToInt32(data_um[1]),
+                        Convert.ToInt32(horaini.Split(':')[0]),
+                        Convert.ToInt32(horaini.Split(':')[1]), 1);
+                }
+                else
+                {
+                    data_filtro_ini = new DateTime(Convert.ToInt32(data_um[2]), Convert.ToInt32(data_um[0]), Convert.ToInt32(data_um[1]), 0, 0, 1);
+                }
+                //
+                if (!string.IsNullOrEmpty(horaini) && horafim.Contains(":"))
+                {
+                    data_filtro_fim = new DateTime(Convert.ToInt32(data_dois[2]),
+                        Convert.ToInt32(data_dois[0]),
+                        Convert.ToInt32(data_dois[1]),
+                        Convert.ToInt32(horafim.Split(':')[0]),
+                        Convert.ToInt32(horafim.Split(':')[1]), 59);
+                }
+                else
+                {
+                    data_filtro_fim = new DateTime(Convert.ToInt32(data_dois[2]), Convert.ToInt32(data_dois[0]), Convert.ToInt32(data_dois[1]), 23, 59, 59);
+                }
             }            
             //
             try
@@ -375,7 +529,7 @@ namespace Connector.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-         string RemTransp(string file, string filename)
+        string RemTransp(string file, string filename)
         {
             Bitmap src = new Bitmap(file);
             Bitmap target = new Bitmap(src.Size.Width, src.Size.Height);
@@ -387,6 +541,172 @@ namespace Connector.Controllers
             app_path += "Temp\\" + filename;
             target.Save(app_path);
             return filename;
+        }
+
+        public JsonResult RelatorioMaquinaInequil(int idempresa, string idmaquina, string periodo)
+        {
+            string sFileName = string.Empty;
+            //
+            try
+            {
+                string sreult = string.Empty;
+                string sProgramaNome = string.Empty;
+                Empresa empresa = null;
+                string date_ini = periodo.Split('-')[0];
+                string date_end = periodo.Split('-')[1];
+                int iidmaquina = Convert.ToInt32(idmaquina);
+                //
+                int day_ini = Convert.ToInt32(date_ini.Split('/')[1]);
+                int month_ini = Convert.ToInt32(date_ini.Split('/')[0]);
+                int year_ini = Convert.ToInt32(date_ini.Split('/')[2]);
+                //
+                int day_end = Convert.ToInt32(date_end.Split('/')[1]);
+                int month_end = Convert.ToInt32(date_end.Split('/')[0]);
+                int year_end = Convert.ToInt32(date_end.Split('/')[2]);
+                //
+                DateTime dtIni = new DateTime(year_ini, month_ini, day_ini);
+                DateTime dtEnd = new DateTime(year_end, month_end, day_end);
+                dtEnd = dtEnd.AddHours(23);
+                dtEnd = dtEnd.AddMinutes(59);
+                dtEnd = dtEnd.AddSeconds(59);
+                //
+                List<MaquinaLog> ml = db.MaquinaLog.Where(a => a.Id_Maquina == iidmaquina).ToList();
+                List<MaquinaLogReport> maRepo_list = db.MaquinaLogReport.Where(a => a.Id_Maquina == iidmaquina && a.DataHora >= dtIni && a.DataHora <= dtEnd).ToList();
+                List<MaquinaItensReportModel> lista_itens = new List<MaquinaItensReportModel>();
+                //
+                foreach (MaquinaLogReport item in maRepo_list)
+                {
+                    MaquinaItensReportModel mtrm = new MaquinaItensReportModel();
+                    //
+                    mtrm.Id = item.Id;
+                    mtrm.Passo = item.Passo;
+                    mtrm.Tempo = item.Tempo;
+                    mtrm.DataHora = Convert.ToDateTime(item.DataHora);
+                    mtrm.Kilos = string.IsNullOrEmpty(item.Kilos) ? "" : item.Kilos;
+                    mtrm.ProdutoA = string.IsNullOrEmpty(item.ProdutoA) ? "" : item.ProdutoA;
+                    mtrm.ProdutoB = string.IsNullOrEmpty(item.ProdutoB) ? "" : item.ProdutoB;
+                    mtrm.ProdutoC = string.IsNullOrEmpty(item.ProdutoC) ? "" : item.ProdutoC;
+                    mtrm.ProdutoD = string.IsNullOrEmpty(item.ProdutoD) ? "" : item.ProdutoD;
+                    mtrm.ProdutoE = string.IsNullOrEmpty(item.ProdutoE) ? "" : item.ProdutoE;
+                    mtrm.ProdutoF = string.IsNullOrEmpty(item.ProdutoF) ? "" : item.ProdutoF;
+                    mtrm.ProdutoG = string.IsNullOrEmpty(item.ProdutoG) ? "" : item.ProdutoG;
+                    mtrm.ProgramaExec = item.ProgramaExec;
+                    mtrm.RPM = item.RPM;
+                    mtrm.Temperatura = item.Temperatura;
+                    mtrm.DescricaoColetor = "";
+                    mtrm.DescricaoMaquina = "";
+                    sProgramaNome = item.ProgramaExec;
+                    //
+                    lista_itens.Add(mtrm);
+                }
+                //
+                List<EmpresaRelatorioModel> lista_empresa_model = new List<EmpresaRelatorioModel>();
+                empresa = db.Empresa.Where(x => x.Id == idempresa).FirstOrDefault();
+                int idmaquinaint = Convert.ToInt32(idmaquina);
+                Maquina maq = db.Maquina.Where(a => a.ID == idmaquinaint).FirstOrDefault();
+                int tot_list = lista_itens.Count;
+                DateTime dt_inicial = lista_itens[0].DataHora;
+                DateTime dt_final = lista_itens[tot_list -1].DataHora;
+                int NumeroLote = lista_itens[0].Id;
+                //
+                TimeSpan dt_diff = (dt_final - dt_inicial);
+                //
+                if (empresa != null)
+                {
+                    EmpresaRelatorioModel tmp = new EmpresaRelatorioModel();
+                    //
+                    tmp.Id = empresa.Id;
+                    tmp.Nome = empresa.Nome;
+                    tmp.Numero = empresa.Numero;
+                    tmp.Telefone = empresa.Telefone;
+                    tmp.Site = empresa.Site;
+                    tmp.EstadoSigla = PegaEstadoSigla(empresa.Estado);
+                    tmp.Endereco = empresa.Endereco;
+                    tmp.CEP = empresa.CEP;
+                    tmp.Cidade = empresa.Cidade;
+                    tmp.NomeFantasia = empresa.NomeFantasia;
+                    tmp.Email = empresa.Email;
+                    tmp.Bairro = empresa.Bairro;
+                    tmp.Imagem = RetornaImagemLink("");
+                    tmp.Periodo = periodo;
+                    tmp.NomeMaquina = "";
+                    //
+                    if (maq != null)
+                    {
+                        tmp.Programa = sProgramaNome;
+                        tmp.Maquina = maq.Descricao;
+                        tmp.NumeroLote = NumeroLote.ToString();
+                        tmp.DataCiclo = dt_inicial.ToShortDateString();
+                        tmp.InicioCiclo = dt_inicial.ToShortTimeString();
+                        tmp.FimCiclo = dt_final.ToShortTimeString();
+                        tmp.TotalCiclo = dt_diff.ToString().Substring(0, 5);
+                        tmp.Erros = "0";
+                    }
+                    //
+                    lista_empresa_model.Add(tmp);
+                }
+                //
+                ReportDocument oRelatorioMaquina = null;
+                ReportDocument oRelatorioMaquinaItem = null;
+                ReportDocument oRelatorioMaquinaItemAlerta = null;
+                ReportDocument oRelatorioMaquinaItemLogAlerta = null;
+                //
+                try
+                {
+                    oRelatorioMaquina = new ReportDocument();
+                    oRelatorioMaquinaItem = new ReportDocument();
+                    oRelatorioMaquinaItemAlerta = new ReportDocument();
+                    oRelatorioMaquinaItemLogAlerta = new ReportDocument();
+                    oRelatorioMaquina = new ReportDocument();
+                    //                
+                    string local = AppDomain.CurrentDomain.BaseDirectory + "Temp";
+                    sFileName = "Relatorio_Maquinas" + DateTime.Today.ToShortDateString() + "_" + DateTime.Now.ToLongTimeString() + "_.pdf";
+                    sFileName = sFileName.Replace("/", "-");
+                    sFileName = sFileName.Replace("\\", "-");
+                    sFileName = sFileName.Replace(":", "-");
+                    //
+                    oRelatorioMaquina.Load(System.Web.HttpContext.Current.Server.MapPath("~/Relatorio/") + "RelatorioMaquina.rpt");
+                    oRelatorioMaquina.SetDataSource(lista_empresa_model);
+                    oRelatorioMaquina.Database.Tables[0].SetDataSource(lista_empresa_model);
+                    //
+                    oRelatorioMaquinaItem.Load(System.Web.HttpContext.Current.Server.MapPath("~/Relatorio/") + "RelatorioMaquinaItem.rpt");
+                    oRelatorioMaquinaItem.SetDataSource(lista_itens);
+                    //
+                    oRelatorioMaquina.Subreports["RelatorioMaquinaItem.rpt"].Database.Tables[0].SetDataSource(lista_itens);
+                    //
+                    oRelatorioMaquina.ExportToDisk(ExportFormatType.PortableDocFormat, local + "\\" + sFileName);
+                    //
+                    oRelatorioMaquinaItemAlerta.Close();
+                    oRelatorioMaquina.Close();
+                    oRelatorioMaquinaItem.Close();
+                    //
+                    oRelatorioMaquinaItemAlerta.Dispose();
+                    oRelatorioMaquina.Dispose();
+                    oRelatorioMaquinaItem.Dispose();
+                    //
+                    GC.Collect();
+                    sreult = "ok";
+                }
+                catch (Exception exc)
+                {
+                    //Utils.Utils.Log.GravaLogExc(exc);
+                    sFileName = "Erro: " + exc.Message;
+                    sreult = "nok";
+                }
+            }
+            catch (Exception exce)
+            {
+                sFileName = "Erro: " +  exce.Message;
+            }
+            //
+            return Json(new
+            {
+                data = "OK",
+                results = 1,
+                success = true,
+                errors = 0,
+                relatorio = sFileName,
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult RelatorioTemperaturaAtmosfera(int idempresa, string strimage1, string maquinas, string periodo)

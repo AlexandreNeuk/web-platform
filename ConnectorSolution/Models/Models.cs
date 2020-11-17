@@ -82,7 +82,9 @@ namespace Connector.Models
     {
         public int Id { get; set; }
         public string Topico { get; set; }
+        public string MaquinaTopico { get; set; }
         public string Mensagem { get; set; }
+        public string NomeReceita { get; set; }
     }
 
     public class ReceitaModel
@@ -232,6 +234,14 @@ namespace Connector.Models
         public string NomeMaquina { get; set; }
         public string Periodo { get; set; }
         public Byte[] Imagem { get; set; }
+        public string Programa { get; set; }
+        public string Maquina { get; set; }
+        public string DataCiclo { get; set; }
+        public string NumeroLote { get; set; }
+        public string Erros { get; set; }
+        public string InicioCiclo { get; set; }
+        public string FimCiclo { get; set; }
+        public string TotalCiclo { get; set; }
     }
 
     public class GatewayModel
@@ -282,6 +292,44 @@ namespace Connector.Models
     {
         public string DescricaoMaquina { get; set; }
         public string DescricaoColetor { get; set; }
+        public int Id { get; set; }
+        public int Id_Maquina { get; set; }
+        public DateTime DataHora { get; set; }
+        public string Tempo { get; set; }
+        public string Kilos { get; set; }
+        public string Passo { get; set; }
+        public string Temperatura { get; set; }
+        public string ProgramaExec { get; set; }
+        public string RPM { get; set; }
+        public string ProdutoA { get; set; }
+        public string ProdutoB { get; set; }
+        public string ProdutoC { get; set; }
+        public string ProdutoD { get; set; }
+        public string ProdutoE { get; set; }
+        public string ProdutoF { get; set; }
+        public string ProdutoG { get; set; }
+    }
+
+    public class MaquinaLogReportModels
+    {
+        public int Id { get; set; }
+        public int Id_Maquina { get; set; }
+        public Nullable<System.DateTime> DataHora { get; set; }
+        public string Tempo { get; set; }
+        public string Kilos { get; set; }
+        public string Passo { get; set; }
+        public string Temperatura { get; set; }
+        public string ProgramaExec { get; set; }
+        public string RPM { get; set; }
+        public string ProdutoA { get; set; }
+        public string ProdutoB { get; set; }
+        public string ProdutoC { get; set; }
+        public string ProdutoD { get; set; }
+        public string ProdutoE { get; set; }
+        public string ProdutoF { get; set; }
+        public string ProdutoG { get; set; }
+
+        public virtual Maquina Maquina { get; set; }
     }
 
     //public partial class ColetorAlertaLogModel
