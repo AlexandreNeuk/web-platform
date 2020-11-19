@@ -546,6 +546,7 @@ namespace Connector.Controllers
         public JsonResult RelatorioMaquinaInequil(int idempresa, string idmaquina, string periodo)
         {
             string sFileName = string.Empty;
+            string serrors = string.Empty;
             //
             try
             {
@@ -685,26 +686,23 @@ namespace Connector.Controllers
                     oRelatorioMaquinaItem.Dispose();
                     //
                     GC.Collect();
-                    sreult = "ok";
                 }
                 catch (Exception exc)
                 {
-                    //Utils.Utils.Log.GravaLogExc(exc);
-                    sFileName = "Erro: " + exc.Message;
-                    sreult = "nok";
+                    serrors = "Erro: " + exc.Message;
                 }
             }
             catch (Exception exce)
             {
-                sFileName = "Erro: " +  exce.Message;
+                serrors = "Erro: " + exce.Message;
             }
             //
             return Json(new
             {
-                data = "OK",
+                data = serrors.Length > 0 ? serrors : "OK",
                 results = 1,
                 success = true,
-                errors = 0,
+                errors = serrors,
                 relatorio = sFileName,
             }, JsonRequestBehavior.AllowGet);
         }

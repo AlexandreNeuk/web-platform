@@ -2994,6 +2994,7 @@
                 //
                 if ($('#slmaquinasrelatorio').select2('val') && $('#slmaquinasrelatorio').select2('val').length > 0) {
                     //
+                    m.relatorio.list_ids = [];
                     for (var i = 0; i < $('#slmaquinasrelatorio').find(':selected').length; i++) {
                         //
                         m.relatorio.list_ids.push($('#slmaquinasrelatorio').find(':selected')[i].id);
@@ -3011,23 +3012,20 @@
                             //
 
                             //
-                            if (resp && resp.data == 'OK') {
+                            if (resp && resp.errors == 0) {
                                 //
                                 m.relatorio.load.out();
-                                document.getElementById('idframerelmaquina').src = 'http://localhost/connector/temp/' + resp.relatorio
-                                //m.relatorio.grafico_relatorio(resp.lista_dados_retorno, resp.lista_labels, d.getid("slperiodo").options[d.getid("slperiodo").selectedIndex].id);
-                                //alert('ok');
-
+                                document.getElementById('idframerelmaquina').src = location.origin + '/temp/' + resp.relatorio
                             }
                             else {
-                                $('#msg')[0].innerHTML = 'Ocorreu um erro ao tentar salvar a conta.';
-                                $("#btnModal").click();
+                                m.relatorio.load.out()
+                                m.g.alert('Erro', resp.errors)
                             }
                         },
                         error: function (xhr, error) {
                             //
-                            //console.log(xhr);
-                            //console.log(error);
+                            m.relatorio.load.out()
+                            m.g.alert('Erro', error)
 
                         }
                     });
